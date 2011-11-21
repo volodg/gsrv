@@ -10,6 +10,8 @@
 
 #import "ViewController.h"
 
+#import <MWSrv/MWSession.h>
+
 @implementation AppDelegate
 
 @synthesize window = _window;
@@ -24,31 +26,11 @@
 
 -(void)test
 {
-   NSURL* url_ = [ NSURL URLWithString: @"http://test.bwf.org.ua:3333" ];
+   MWSession* session_ = [ MWSession sessionWithLogin: @"testUser" ];
 
-   NSString* post_ = @"{cmd:\"enter\",env:1,cid:\"someUSER\"}";
-   NSData* post_data_ = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
-
-   NSDictionary* headers_ = [ NSDictionary dictionaryWithObjectsAndKeys:
-                             @"text/x-json", @"Content-Type"
-                             , nil ];
-
-   JFFAsyncOperation loader_ = dataURLResponseLoader( 
-                                                     url_
-                                                     , post_data_
-                                                     , headers_ );
-
-   loader_( nil, nil, ^( id result_, NSError* error_ )
+   [ session_ authLoader ]( nil, nil, ^( id result_, NSError* error_ )
    {
-      if ( result_ )
-      {
-         NSString* response_ = [ [ NSString alloc ] initWithData: result_ encoding: NSUTF8StringEncoding ];
-         NSLog( @"result: %@", response_ );
-      }
-      else
-      {
-         NSLog( @"error: %@", error_ );
-      }
+      NSLog( @"result: %@ error: %@", result_, error_ );
    } );
 }
 

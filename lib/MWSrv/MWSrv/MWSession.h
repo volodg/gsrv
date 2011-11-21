@@ -7,6 +7,6 @@
 +(id)currentSession;
 +(id)sessionWithLogin:( NSString* )login_;
 
--(JFFAsyncOperation)authLoaderWithLogin:( NSString* )login_;
+-(JFFAsyncOperation)authLoader;
 
 @end

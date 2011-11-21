@@ -51,9 +51,9 @@ static MWSession* instance_;
    return instance_;
 }
 
--(JFFAsyncOperation)authLoaderWithLogin:( NSString* )login_
+-(JFFAsyncOperation)authLoader
 {
-   return nil;
+   return [ self.api authLoaderWithLogin: self.login ];
 }
 
 @end
