@@ -1,0 +1,8 @@
+.svn
+build
+*.pbxuser
+*.mode1v3
+xcuserdata
+*xcworkspace
+.svnignore
+*.DS_Store
