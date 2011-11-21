@@ -80,7 +80,7 @@ BOOL has_native_blocks_runtime_ = NO;
    return [ self copyWithZone: nil ];
 }
 
-- (void) release {
+- (oneway void) release {
    if ( has_native_blocks_runtime_ )
    {
       _Block_release((void *) self);
@@ -114,7 +114,7 @@ BOOL has_native_blocks_runtime_ = NO;
    return self;
 }
 
-- (void) release {
+- (oneway void) release {
    /* Allocated on stack */
 }
 
@@ -150,7 +150,7 @@ BOOL has_native_blocks_runtime_ = NO;
    return self;
 }
 
-- (void) release {
+- (oneway void) release {
 }
 
 - (id) autorelease {
@@ -181,7 +181,7 @@ BOOL has_native_blocks_runtime_ = NO;
    return self; 
 }
 
-- (void) release {
+- (oneway void) release {
 }
 
 - (NSUInteger) retainCount { 
