@@ -5,6 +5,7 @@
 @interface MWSession : NSObject
 
 +(id)currentSession;
++(id)sessionWithLogin:( NSString* )login_;
 
 -(JFFAsyncOperation)authLoaderWithLogin:( NSString* )login_;
 

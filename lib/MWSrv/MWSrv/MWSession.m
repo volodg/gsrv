@@ -2,27 +2,32 @@
 
 #import "MWApi.h"
 
+static MWSession* instance_;
+
 @interface MWSession ()
 
 @property ( nonatomic, retain ) NSDate* lastLoginDate;
 @property ( nonatomic, retain ) MWApi* api;
+@property ( nonatomic, retain ) NSString* login;
 
 @end
 
 @implementation MWSession
 
 @synthesize lastLoginDate = _lastLoginDate;
-@synthesize api = _api;
+@synthesize api           = _api;
+@synthesize login         = _login;
 
 -(void)dealloc
 {
    [ _lastLoginDate release ];
    [ _api release ];
+   [ _login release ];
 
    [ super dealloc ];
 }
 
--(id)init
+-(id)initWithLogin:( NSString* )login_
 {
    self = [ super init ];
 
@@ -36,11 +41,13 @@
 
 +(id)currentSession
 {
-   static MWSession* instance_;
-   if ( !instance_ )
-   {
-      instance_ = [ MWSession new ];
-   }
+   return instance_;
+}
+
++(id)sessionWithLogin:( NSString* )login_
+{
+   [ instance_ release ];
+   instance_ = [ [ self alloc ] initWithLogin: login_ ];
    return instance_;
 }
 
