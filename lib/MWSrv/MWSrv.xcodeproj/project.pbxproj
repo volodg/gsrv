@@ -1,0 +1,549 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		65229F98147AD45900D83D06 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65229F97147AD45900D83D06 /* Foundation.framework */; };
+		65229FF7147AD55300D83D06 /* libESBlockRuntime.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65229FAD147AD4A200D83D06 /* libESBlockRuntime.a */; };
+		65229FF8147AD55300D83D06 /* libJFFAsyncOperations.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65229FD2147AD4BC00D83D06 /* libJFFAsyncOperations.a */; };
+		65229FF9147AD55300D83D06 /* libJFFNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65229FC8147AD4B500D83D06 /* libJFFNetwork.a */; };
+		65229FFA147AD55300D83D06 /* libJFFScheduler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65229FBF147AD4B100D83D06 /* libJFFScheduler.a */; };
+		65229FFB147AD55300D83D06 /* libJFFUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65229FB6147AD4AA00D83D06 /* libJFFUtils.a */; };
+		65229FFC147AD55300D83D06 /* libsbjson-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65229FE8147AD52D00D83D06 /* libsbjson-ios.a */; };
+		65229FFD147AD55300D83D06 /* SBJson.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65229FE4147AD52D00D83D06 /* SBJson.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		65229FAC147AD4A200D83D06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65229FA5147AD4A100D83D06 /* ESBlockRuntime.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
+			remoteInfo = ESBlockRuntime;
+		};
+		65229FB5147AD4AA00D83D06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65229FAE147AD4AA00D83D06 /* JFFUtils.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
+			remoteInfo = JFFUtils;
+		};
+		65229FBE147AD4B100D83D06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65229FB7147AD4B100D83D06 /* JFFScheduler.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
+			remoteInfo = JFFScheduler;
+		};
+		65229FC7147AD4B500D83D06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65229FC0147AD4B500D83D06 /* JFFNetwork.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D5AE6DB13F3E6C600EB6143;
+			remoteInfo = JFFNetwork;
+		};
+		65229FD1147AD4BC00D83D06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65229FC9147AD4BB00D83D06 /* JFFAsyncOperations.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
+			remoteInfo = JFFAsyncOperations;
+		};
+		65229FE3147AD52D00D83D06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65229FD9147AD52D00D83D06 /* SBJson.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BC12323D1391D5CC00131607;
+			remoteInfo = SBJson;
+		};
+		65229FE5147AD52D00D83D06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65229FD9147AD52D00D83D06 /* SBJson.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BC1232521391D5CC00131607;
+			remoteInfo = SBJsonTests;
+		};
+		65229FE7147AD52D00D83D06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65229FD9147AD52D00D83D06 /* SBJson.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BCC2626913920FC7003D9994;
+			remoteInfo = "sbjson-ios";
+		};
+		65229FE9147AD52D00D83D06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65229FD9147AD52D00D83D06 /* SBJson.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BCC2627313920FC7003D9994;
+			remoteInfo = "sbjson-iosTests";
+		};
+		65229FEB147AD54800D83D06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65229FAE147AD4AA00D83D06 /* JFFUtils.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = JFFUtils;
+		};
+		65229FED147AD54800D83D06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65229FD9147AD52D00D83D06 /* SBJson.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BCC2626813920FC7003D9994;
+			remoteInfo = "sbjson-ios";
+		};
+		65229FEF147AD54800D83D06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65229FB7147AD4B100D83D06 /* JFFScheduler.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = JFFScheduler;
+		};
+		65229FF1147AD54800D83D06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65229FC9147AD4BB00D83D06 /* JFFAsyncOperations.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = JFFAsyncOperations;
+		};
+		65229FF3147AD54800D83D06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65229FC0147AD4B500D83D06 /* JFFNetwork.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5AE6DA13F3E6C600EB6143;
+			remoteInfo = JFFNetwork;
+		};
+		65229FF5147AD54800D83D06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65229FA5147AD4A100D83D06 /* ESBlockRuntime.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = ESBlockRuntime;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		65229F94147AD45900D83D06 /* libMWSrv.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMWSrv.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		65229F97147AD45900D83D06 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		65229F9B147AD45900D83D06 /* MWSrv-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MWSrv-Prefix.pch"; sourceTree = "<group>"; };
+		65229FA5147AD4A100D83D06 /* ESBlockRuntime.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ESBlockRuntime.xcodeproj; path = "../../lib-third-party/BlockRuntime/ESBlockRuntime.xcodeproj"; sourceTree = "<group>"; };
+		65229FAE147AD4AA00D83D06 /* JFFUtils.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JFFUtils.xcodeproj; path = "../../lib-third-party/JFFLibrary/lib/JFFUtils/JFFUtils.xcodeproj"; sourceTree = "<group>"; };
+		65229FB7147AD4B100D83D06 /* JFFScheduler.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JFFScheduler.xcodeproj; path = "../../lib-third-party/JFFLibrary/lib/JFFScheduler/JFFScheduler.xcodeproj"; sourceTree = "<group>"; };
+		65229FC0147AD4B500D83D06 /* JFFNetwork.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JFFNetwork.xcodeproj; path = "../../lib-third-party/JFFLibrary/lib/JFFNetwork/JFFNetwork.xcodeproj"; sourceTree = "<group>"; };
+		65229FC9147AD4BB00D83D06 /* JFFAsyncOperations.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JFFAsyncOperations.xcodeproj; path = "../../lib-third-party/JFFLibrary/lib/JFFAsyncOperations/JFFAsyncOperations.xcodeproj"; sourceTree = "<group>"; };
+		65229FD9147AD52D00D83D06 /* SBJson.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SBJson.xcodeproj; path = "../../lib-third-party/json-framework/SBJson.xcodeproj"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		65229F91147AD45900D83D06 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				65229FF7147AD55300D83D06 /* libESBlockRuntime.a in Frameworks */,
+				65229FF8147AD55300D83D06 /* libJFFAsyncOperations.a in Frameworks */,
+				65229FF9147AD55300D83D06 /* libJFFNetwork.a in Frameworks */,
+				65229FFA147AD55300D83D06 /* libJFFScheduler.a in Frameworks */,
+				65229FFB147AD55300D83D06 /* libJFFUtils.a in Frameworks */,
+				65229FFC147AD55300D83D06 /* libsbjson-ios.a in Frameworks */,
+				65229FFD147AD55300D83D06 /* SBJson.framework in Frameworks */,
+				65229F98147AD45900D83D06 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		65229F89147AD45800D83D06 = {
+			isa = PBXGroup;
+			children = (
+				65229F99147AD45900D83D06 /* MWSrv */,
+				65229F96147AD45900D83D06 /* Frameworks */,
+				65229F95147AD45900D83D06 /* Products */,
+				65229FA4147AD48900D83D06 /* Dependencies */,
+			);
+			sourceTree = "<group>";
+		};
+		65229F95147AD45900D83D06 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				65229F94147AD45900D83D06 /* libMWSrv.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		65229F96147AD45900D83D06 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				65229F97147AD45900D83D06 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		65229F99147AD45900D83D06 /* MWSrv */ = {
+			isa = PBXGroup;
+			children = (
+				65229F9A147AD45900D83D06 /* Supporting Files */,
+			);
+			path = MWSrv;
+			sourceTree = "<group>";
+		};
+		65229F9A147AD45900D83D06 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				65229F9B147AD45900D83D06 /* MWSrv-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		65229FA4147AD48900D83D06 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				65229FD9147AD52D00D83D06 /* SBJson.xcodeproj */,
+				65229FC9147AD4BB00D83D06 /* JFFAsyncOperations.xcodeproj */,
+				65229FC0147AD4B500D83D06 /* JFFNetwork.xcodeproj */,
+				65229FB7147AD4B100D83D06 /* JFFScheduler.xcodeproj */,
+				65229FAE147AD4AA00D83D06 /* JFFUtils.xcodeproj */,
+				65229FA5147AD4A100D83D06 /* ESBlockRuntime.xcodeproj */,
+			);
+			name = Dependencies;
+			sourceTree = "<group>";
+		};
+		65229FA6147AD4A100D83D06 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				65229FAD147AD4A200D83D06 /* libESBlockRuntime.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		65229FAF147AD4AA00D83D06 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				65229FB6147AD4AA00D83D06 /* libJFFUtils.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		65229FB8147AD4B100D83D06 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				65229FBF147AD4B100D83D06 /* libJFFScheduler.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		65229FC1147AD4B500D83D06 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				65229FC8147AD4B500D83D06 /* libJFFNetwork.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		65229FCA147AD4BB00D83D06 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				65229FD2147AD4BC00D83D06 /* libJFFAsyncOperations.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		65229FDA147AD52D00D83D06 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				65229FE4147AD52D00D83D06 /* SBJson.framework */,
+				65229FE6147AD52D00D83D06 /* SBJsonTests.octest */,
+				65229FE8147AD52D00D83D06 /* libsbjson-ios.a */,
+				65229FEA147AD52D00D83D06 /* sbjson-iosTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		65229F92147AD45900D83D06 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		65229F93147AD45900D83D06 /* MWSrv */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 65229FA1147AD45900D83D06 /* Build configuration list for PBXNativeTarget "MWSrv" */;
+			buildPhases = (
+				65229F90147AD45900D83D06 /* Sources */,
+				65229F91147AD45900D83D06 /* Frameworks */,
+				65229F92147AD45900D83D06 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				65229FEC147AD54800D83D06 /* PBXTargetDependency */,
+				65229FEE147AD54800D83D06 /* PBXTargetDependency */,
+				65229FF0147AD54800D83D06 /* PBXTargetDependency */,
+				65229FF2147AD54800D83D06 /* PBXTargetDependency */,
+				65229FF4147AD54800D83D06 /* PBXTargetDependency */,
+				65229FF6147AD54800D83D06 /* PBXTargetDependency */,
+			);
+			name = MWSrv;
+			productName = MWSrv;
+			productReference = 65229F94147AD45900D83D06 /* libMWSrv.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		65229F8B147AD45800D83D06 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = 65229F8E147AD45800D83D06 /* Build configuration list for PBXProject "MWSrv" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 65229F89147AD45800D83D06;
+			productRefGroup = 65229F95147AD45900D83D06 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 65229FA6147AD4A100D83D06 /* Products */;
+					ProjectRef = 65229FA5147AD4A100D83D06 /* ESBlockRuntime.xcodeproj */;
+				},
+				{
+					ProductGroup = 65229FCA147AD4BB00D83D06 /* Products */;
+					ProjectRef = 65229FC9147AD4BB00D83D06 /* JFFAsyncOperations.xcodeproj */;
+				},
+				{
+					ProductGroup = 65229FC1147AD4B500D83D06 /* Products */;
+					ProjectRef = 65229FC0147AD4B500D83D06 /* JFFNetwork.xcodeproj */;
+				},
+				{
+					ProductGroup = 65229FB8147AD4B100D83D06 /* Products */;
+					ProjectRef = 65229FB7147AD4B100D83D06 /* JFFScheduler.xcodeproj */;
+				},
+				{
+					ProductGroup = 65229FAF147AD4AA00D83D06 /* Products */;
+					ProjectRef = 65229FAE147AD4AA00D83D06 /* JFFUtils.xcodeproj */;
+				},
+				{
+					ProductGroup = 65229FDA147AD52D00D83D06 /* Products */;
+					ProjectRef = 65229FD9147AD52D00D83D06 /* SBJson.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				65229F93147AD45900D83D06 /* MWSrv */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		65229FAD147AD4A200D83D06 /* libESBlockRuntime.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libESBlockRuntime.a;
+			remoteRef = 65229FAC147AD4A200D83D06 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		65229FB6147AD4AA00D83D06 /* libJFFUtils.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libJFFUtils.a;
+			remoteRef = 65229FB5147AD4AA00D83D06 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		65229FBF147AD4B100D83D06 /* libJFFScheduler.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libJFFScheduler.a;
+			remoteRef = 65229FBE147AD4B100D83D06 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		65229FC8147AD4B500D83D06 /* libJFFNetwork.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libJFFNetwork.a;
+			remoteRef = 65229FC7147AD4B500D83D06 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		65229FD2147AD4BC00D83D06 /* libJFFAsyncOperations.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libJFFAsyncOperations.a;
+			remoteRef = 65229FD1147AD4BC00D83D06 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		65229FE4147AD52D00D83D06 /* SBJson.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SBJson.framework;
+			remoteRef = 65229FE3147AD52D00D83D06 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		65229FE6147AD52D00D83D06 /* SBJsonTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SBJsonTests.octest;
+			remoteRef = 65229FE5147AD52D00D83D06 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		65229FE8147AD52D00D83D06 /* libsbjson-ios.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libsbjson-ios.a";
+			remoteRef = 65229FE7147AD52D00D83D06 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		65229FEA147AD52D00D83D06 /* sbjson-iosTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "sbjson-iosTests.octest";
+			remoteRef = 65229FE9147AD52D00D83D06 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXSourcesBuildPhase section */
+		65229F90147AD45900D83D06 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		65229FEC147AD54800D83D06 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = JFFUtils;
+			targetProxy = 65229FEB147AD54800D83D06 /* PBXContainerItemProxy */;
+		};
+		65229FEE147AD54800D83D06 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "sbjson-ios";
+			targetProxy = 65229FED147AD54800D83D06 /* PBXContainerItemProxy */;
+		};
+		65229FF0147AD54800D83D06 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = JFFScheduler;
+			targetProxy = 65229FEF147AD54800D83D06 /* PBXContainerItemProxy */;
+		};
+		65229FF2147AD54800D83D06 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = JFFAsyncOperations;
+			targetProxy = 65229FF1147AD54800D83D06 /* PBXContainerItemProxy */;
+		};
+		65229FF4147AD54800D83D06 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = JFFNetwork;
+			targetProxy = 65229FF3147AD54800D83D06 /* PBXContainerItemProxy */;
+		};
+		65229FF6147AD54800D83D06 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ESBlockRuntime;
+			targetProxy = 65229FF5147AD54800D83D06 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		65229F9F147AD45900D83D06 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		65229FA0147AD45900D83D06 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		65229FA2147AD45900D83D06 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/MWSrv.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MWSrv/MWSrv-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		65229FA3147AD45900D83D06 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/MWSrv.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MWSrv/MWSrv-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		65229F8E147AD45800D83D06 /* Build configuration list for PBXProject "MWSrv" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65229F9F147AD45900D83D06 /* Debug */,
+				65229FA0147AD45900D83D06 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		65229FA1147AD45900D83D06 /* Build configuration list for PBXNativeTarget "MWSrv" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				65229FA2147AD45900D83D06 /* Debug */,
+				65229FA3147AD45900D83D06 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 65229F8B147AD45800D83D06 /* Project object */;
+}
