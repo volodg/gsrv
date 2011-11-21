@@ -14,7 +14,8 @@
 		65229FFA147AD55300D83D06 /* libJFFScheduler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65229FBF147AD4B100D83D06 /* libJFFScheduler.a */; };
 		65229FFB147AD55300D83D06 /* libJFFUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65229FB6147AD4AA00D83D06 /* libJFFUtils.a */; };
 		65229FFC147AD55300D83D06 /* libsbjson-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65229FE8147AD52D00D83D06 /* libsbjson-ios.a */; };
-		65229FFD147AD55300D83D06 /* SBJson.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65229FE4147AD52D00D83D06 /* SBJson.framework */; };
+		6522A059147AD6D200D83D06 /* TestTest.h in Headers */ = {isa = PBXBuildFile; fileRef = 6522A057147AD6D200D83D06 /* TestTest.h */; };
+		6522A05A147AD6D200D83D06 /* TestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6522A058147AD6D200D83D06 /* TestTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,6 +136,8 @@
 		65229FC0147AD4B500D83D06 /* JFFNetwork.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JFFNetwork.xcodeproj; path = "../../lib-third-party/JFFLibrary/lib/JFFNetwork/JFFNetwork.xcodeproj"; sourceTree = "<group>"; };
 		65229FC9147AD4BB00D83D06 /* JFFAsyncOperations.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JFFAsyncOperations.xcodeproj; path = "../../lib-third-party/JFFLibrary/lib/JFFAsyncOperations/JFFAsyncOperations.xcodeproj"; sourceTree = "<group>"; };
 		65229FD9147AD52D00D83D06 /* SBJson.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SBJson.xcodeproj; path = "../../lib-third-party/json-framework/SBJson.xcodeproj"; sourceTree = "<group>"; };
+		6522A057147AD6D200D83D06 /* TestTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestTest.h; sourceTree = "<group>"; };
+		6522A058147AD6D200D83D06 /* TestTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestTest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,7 +151,6 @@
 				65229FFA147AD55300D83D06 /* libJFFScheduler.a in Frameworks */,
 				65229FFB147AD55300D83D06 /* libJFFUtils.a in Frameworks */,
 				65229FFC147AD55300D83D06 /* libsbjson-ios.a in Frameworks */,
-				65229FFD147AD55300D83D06 /* SBJson.framework in Frameworks */,
 				65229F98147AD45900D83D06 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -186,6 +188,8 @@
 			isa = PBXGroup;
 			children = (
 				65229F9A147AD45900D83D06 /* Supporting Files */,
+				6522A057147AD6D200D83D06 /* TestTest.h */,
+				6522A058147AD6D200D83D06 /* TestTest.m */,
 			);
 			path = MWSrv;
 			sourceTree = "<group>";
@@ -269,6 +273,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6522A059147AD6D200D83D06 /* TestTest.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,6 +425,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6522A05A147AD6D200D83D06 /* TestTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,6 +548,7 @@
 				65229FA3147AD45900D83D06 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
