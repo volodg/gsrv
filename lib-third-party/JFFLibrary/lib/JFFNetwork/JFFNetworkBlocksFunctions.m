@@ -106,7 +106,7 @@ JFFAsyncOperation chunkedURLResponseLoader(
    , NSData* post_data_
    , NSDictionary* headers_ )
 {
-   return genericChunkedURLResponseLoader( url_,post_data_, headers_, NO, nil );
+   return genericChunkedURLResponseLoader( url_, post_data_, headers_, NO, nil );
 }
 
 JFFAsyncOperation dataURLResponseLoader( 
@@ -122,7 +122,7 @@ JFFAsyncOperation liveChunkedURLResponseLoader(
    , NSData* post_data_
    , NSDictionary* headers_ )
 {
-   return genericChunkedURLResponseLoader( url_,post_data_, headers_, YES, nil );
+   return genericChunkedURLResponseLoader( url_, post_data_, headers_, YES, nil );
 }
 
 JFFAsyncOperation liveDataURLResponseLoader(
@@ -130,5 +130,5 @@ JFFAsyncOperation liveDataURLResponseLoader(
    , NSData* post_data_
    , NSDictionary* headers_ )
 {
-   return genericDataURLResponseLoader( url_,post_data_, headers_, YES, nil );
+   return genericDataURLResponseLoader( url_, post_data_, headers_, YES, nil );
 }
