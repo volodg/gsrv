@@ -14,8 +14,12 @@
 		65229FFA147AD55300D83D06 /* libJFFScheduler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65229FBF147AD4B100D83D06 /* libJFFScheduler.a */; };
 		65229FFB147AD55300D83D06 /* libJFFUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65229FB6147AD4AA00D83D06 /* libJFFUtils.a */; };
 		65229FFC147AD55300D83D06 /* libsbjson-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65229FE8147AD52D00D83D06 /* libsbjson-ios.a */; };
-		6522A059147AD6D200D83D06 /* TestTest.h in Headers */ = {isa = PBXBuildFile; fileRef = 6522A057147AD6D200D83D06 /* TestTest.h */; };
-		6522A05A147AD6D200D83D06 /* TestTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6522A058147AD6D200D83D06 /* TestTest.m */; };
+		6522A062147AECFE00D83D06 /* MWSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 6522A060147AECFE00D83D06 /* MWSession.h */; };
+		6522A063147AECFE00D83D06 /* MWSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 6522A061147AECFE00D83D06 /* MWSession.m */; };
+		6522A066147AEE0800D83D06 /* MWApi.h in Headers */ = {isa = PBXBuildFile; fileRef = 6522A064147AEE0800D83D06 /* MWApi.h */; };
+		6522A067147AEE0800D83D06 /* MWApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 6522A065147AEE0800D83D06 /* MWApi.m */; };
+		6522A06B147AEF2C00D83D06 /* NSString+RandomString.h in Headers */ = {isa = PBXBuildFile; fileRef = 6522A069147AEF2C00D83D06 /* NSString+RandomString.h */; };
+		6522A06C147AEF2C00D83D06 /* NSString+RandomString.m in Sources */ = {isa = PBXBuildFile; fileRef = 6522A06A147AEF2C00D83D06 /* NSString+RandomString.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,8 +140,12 @@
 		65229FC0147AD4B500D83D06 /* JFFNetwork.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JFFNetwork.xcodeproj; path = "../../lib-third-party/JFFLibrary/lib/JFFNetwork/JFFNetwork.xcodeproj"; sourceTree = "<group>"; };
 		65229FC9147AD4BB00D83D06 /* JFFAsyncOperations.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JFFAsyncOperations.xcodeproj; path = "../../lib-third-party/JFFLibrary/lib/JFFAsyncOperations/JFFAsyncOperations.xcodeproj"; sourceTree = "<group>"; };
 		65229FD9147AD52D00D83D06 /* SBJson.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SBJson.xcodeproj; path = "../../lib-third-party/json-framework/SBJson.xcodeproj"; sourceTree = "<group>"; };
-		6522A057147AD6D200D83D06 /* TestTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestTest.h; sourceTree = "<group>"; };
-		6522A058147AD6D200D83D06 /* TestTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestTest.m; sourceTree = "<group>"; };
+		6522A060147AECFE00D83D06 /* MWSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWSession.h; sourceTree = "<group>"; };
+		6522A061147AECFE00D83D06 /* MWSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWSession.m; sourceTree = "<group>"; };
+		6522A064147AEE0800D83D06 /* MWApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWApi.h; sourceTree = "<group>"; };
+		6522A065147AEE0800D83D06 /* MWApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWApi.m; sourceTree = "<group>"; };
+		6522A069147AEF2C00D83D06 /* NSString+RandomString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RandomString.h"; sourceTree = "<group>"; };
+		6522A06A147AEF2C00D83D06 /* NSString+RandomString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+RandomString.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,9 +195,12 @@
 		65229F99147AD45900D83D06 /* MWSrv */ = {
 			isa = PBXGroup;
 			children = (
+				6522A068147AEF1200D83D06 /* Extensions */,
+				6522A064147AEE0800D83D06 /* MWApi.h */,
+				6522A065147AEE0800D83D06 /* MWApi.m */,
+				6522A060147AECFE00D83D06 /* MWSession.h */,
+				6522A061147AECFE00D83D06 /* MWSession.m */,
 				65229F9A147AD45900D83D06 /* Supporting Files */,
-				6522A057147AD6D200D83D06 /* TestTest.h */,
-				6522A058147AD6D200D83D06 /* TestTest.m */,
 			);
 			path = MWSrv;
 			sourceTree = "<group>";
@@ -266,6 +277,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		6522A068147AEF1200D83D06 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				6522A069147AEF2C00D83D06 /* NSString+RandomString.h */,
+				6522A06A147AEF2C00D83D06 /* NSString+RandomString.m */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -273,7 +293,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6522A059147AD6D200D83D06 /* TestTest.h in Headers */,
+				6522A062147AECFE00D83D06 /* MWSession.h in Headers */,
+				6522A066147AEE0800D83D06 /* MWApi.h in Headers */,
+				6522A06B147AEF2C00D83D06 /* NSString+RandomString.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,7 +447,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6522A05A147AD6D200D83D06 /* TestTest.m in Sources */,
+				6522A063147AECFE00D83D06 /* MWSession.m in Sources */,
+				6522A067147AEE0800D83D06 /* MWApi.m in Sources */,
+				6522A06C147AEF2C00D83D06 /* NSString+RandomString.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
