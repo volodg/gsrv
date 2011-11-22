@@ -20,6 +20,7 @@
 		6522A067147AEE0800D83D06 /* MWApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 6522A065147AEE0800D83D06 /* MWApi.m */; };
 		6522A06B147AEF2C00D83D06 /* NSString+RandomString.h in Headers */ = {isa = PBXBuildFile; fileRef = 6522A069147AEF2C00D83D06 /* NSString+RandomString.h */; };
 		6522A06C147AEF2C00D83D06 /* NSString+RandomString.m in Sources */ = {isa = PBXBuildFile; fileRef = 6522A06A147AEF2C00D83D06 /* NSString+RandomString.m */; };
+		6522A07C147C570400D83D06 /* libCocoaAMF.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6522A079147C56D100D83D06 /* libCocoaAMF.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,6 +129,27 @@
 			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = ESBlockRuntime;
 		};
+		6522A076147C56D100D83D06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6522A06D147C56D000D83D06 /* CocoaAMF-iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1D6058910D05DD3D006BFB54;
+			remoteInfo = "CocoaAMF-iPhone";
+		};
+		6522A078147C56D100D83D06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6522A06D147C56D000D83D06 /* CocoaAMF-iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2CEB28391203818500887DED;
+			remoteInfo = "CocoaAMF (Device 4.0)";
+		};
+		6522A07A147C56FD00D83D06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6522A06D147C56D000D83D06 /* CocoaAMF-iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 2CEB28381203818500887DED;
+			remoteInfo = "CocoaAMF (Device 4.0)";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -146,6 +168,7 @@
 		6522A065147AEE0800D83D06 /* MWApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWApi.m; sourceTree = "<group>"; };
 		6522A069147AEF2C00D83D06 /* NSString+RandomString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RandomString.h"; sourceTree = "<group>"; };
 		6522A06A147AEF2C00D83D06 /* NSString+RandomString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+RandomString.m"; sourceTree = "<group>"; };
+		6522A06D147C56D000D83D06 /* CocoaAMF-iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "CocoaAMF-iPhone.xcodeproj"; path = "../../lib-third-party/cocoa-amf/CocoaAMF-iPhone.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +176,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6522A07C147C570400D83D06 /* libCocoaAMF.a in Frameworks */,
 				65229FF7147AD55300D83D06 /* libESBlockRuntime.a in Frameworks */,
 				65229FF8147AD55300D83D06 /* libJFFAsyncOperations.a in Frameworks */,
 				65229FF9147AD55300D83D06 /* libJFFNetwork.a in Frameworks */,
@@ -216,6 +240,7 @@
 		65229FA4147AD48900D83D06 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				6522A06D147C56D000D83D06 /* CocoaAMF-iPhone.xcodeproj */,
 				65229FD9147AD52D00D83D06 /* SBJson.xcodeproj */,
 				65229FC9147AD4BB00D83D06 /* JFFAsyncOperations.xcodeproj */,
 				65229FC0147AD4B500D83D06 /* JFFNetwork.xcodeproj */,
@@ -286,6 +311,15 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		6522A06E147C56D000D83D06 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6522A077147C56D100D83D06 /* CocoaAMFiPhone.app */,
+				6522A079147C56D100D83D06 /* libCocoaAMF.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -313,6 +347,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				6522A07B147C56FD00D83D06 /* PBXTargetDependency */,
 				65229FEC147AD54800D83D06 /* PBXTargetDependency */,
 				65229FEE147AD54800D83D06 /* PBXTargetDependency */,
 				65229FF0147AD54800D83D06 /* PBXTargetDependency */,
@@ -344,6 +379,10 @@
 			productRefGroup = 65229F95147AD45900D83D06 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
+				{
+					ProductGroup = 6522A06E147C56D000D83D06 /* Products */;
+					ProjectRef = 6522A06D147C56D000D83D06 /* CocoaAMF-iPhone.xcodeproj */;
+				},
 				{
 					ProductGroup = 65229FA6147AD4A100D83D06 /* Products */;
 					ProjectRef = 65229FA5147AD4A100D83D06 /* ESBlockRuntime.xcodeproj */;
@@ -440,6 +479,20 @@
 			remoteRef = 65229FE9147AD52D00D83D06 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		6522A077147C56D100D83D06 /* CocoaAMFiPhone.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = CocoaAMFiPhone.app;
+			remoteRef = 6522A076147C56D100D83D06 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		6522A079147C56D100D83D06 /* libCocoaAMF.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCocoaAMF.a;
+			remoteRef = 6522A078147C56D100D83D06 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -486,6 +539,11 @@
 			name = ESBlockRuntime;
 			targetProxy = 65229FF5147AD54800D83D06 /* PBXContainerItemProxy */;
 		};
+		6522A07B147C56FD00D83D06 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "CocoaAMF (Device 4.0)";
+			targetProxy = 6522A07A147C56FD00D83D06 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -507,7 +565,10 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "../../lib-third-party/JFFLibrary/lib";
+				HEADER_SEARCH_PATHS = (
+					"../../lib-third-party/cocoa-amf/CocoaAMF",
+					"../../lib-third-party/JFFLibrary/lib",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 			};
@@ -524,7 +585,10 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "../../lib-third-party/JFFLibrary/lib";
+				HEADER_SEARCH_PATHS = (
+					"../../lib-third-party/cocoa-amf/CocoaAMF",
+					"../../lib-third-party/JFFLibrary/lib",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

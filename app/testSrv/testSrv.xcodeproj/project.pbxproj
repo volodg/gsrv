@@ -278,6 +278,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
+					"../../lib-third-party/cocoa-amf/CocoaAMF",
 					../../lib/MWSrv,
 					"../../lib-third-party/JFFLibrary/lib",
 				);
@@ -300,6 +301,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
+					"../../lib-third-party/cocoa-amf/CocoaAMF",
 					../../lib/MWSrv,
 					"../../lib-third-party/JFFLibrary/lib",
 				);
@@ -352,6 +354,7 @@
 				6522A02A147AD62F00D83D06 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

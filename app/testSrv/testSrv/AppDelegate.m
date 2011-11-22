@@ -12,6 +12,8 @@
 
 #import <MWSrv/MWSession.h>
 
+#import <AMFUnarchiver.h>
+
 @implementation AppDelegate
 
 @synthesize window = _window;
@@ -30,6 +32,15 @@
 
    [ session_ createGameWithName: @"NewGame" ]( nil, nil, ^( id result_, NSError* error_ )
    {
+      if ( result_ )
+      {
+         NSData* data_ = result_;
+         NSData* new_data_ = [ NSData dataWithBytes: data_.bytes + 4
+                                             length: data_.length - 4 ];
+         id encoded_data_ = [ AMFUnarchiver unarchiveObjectWithData: new_data_
+                                                           encoding: kAMF3Encoding ];
+         NSLog( @"encoded_data_: %@", encoded_data_ );
+      }
       NSLog( @"result: %@ error: %@", result_, error_ );
    } );
 }
