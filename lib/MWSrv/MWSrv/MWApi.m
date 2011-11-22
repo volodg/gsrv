@@ -75,7 +75,7 @@ static NSString* const host_format_ = @"http://test.bwf.org.ua:3333/%@";
          }
          else
          {
-            NSString* error_format_ = @"Invalid response code: %d";
+            NSString* error_format_ = @"Invalid auth response code: %d";
             NSString* error_description_ = [ NSString stringWithFormat:
                                             error_format_
                                             , response_.statusCode ];
@@ -117,7 +117,7 @@ static NSString* const host_format_ = @"http://test.bwf.org.ua:3333/%@";
          }
          else
          {
-            NSString* error_format_ = @"Invalid response code: %d";
+            NSString* error_format_ = @"Invalid createGame response code: %d";
             NSString* error_description_ = [ NSString stringWithFormat:
                                             error_format_
                                             , response_.statusCode ];
@@ -157,7 +157,7 @@ static NSString* const host_format_ = @"http://test.bwf.org.ua:3333/%@";
          }
          else
          {
-            NSString* error_format_ = @"Invalid response code: %d";
+            NSString* error_format_ = @"Invalid getListOfGames response code: %d";
             NSString* error_description_ = [ NSString stringWithFormat:
                                             error_format_
                                             , response_.statusCode ];
@@ -171,6 +171,63 @@ static NSString* const host_format_ = @"http://test.bwf.org.ua:3333/%@";
    };
 
    return asyncOperationWithFinishHookBlock( loader_, finish_callback_hook_ );
+}
+
+-(JFFAsyncOperation)getSrvStateWithSid:( NSString* )sid_
+{
+   return [ [ ^( JFFAsyncOperationProgressHandler progress_callback_
+                , JFFCancelAsyncOperationHandler cancel_callback_
+                , JFFDidFinishAsyncOperationHandler done_callback_ )
+   {
+      //NSURL* url_ = [ NSURL URLWithString: @"http://test.bwf.org.ua:3333" ];
+      NSURL* url_ = [ NSURL URLWithSid: sid_ ];
+
+      static char data_[1] = { 0 };
+      NSData* post_data_ = [ NSData dataWithBytes: data_ length: 1 ];
+
+      NSMutableData* response_data_ = [ NSMutableData data ];
+
+      JFFAsyncOperation loader_ = chunkedURLResponseLoader( url_
+                                                           , post_data_
+                                                           , nil );
+
+      JFFDidFinishAsyncOperationHook finish_callback_hook_ = ^void( id result_
+                                                                   , NSError* error_
+                                                                   , JFFDidFinishAsyncOperationHandler done_callback_ )
+      {
+         id< JNUrlResponse > response_ = result_;
+         if ( response_ )
+         {
+            if ( 200 == response_.statusCode )
+            {
+               done_callback_( response_data_, nil );
+            }
+            else
+            {
+               NSString* error_format_ = @"Invalid getSrvState response code: %d";
+               NSString* error_description_ = [ NSString stringWithFormat:
+                                               error_format_
+                                               , response_.statusCode ];
+               done_callback_( nil, [ JFFError errorWithDescription: error_description_ ] );
+            }
+         }
+         else
+         {
+            done_callback_( nil, error_ );
+         }
+      };
+
+      progress_callback_ = [ [ progress_callback_ copy ] autorelease ];
+      progress_callback_ = ^( id progress_data_ )
+      {
+         [ response_data_ appendData: progress_data_ ];
+      };
+
+      loader_ = asyncOperationWithFinishHookBlock( loader_, finish_callback_hook_ );
+      return loader_( progress_callback_
+                     , cancel_callback_
+                     , done_callback_  );
+   } copy ] autorelease ];
 }
 
 @end

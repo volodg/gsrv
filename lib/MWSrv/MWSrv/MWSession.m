@@ -53,12 +53,35 @@ static MWSession* instance_;
    return instance_;
 }
 
+-(BOOL)loginDateExpared
+{
+   NSTimeInterval interval_ = [ self.lastLoginDate timeIntervalSinceNow ];
+   return interval_ < -4.8 * 60;
+}
+
 -(JFFAsyncOperation)authLoader
 {
    //GTODO 5 min and 'sid cache'
-   JFFAsyncOperation loader_ = [ self.api authWithLogin: self.login ];
-   return [ self asyncOperationForPropertyWithName: @"sid"
-                                    asyncOperation: loader_ ];
+   return [ [ ^( JFFAsyncOperationProgressHandler progress_callback_
+                , JFFCancelAsyncOperationHandler cancel_callback_
+                , JFFDidFinishAsyncOperationHandler done_callback_ )
+   {
+      JFFAsyncOperation loader_ = [ self.api authWithLogin: self.login ];
+
+      JFFDidFinishAsyncOperationHandler did_finish_operation_ = ^( id result_, NSError* error_ )
+      {
+         self.lastLoginDate = [ NSDate date ];
+      };
+      loader_ = [ self asyncOperationForPropertyWithName: @"sid"
+                                          asyncOperation: loader_
+                                  didFinishLoadDataBlock: did_finish_operation_ ];
+      if ( self.lastLoginDate == nil ||
+          [ self loginDateExpared ] )
+      {
+         self.sid = nil;
+      }
+      return loader_( progress_callback_, cancel_callback_, done_callback_ );
+   } copy ] autorelease ];
 }
 
 -(JFFAsyncOperation)privateGetListOfGames
@@ -71,6 +94,21 @@ static MWSession* instance_;
       return [ self.api getListOfGamesForSid: self.sid ]( progress_callback_
                                                          , cancel_callback_
                                                          , done_callback_ );
+   };
+
+   return sequenceOfAsyncOperations( auth_loader_, cmd_loader_, nil );
+}
+
+-(JFFAsyncOperation)getSrvState
+{
+   JFFAsyncOperation auth_loader_ = [ self authLoader ];
+   JFFAsyncOperation cmd_loader_ = ^( JFFAsyncOperationProgressHandler progress_callback_
+                                     , JFFCancelAsyncOperationHandler cancel_callback_
+                                     , JFFDidFinishAsyncOperationHandler done_callback_ )
+   {
+      return [ self.api getSrvStateWithSid: self.sid ]( progress_callback_
+                                                       , cancel_callback_
+                                                       , done_callback_ );
    };
 
    return sequenceOfAsyncOperations( auth_loader_, cmd_loader_, nil );
@@ -98,6 +136,7 @@ static MWSession* instance_;
    return sequenceOfAsyncOperations( auth_loader_
                                     , cmd_loader_
                                     , [ self privateGetListOfGames ]
+                                    , [ self getSrvState ]
                                     , nil );
 }
 

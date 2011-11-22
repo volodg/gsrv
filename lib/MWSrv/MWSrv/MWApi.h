@@ -11,4 +11,6 @@
 
 -(JFFAsyncOperation)getListOfGamesForSid:( NSString* )sid_;
 
+-(JFFAsyncOperation)getSrvStateWithSid:( NSString* )sid_;
+
 @end
