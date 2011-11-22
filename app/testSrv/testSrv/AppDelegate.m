@@ -28,7 +28,7 @@
 {
    MWSession* session_ = [ MWSession sessionWithLogin: @"testUser" ];
 
-   [ session_ authLoader ]( nil, nil, ^( id result_, NSError* error_ )
+   [ session_ createGameWithName: @"NewGame" ]( nil, nil, ^( id result_, NSError* error_ )
    {
       NSLog( @"result: %@ error: %@", result_, error_ );
    } );

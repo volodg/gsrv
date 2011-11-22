@@ -4,6 +4,11 @@
 
 @interface MWApi : NSObject
 
--(JFFAsyncOperation)authLoaderWithLogin:( NSString* )login_;
+-(JFFAsyncOperation)authWithLogin:( NSString* )login_;
+
+-(JFFAsyncOperation)createGameWithName:( NSString* )name_
+                                   sid:( NSString* )sid_;
+
+-(JFFAsyncOperation)getListOfGamesForSid:( NSString* )sid_;
 
 @end

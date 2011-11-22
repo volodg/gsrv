@@ -7,6 +7,8 @@
 +(id)currentSession;
 +(id)sessionWithLogin:( NSString* )login_;
 
--(JFFAsyncOperation)authLoader;
+-(JFFAsyncOperation)createGameWithName:( NSString* )name_;
+
+-(JFFAsyncOperation)getListOfGames;
 
 @end
