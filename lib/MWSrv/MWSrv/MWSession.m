@@ -61,7 +61,6 @@ static MWSession* instance_;
 
 -(JFFAsyncOperation)authLoader
 {
-   //GTODO 5 min and 'sid cache'
    return [ [ ^( JFFAsyncOperationProgressHandler progress_callback_
                 , JFFCancelAsyncOperationHandler cancel_callback_
                 , JFFDidFinishAsyncOperationHandler done_callback_ )

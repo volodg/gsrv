@@ -221,6 +221,8 @@ static NSString* const host_format_ = @"http://test.bwf.org.ua:3333/%@";
       progress_callback_ = ^( id progress_data_ )
       {
          [ response_data_ appendData: progress_data_ ];
+         if ( progress_callback_ )
+            progress_callback_( progress_data_ );
       };
 
       loader_ = asyncOperationWithFinishHookBlock( loader_, finish_callback_hook_ );

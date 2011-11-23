@@ -26,6 +26,25 @@
     [super dealloc];
 }
 
+-(NSArray*)splitResponseData:( NSData* )data_
+{
+   NSMutableArray* result_ = [ NSMutableArray new ];
+   for ( NSUInteger index_ = 0; index_ < data_.length; )
+   {
+      NSData* size_data_ = [ data_ subdataWithRange: NSMakeRange( index_, sizeof( int ) ) ];
+      int size_ = CFSwapInt32BigToHost(*(int*)([size_data_ bytes]));
+
+      {
+         NSRange chunkRange_ = NSMakeRange( index_ + sizeof( int ), size_ );
+         NSData* chunk_ = [ data_ subdataWithRange: chunkRange_ ];
+         [ result_ addObject: chunk_ ];
+      }
+
+      index_ += size_ + sizeof( int );
+   }
+   return [ result_ autorelease ];
+}
+
 -(void)test
 {
    MWSession* session_ = [ MWSession sessionWithLogin: @"testUser" ];
@@ -35,11 +54,14 @@
       if ( result_ )
       {
          NSData* data_ = result_;
-         NSData* new_data_ = [ NSData dataWithBytes: data_.bytes + 4
-                                             length: data_.length - 4 ];
-         id encoded_data_ = [ AMFUnarchiver unarchiveObjectWithData: new_data_
-                                                           encoding: kAMF3Encoding ];
-         NSLog( @"encoded_data_: %@", encoded_data_ );
+         NSArray* chunks_ = [ self splitResponseData: data_ ];
+
+         for ( NSData* chunk_data_ in chunks_ )
+         {
+            id encoded_data_ = [ AMFUnarchiver unarchiveObjectWithData: chunk_data_
+                                                              encoding: kAMF3Encoding ];
+            NSLog( @"encoded_data_: %@", encoded_data_ );
+         }
       }
       NSLog( @"result: %@ error: %@", result_, error_ );
    } );
