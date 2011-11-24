@@ -24,3 +24,13 @@ typedef id< JMonad > (^MonadVoidOperation)( void );
 +(id)maybeMonadWithValue:( id )value_;
 
 @end
+
+@interface JEitherMonad : NSObject < JMonad >
+
+@property ( nonatomic, retain, readonly ) NSError* error;
+@property ( nonatomic, retain, readonly ) id value;
+
++(id)eitherMonadWithError:( NSError* )error_
+                    value:( id )value_;
+
+@end

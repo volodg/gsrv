@@ -2,10 +2,27 @@
 
 #import "NSString+RandomString.h"
 
+#import "JMonad.h"
+
 #import <AMFUnarchiver.h>
 
 static NSUInteger sidLength_ = 32;
 static NSString* const host_format_ = @"http://test.bwf.org.ua:3333/%@";
+
+@interface JEitherMonad (MWApi)
+@end
+
+@implementation JEitherMonad (MWApi)
+
+-(void)notifyDoneBlock:( JFFDidFinishAsyncOperationHandler )block_
+{
+   if ( block_ )
+   {
+      block_( self.value, self.error );
+   }
+}
+
+@end
 
 @interface NSURL (MWApi)
 
@@ -51,6 +68,23 @@ static NSString* const host_format_ = @"http://test.bwf.org.ua:3333/%@";
    return _headers;
 }
 
+-(id< JMonad >)monadForResponse:( id< JNUrlResponse > )response_
+                          error:( NSError* )error_
+{
+   id value_ = [ NSNull null ];
+   if ( error_ == nil && 200 != response_.statusCode )
+   {
+      value_ = nil;
+      NSString* error_format_ = @"Invalid auth response code: %d";
+      NSString* error_description_ = [ NSString stringWithFormat:
+                                      error_format_
+                                      , response_.statusCode ];
+      error_ = [ JFFError errorWithDescription: error_description_ ];
+   }
+   return [ JEitherMonad eitherMonadWithError: error_
+                                        value: value_ ];
+}
+
 -(JFFAsyncOperation)authWithLogin:( NSString* )login_
 {
    NSString* sid_ = [ NSString randomStringWithLength: sidLength_ ];
@@ -68,26 +102,13 @@ static NSString* const host_format_ = @"http://test.bwf.org.ua:3333/%@";
                                                                 , NSError* error_
                                                                 , JFFDidFinishAsyncOperationHandler done_callback_ )
    {
-      id< JNUrlResponse > response_ = result_;
-      if ( response_ )
-      {
-         if ( 200 == response_.statusCode )
-         {
-            done_callback_( sid_, nil );
-         }
-         else
-         {
-            NSString* error_format_ = @"Invalid auth response code: %d";
-            NSString* error_description_ = [ NSString stringWithFormat:
-                                            error_format_
-                                            , response_.statusCode ];
-            done_callback_( nil, [ JFFError errorWithDescription: error_description_ ] );
-         }
-      }
-      else
-      {
-         done_callback_( nil, error_ );
-      }
+      JEitherMonad* monad_ = [ [ self monadForResponse: result_ error: error_ ]
+      bindVoidOperation: ^id<JMonad>{
+         return [ JEitherMonad eitherMonadWithError: nil
+                                              value: sid_ ];
+      } ];
+
+      [ monad_ notifyDoneBlock: done_callback_ ];
    };
 
    return asyncOperationWithFinishHookBlock( loader_, finish_callback_hook_ );
@@ -108,26 +129,8 @@ static NSString* const host_format_ = @"http://test.bwf.org.ua:3333/%@";
                                                                 , NSError* error_
                                                                 , JFFDidFinishAsyncOperationHandler done_callback_ )
    {
-      id< JNUrlResponse > response_ = result_;
-      if ( response_ )
-      {
-         if ( 200 == response_.statusCode )
-         {
-            done_callback_( [ NSNull null ], nil );
-         }
-         else
-         {
-            NSString* error_format_ = @"Invalid playBattleground response code: %d";
-            NSString* error_description_ = [ NSString stringWithFormat:
-                                            error_format_
-                                            , response_.statusCode ];
-            done_callback_( nil, [ JFFError errorWithDescription: error_description_ ] );
-         }
-      }
-      else
-      {
-         done_callback_( nil, error_ );
-      }
+      JEitherMonad* monad_ = [ self monadForResponse: result_ error: error_ ];
+      [ monad_ notifyDoneBlock: done_callback_ ];
    };
 
    return asyncOperationWithFinishHookBlock( loader_, finish_callback_hook_ );
@@ -174,35 +177,20 @@ static NSString* const host_format_ = @"http://test.bwf.org.ua:3333/%@";
                                                                    , NSError* error_
                                                                    , JFFDidFinishAsyncOperationHandler done_callback_ )
       {
-         id< JNUrlResponse > response_ = result_;
-         if ( response_ )
+         JEitherMonad* monad_ = [ [ self monadForResponse: result_ error: error_ ]
+         bindOperation: ^id<JMonad>( id value_a_ )
          {
-            if ( 200 == response_.statusCode )
+            id chunks_ = [ self splitResponseData: response_data_ ];
+            id value_ = [ chunks_ map: ^id( id chunk_ )
             {
-               NSData* data_ = response_data_;
-               NSArray* chunks_ = [ self splitResponseData: data_ ];
+               return [ AMFUnarchiver unarchiveObjectWithData: chunk_
+                                                     encoding: kAMF3Encoding ];
+            } ];
+            return [ JEitherMonad eitherMonadWithError: nil
+                                                 value: value_ ];
+         } ];
 
-               id new_result_ = [ chunks_ map: ^id( id chunk_ )
-               {
-                  return [ AMFUnarchiver unarchiveObjectWithData: chunk_
-                                                        encoding: kAMF3Encoding ];
-               } ];
-
-               done_callback_( new_result_, nil );
-            }
-            else
-            {
-               NSString* error_format_ = @"Invalid getSrvState response code: %d";
-               NSString* error_description_ = [ NSString stringWithFormat:
-                                               error_format_
-                                               , response_.statusCode ];
-               done_callback_( nil, [ JFFError errorWithDescription: error_description_ ] );
-            }
-         }
-         else
-         {
-            done_callback_( nil, error_ );
-         }
+         [ monad_ notifyDoneBlock: done_callback_ ];
       };
 
       progress_callback_ = [ [ progress_callback_ copy ] autorelease ];
