@@ -2,13 +2,14 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void (^MWServerCommandsHandler)( NSArray* commands_ );
+
 @interface MWSession : NSObject
 
-+(id)currentSession;
+@property ( nonatomic, copy ) MWServerCommandsHandler handler;
+
 +(id)sessionWithLogin:( NSString* )login_;
 
--(JFFAsyncOperation)createGameWithName:( NSString* )name_;
-
--(JFFAsyncOperation)getListOfGames;
+-(JFFAsyncOperation)playBattleground;
 
 @end

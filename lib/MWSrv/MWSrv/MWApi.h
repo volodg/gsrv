@@ -6,10 +6,7 @@
 
 -(JFFAsyncOperation)authWithLogin:( NSString* )login_;
 
--(JFFAsyncOperation)createGameWithName:( NSString* )name_
-                                   sid:( NSString* )sid_;
-
--(JFFAsyncOperation)getListOfGamesForSid:( NSString* )sid_;
+-(JFFAsyncOperation)playBattlegroundForSid:( NSString* )sid_;
 
 -(JFFAsyncOperation)getSrvStateWithSid:( NSString* )sid_;
 

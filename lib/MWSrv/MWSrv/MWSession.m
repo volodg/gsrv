@@ -2,23 +2,30 @@
 
 #import "MWApi.h"
 
-static MWSession* instance_;
-
 @interface MWSession ()
 
 @property ( nonatomic, retain ) NSDate* lastLoginDate;
 @property ( nonatomic, retain ) MWApi* api;
 @property ( nonatomic, retain ) NSString* login;
 @property ( nonatomic, retain ) NSString* sid;
+@property ( nonatomic, retain ) JFFScheduler* scheduler;
+@property ( nonatomic, assign ) BOOL buzy;
+@property ( nonatomic, assign ) BOOL stateMayChanged;
+
+-(void)pingServerState;
 
 @end
 
 @implementation MWSession
 
-@synthesize lastLoginDate = _lastLoginDate;
-@synthesize api           = _api;
-@synthesize login         = _login;
-@synthesize sid           = _sid;
+@synthesize lastLoginDate   = _lastLoginDate;
+@synthesize api             = _api;
+@synthesize login           = _login;
+@synthesize sid             = _sid;
+@synthesize handler         = _handler;
+@synthesize scheduler       = _scheduler;
+@synthesize buzy            = _buzy;
+@synthesize stateMayChanged = _stateMayChanged;
 
 -(void)dealloc
 {
@@ -35,22 +42,24 @@ static MWSession* instance_;
 
    if ( self )
    {
+      self.login = login_;
       self.api = [ [ MWApi new ] autorelease ];
+
+      self.scheduler = [ [ JFFScheduler new ] autorelease ];
+
+      __unsafe_unretained MWSession* self_ = self;
+      [ self.scheduler addBlock: ^( JFFCancelScheduledBlock cancel_ )
+      {
+         [ self_ pingServerState ];
+      } duration: 3. ];
    }
 
    return self;
 }
 
-+(id)currentSession
-{
-   return instance_;
-}
-
 +(id)sessionWithLogin:( NSString* )login_
 {
-   [ instance_ release ];
-   instance_ = [ [ self alloc ] initWithLogin: login_ ];
-   return instance_;
+   return [ [ [ self alloc ] initWithLogin: login_ ] autorelease ];
 }
 
 -(BOOL)loginDateExpared
@@ -83,22 +92,7 @@ static MWSession* instance_;
    } copy ] autorelease ];
 }
 
--(JFFAsyncOperation)privateGetListOfGames
-{
-   JFFAsyncOperation auth_loader_ = [ self authLoader ];
-   JFFAsyncOperation cmd_loader_ = ^( JFFAsyncOperationProgressHandler progress_callback_
-                                     , JFFCancelAsyncOperationHandler cancel_callback_
-                                     , JFFDidFinishAsyncOperationHandler done_callback_ )
-   {
-      return [ self.api getListOfGamesForSid: self.sid ]( progress_callback_
-                                                         , cancel_callback_
-                                                         , done_callback_ );
-   };
-
-   return sequenceOfAsyncOperations( auth_loader_, cmd_loader_, nil );
-}
-
--(JFFAsyncOperation)getSrvState
+-(JFFAsyncOperation)privateGetSrvState
 {
    JFFAsyncOperation auth_loader_ = [ self authLoader ];
    JFFAsyncOperation cmd_loader_ = ^( JFFAsyncOperationProgressHandler progress_callback_
@@ -113,30 +107,52 @@ static MWSession* instance_;
    return sequenceOfAsyncOperations( auth_loader_, cmd_loader_, nil );
 }
 
--(JFFAsyncOperation)getListOfGames
+-(JFFAsyncOperation)updateStateMayChanged
 {
-   //GTODO put in load balancer
-   return [ self privateGetListOfGames ];
+   return [ [ ^( JFFAsyncOperationProgressHandler progress_callback_
+                , JFFCancelAsyncOperationHandler cancel_callback_
+                , JFFDidFinishAsyncOperationHandler done_callback_ )
+   {
+      self.stateMayChanged = YES;
+      if ( done_callback_ )
+         done_callback_( [ NSNull null ], nil );
+      return JFFEmptyCancelAsyncOperationBlock;
+   } copy ] autorelease ];
 }
 
--(JFFAsyncOperation)createGameWithName:( NSString* )name_
+-(JFFAsyncOperation)playBattleground
 {
    JFFAsyncOperation auth_loader_ = [ self authLoader ];
    JFFAsyncOperation cmd_loader_ = ^( JFFAsyncOperationProgressHandler progress_callback_
                                      , JFFCancelAsyncOperationHandler cancel_callback_
                                      , JFFDidFinishAsyncOperationHandler done_callback_ )
    {
-      return [ self.api createGameWithName: name_ sid: self.sid ]( progress_callback_
-                                                                  , cancel_callback_
-                                                                  , done_callback_ );
+      return [ self.api playBattlegroundForSid: self.sid ]( progress_callback_
+                                                           , cancel_callback_
+                                                           , done_callback_ );
    };
 
    //GTODO put in load balancer
    return sequenceOfAsyncOperations( auth_loader_
                                     , cmd_loader_
-                                    , [ self privateGetListOfGames ]
-                                    , [ self getSrvState ]
+                                    , [ self updateStateMayChanged ]
                                     , nil );
+}
+
+//GTODO put in load balancer
+-(void)pingServerState
+{
+   if ( !self.handler || self.buzy || !self.stateMayChanged )
+      return;
+
+   self.buzy = YES;
+   self.stateMayChanged = NO;
+   [ self privateGetSrvState ]( nil, nil, ^( id result_, NSError* error_ )
+   {
+      self.buzy = NO;
+      if ( result_ && self.handler )
+         self.handler( result_ );
+   } );
 }
 
 @end

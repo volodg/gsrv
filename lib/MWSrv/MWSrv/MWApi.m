@@ -2,6 +2,8 @@
 
 #import "NSString+RandomString.h"
 
+#import <AMFUnarchiver.h>
+
 static NSUInteger sidLength_ = 32;
 static NSString* const host_format_ = @"http://test.bwf.org.ua:3333/%@";
 
@@ -91,53 +93,11 @@ static NSString* const host_format_ = @"http://test.bwf.org.ua:3333/%@";
    return asyncOperationWithFinishHookBlock( loader_, finish_callback_hook_ );
 }
 
--(JFFAsyncOperation)createGameWithName:( NSString* )name_
-                                   sid:( NSString* )sid_
+-(JFFAsyncOperation)playBattlegroundForSid:( NSString* )sid_
 {
    NSURL* url_ = [ NSURL URLWithSid: sid_ ];
 
-   NSString* post_format_ = @"{\"cmd\":\"createGame\",\"name\":\"%@\"}";
-   NSString* post_        = [ NSString stringWithFormat: post_format_, name_ ? name_ : @"" ];
-   NSData*   post_data_   = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
-
-   JFFAsyncOperation loader_ = chunkedURLResponseLoader( url_
-                                                        , post_data_
-                                                        , self.headers );
-
-   JFFDidFinishAsyncOperationHook finish_callback_hook_ = ^void( id result_
-                                                                , NSError* error_
-                                                                , JFFDidFinishAsyncOperationHandler done_callback_ )
-   {
-      id< JNUrlResponse > response_ = result_;
-      if ( response_ )
-      {
-         if ( 200 == response_.statusCode )
-         {
-            done_callback_( [ NSNull null ], nil );
-         }
-         else
-         {
-            NSString* error_format_ = @"Invalid createGame response code: %d";
-            NSString* error_description_ = [ NSString stringWithFormat:
-                                            error_format_
-                                            , response_.statusCode ];
-            done_callback_( nil, [ JFFError errorWithDescription: error_description_ ] );
-         }
-      }
-      else
-      {
-         done_callback_( nil, error_ );
-      }
-   };
-
-   return asyncOperationWithFinishHookBlock( loader_, finish_callback_hook_ );
-}
-
--(JFFAsyncOperation)getListOfGamesForSid:( NSString* )sid_
-{
-   NSURL* url_ = [ NSURL URLWithSid: sid_ ];
-
-   NSString* post_      = @"{\"cmd\":\"getListOfGames\"}";
+   NSString* post_      = @"{\"cmd\":\"playBattleground\"}";
    NSData*   post_data_ = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
 
    JFFAsyncOperation loader_ = chunkedURLResponseLoader( url_
@@ -157,7 +117,7 @@ static NSString* const host_format_ = @"http://test.bwf.org.ua:3333/%@";
          }
          else
          {
-            NSString* error_format_ = @"Invalid getListOfGames response code: %d";
+            NSString* error_format_ = @"Invalid playBattleground response code: %d";
             NSString* error_description_ = [ NSString stringWithFormat:
                                             error_format_
                                             , response_.statusCode ];
@@ -171,6 +131,25 @@ static NSString* const host_format_ = @"http://test.bwf.org.ua:3333/%@";
    };
 
    return asyncOperationWithFinishHookBlock( loader_, finish_callback_hook_ );
+}
+
+-(NSArray*)splitResponseData:( NSData* )data_
+{
+   NSMutableArray* result_ = [ NSMutableArray new ];
+   for ( NSUInteger index_ = 0; index_ < data_.length; )
+   {
+      NSData* size_data_ = [ data_ subdataWithRange: NSMakeRange( index_, sizeof( int ) ) ];
+      int size_ = CFSwapInt32BigToHost(*(int*)([size_data_ bytes]));
+
+      {
+         NSRange chunkRange_ = NSMakeRange( index_ + sizeof( int ), size_ );
+         NSData* chunk_ = [ data_ subdataWithRange: chunkRange_ ];
+         [ result_ addObject: chunk_ ];
+      }
+
+      index_ += size_ + sizeof( int );
+   }
+   return [ result_ autorelease ];
 }
 
 -(JFFAsyncOperation)getSrvStateWithSid:( NSString* )sid_
@@ -200,7 +179,16 @@ static NSString* const host_format_ = @"http://test.bwf.org.ua:3333/%@";
          {
             if ( 200 == response_.statusCode )
             {
-               done_callback_( response_data_, nil );
+               NSData* data_ = response_data_;
+               NSArray* chunks_ = [ self splitResponseData: data_ ];
+
+               id new_result_ = [ chunks_ map: ^id( id chunk_ )
+               {
+                  return [ AMFUnarchiver unarchiveObjectWithData: chunk_
+                                                        encoding: kAMF3Encoding ];
+               } ];
+
+               done_callback_( new_result_, nil );
             }
             else
             {

@@ -12,58 +12,51 @@
 
 #import <MWSrv/MWSession.h>
 
-#import <AMFUnarchiver.h>
+@interface AppDelegate ()
+
+@property ( nonatomic, retain ) MWSession* session1;
+@property ( nonatomic, retain ) MWSession* session2;
+
+@end
 
 @implementation AppDelegate
 
 @synthesize window = _window;
 @synthesize viewController = _viewController;
+@synthesize session1 = _session1;
+@synthesize session2 = _session2;
 
 - (void)dealloc
 {
-   [_window release];
-   [_viewController release];
-    [super dealloc];
-}
+   [ _window release ];
+   [ _viewController release ];
+   [ _session1 release ];
+   [ _session2 release ];
 
--(NSArray*)splitResponseData:( NSData* )data_
-{
-   NSMutableArray* result_ = [ NSMutableArray new ];
-   for ( NSUInteger index_ = 0; index_ < data_.length; )
-   {
-      NSData* size_data_ = [ data_ subdataWithRange: NSMakeRange( index_, sizeof( int ) ) ];
-      int size_ = CFSwapInt32BigToHost(*(int*)([size_data_ bytes]));
-
-      {
-         NSRange chunkRange_ = NSMakeRange( index_ + sizeof( int ), size_ );
-         NSData* chunk_ = [ data_ subdataWithRange: chunkRange_ ];
-         [ result_ addObject: chunk_ ];
-      }
-
-      index_ += size_ + sizeof( int );
-   }
-   return [ result_ autorelease ];
+   [ super dealloc ];
 }
 
 -(void)test
 {
-   MWSession* session_ = [ MWSession sessionWithLogin: @"testUser" ];
+   self.session1 = [ MWSession sessionWithLogin: @"testUser1" ];
+   self.session2 = [ MWSession sessionWithLogin: @"testUser2" ];
 
-   [ session_ createGameWithName: @"NewGame" ]( nil, nil, ^( id result_, NSError* error_ )
+   self.session1.handler = ^( NSArray* command_ )
    {
-      if ( result_ )
-      {
-         NSData* data_ = result_;
-         NSArray* chunks_ = [ self splitResponseData: data_ ];
+      NSLog( @"player1 got command: %@", command_ );
+   };
+   self.session2.handler = ^( NSArray* command_ )
+   {
+      NSLog( @"player2 got command: %@", command_ );
+   };
 
-         for ( NSData* chunk_data_ in chunks_ )
-         {
-            id encoded_data_ = [ AMFUnarchiver unarchiveObjectWithData: chunk_data_
-                                                              encoding: kAMF3Encoding ];
-            NSLog( @"encoded_data_: %@", encoded_data_ );
-         }
-      }
-      NSLog( @"result: %@ error: %@", result_, error_ );
+   [ self.session1 playBattleground ]( nil, nil, ^( id result_, NSError* error_ )
+   {
+      NSLog( @"result1: %@ error: %@", result_, error_ );
+   } );
+   [ self.session2 playBattleground ]( nil, nil, ^( id result_, NSError* error_ )
+   {
+      NSLog( @"result2: %@ error: %@", result_, error_ );
    } );
 }
 
@@ -73,7 +66,7 @@
     // Override point for customization after application launch.
    self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController" bundle:nil] autorelease];
    self.window.rootViewController = self.viewController;
-    [self.window makeKeyAndVisible];
+   [ self.window makeKeyAndVisible ];
 
    [ self test ];
 
