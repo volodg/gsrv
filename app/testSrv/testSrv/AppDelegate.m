@@ -36,28 +36,28 @@
    [ super dealloc ];
 }
 
+-(void)loginAndPlayPlayer2
+{
+   self.session2 = [ MWSession sessionWithLogin: @"testUser2" ];
+
+   [ self.session2 playBattleground ]( nil, nil, ^( id result_, NSError* error_ )
+   {
+      NSLog( @"result2: %@ error: %@", result_, error_ );
+   } );
+}
+
 -(void)test
 {
    self.session1 = [ MWSession sessionWithLogin: @"testUser1" ];
-   self.session2 = [ MWSession sessionWithLogin: @"testUser2" ];
-
-   self.session1.handler = ^( NSArray* command_ )
-   {
-      NSLog( @"player1 got command: %@", command_ );
-   };
-   self.session2.handler = ^( NSArray* command_ )
-   {
-      NSLog( @"player2 got command: %@", command_ );
-   };
 
    [ self.session1 playBattleground ]( nil, nil, ^( id result_, NSError* error_ )
    {
       NSLog( @"result1: %@ error: %@", result_, error_ );
    } );
-   [ self.session2 playBattleground ]( nil, nil, ^( id result_, NSError* error_ )
-   {
-      NSLog( @"result2: %@ error: %@", result_, error_ );
-   } );
+
+   [ self performSelector: @selector( loginAndPlayPlayer2 )
+               withObject: nil
+               afterDelay: 2.0 ];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions

@@ -86,12 +86,15 @@ static NSString* const host_format_ = @"http://test.bwf.org.ua:3333/%@";
 }
 
 -(JFFAsyncOperation)authWithLogin:( NSString* )login_
+                              sid:( NSString* )sid_
 {
-   NSString* sid_ = [ NSString randomStringWithLength: sidLength_ ];
+   sid_ = sid_ ? sid_ : [ NSString randomStringWithLength: sidLength_ ];
    NSURL*    url_ = [ NSURL URLWithSid: sid_ ];
 
-   NSString* post_format_ = @"{\"cmd\":\"enter\",\"env\":1,\"cid\":\"%@\"}";
-   NSString* post_        = [ NSString stringWithFormat: post_format_, login_ ? login_ : @"" ];
+   NSString* post_format_ = @"{\"cmd\":\"enter\",\"env\":1,\"cid\":\"%@\",\"name\":\"%@\"}";
+   NSString* post_        = [ NSString stringWithFormat: post_format_
+                             , login_ ? login_ : @""
+                             , login_ ? login_ : @"" ];
    NSData*   post_data_   = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
 
    JFFAsyncOperation loader_ = chunkedURLResponseLoader( url_
@@ -118,7 +121,7 @@ static NSString* const host_format_ = @"http://test.bwf.org.ua:3333/%@";
 {
    NSURL* url_ = [ NSURL URLWithSid: sid_ ];
 
-   NSString* post_      = @"{\"cmd\":\"playBattleground\"}";
+   NSString* post_      = @"{\"command\":\"playBattleground\"}";
    NSData*   post_data_ = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
 
    JFFAsyncOperation loader_ = chunkedURLResponseLoader( url_

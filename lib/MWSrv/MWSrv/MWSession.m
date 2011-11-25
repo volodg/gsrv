@@ -8,30 +8,33 @@
 @property ( nonatomic, retain ) MWApi* api;
 @property ( nonatomic, retain ) NSString* login;
 @property ( nonatomic, retain ) NSString* sid;
+@property ( nonatomic, assign ) BOOL gameActive;//???
 @property ( nonatomic, retain ) JFFScheduler* scheduler;
 @property ( nonatomic, assign ) BOOL buzy;
-@property ( nonatomic, assign ) BOOL stateMayChanged;
 
+-(JFFAsyncOperation)privateGetSrvState;
 -(void)pingServerState;
 
 @end
 
 @implementation MWSession
 
-@synthesize lastLoginDate   = _lastLoginDate;
-@synthesize api             = _api;
-@synthesize login           = _login;
-@synthesize sid             = _sid;
-@synthesize handler         = _handler;
-@synthesize scheduler       = _scheduler;
-@synthesize buzy            = _buzy;
-@synthesize stateMayChanged = _stateMayChanged;
+@synthesize lastLoginDate = _lastLoginDate;
+@synthesize api           = _api;
+@synthesize login         = _login;
+@synthesize sid           = _sid;
+@synthesize handler       = _handler;
+@synthesize gameActive    = _gameActive;
+@synthesize scheduler     = _scheduler;
+@synthesize buzy          = _buzy;
 
 -(void)dealloc
 {
    [ _lastLoginDate release ];
-   [ _api release ];
-   [ _login release ];
+   [ _api           release ];
+   [ _login         release ];
+   [ _sid           release ];
+   [ _scheduler     release ];
 
    [ super dealloc ];
 }
@@ -43,15 +46,14 @@
    if ( self )
    {
       self.login = login_;
-      self.api = [ [ MWApi new ] autorelease ];
-
-      self.scheduler = [ [ JFFScheduler new ] autorelease ];
+      self.api   = [ [ MWApi new ] autorelease ];
 
       __unsafe_unretained MWSession* self_ = self;
+      self.scheduler = [ [ JFFScheduler new ] autorelease ];
       [ self.scheduler addBlock: ^( JFFCancelScheduledBlock cancel_ )
       {
          [ self_ pingServerState ];
-      } duration: 3. ];
+      } duration: 5.0 ];
    }
 
    return self;
@@ -74,7 +76,38 @@
                 , JFFCancelAsyncOperationHandler cancel_callback_
                 , JFFDidFinishAsyncOperationHandler done_callback_ )
    {
-      JFFAsyncOperation loader_ = [ self.api authWithLogin: self.login ];
+      JFFAsyncOperation loader_ = ^( JFFAsyncOperationProgressHandler progress_callback_
+                                    , JFFCancelAsyncOperationHandler cancel_callback_
+                                    , JFFDidFinishAsyncOperationHandler done_callback_ )
+      {
+         JFFResultContext* context_ = [ [ JFFResultContext new ] autorelease ];
+
+         JFFAsyncOperation loader_ = [ self.api authWithLogin: self.login sid: nil ];
+         loader_ = asyncOperationWithFinishHookBlock( loader_
+                                                     , ^( id result_
+                                                         , NSError* error_
+                                                         , JFFDidFinishAsyncOperationHandler done_callback_ )
+         {
+            context_.result = result_;
+            self.sid = result_;
+            done_callback_( result_, error_ );
+         } );
+
+         JFFAsyncOperation set_res_loader_ = ^( JFFAsyncOperationProgressHandler progress_callback_
+                                               , JFFCancelAsyncOperationHandler cancel_callback_
+                                               , JFFDidFinishAsyncOperationHandler done_callback_ )
+         {
+            done_callback_( context_.result, nil );
+            return JFFEmptyCancelAsyncOperationBlock;
+         };
+
+         loader_ = sequenceOfAsyncOperations( loader_
+                                             , [ self privateGetSrvState ]
+                                             , set_res_loader_
+                                             , nil );
+
+         return loader_( progress_callback_, cancel_callback_, done_callback_ );
+      };
 
       JFFDidFinishAsyncOperationHandler did_finish_operation_ = ^( id result_, NSError* error_ )
       {
@@ -83,40 +116,25 @@
       loader_ = [ self asyncOperationForPropertyWithName: @"sid"
                                           asyncOperation: loader_
                                   didFinishLoadDataBlock: did_finish_operation_ ];
-      if ( self.lastLoginDate == nil ||
-          [ self loginDateExpared ] )
+
+      if ( self.lastLoginDate == nil || [ self loginDateExpared ] )
       {
          self.sid = nil;
       }
+
       return loader_( progress_callback_, cancel_callback_, done_callback_ );
    } copy ] autorelease ];
 }
 
 -(JFFAsyncOperation)privateGetSrvState
 {
-   JFFAsyncOperation auth_loader_ = [ self authLoader ];
-   JFFAsyncOperation cmd_loader_ = ^( JFFAsyncOperationProgressHandler progress_callback_
-                                     , JFFCancelAsyncOperationHandler cancel_callback_
-                                     , JFFDidFinishAsyncOperationHandler done_callback_ )
-   {
-      return [ self.api getSrvStateWithSid: self.sid ]( progress_callback_
-                                                       , cancel_callback_
-                                                       , done_callback_ );
-   };
-
-   return sequenceOfAsyncOperations( auth_loader_, cmd_loader_, nil );
-}
-
--(JFFAsyncOperation)updateStateMayChanged
-{
    return [ [ ^( JFFAsyncOperationProgressHandler progress_callback_
                 , JFFCancelAsyncOperationHandler cancel_callback_
                 , JFFDidFinishAsyncOperationHandler done_callback_ )
    {
-      self.stateMayChanged = YES;
-      if ( done_callback_ )
-         done_callback_( [ NSNull null ], nil );
-      return JFFEmptyCancelAsyncOperationBlock;
+      NSAssert( self.sid, @"sid can not be empty" );
+      JFFAsyncOperation loader_ = [ self.api getSrvStateWithSid: self.sid ];
+      return loader_( progress_callback_, cancel_callback_, done_callback_ );
    } copy ] autorelease ];
 }
 
@@ -132,26 +150,38 @@
                                                            , done_callback_ );
    };
 
-   //GTODO put in load balancer
    return sequenceOfAsyncOperations( auth_loader_
                                     , cmd_loader_
-                                    , [ self updateStateMayChanged ]
+                                    , [ self privateGetSrvState ]
                                     , nil );
 }
 
-//GTODO put in load balancer
 -(void)pingServerState
 {
-   if ( !self.handler || self.buzy || !self.stateMayChanged )
+   if ( !self.sid || self.buzy )
       return;
 
    self.buzy = YES;
-   self.stateMayChanged = NO;
-   [ self privateGetSrvState ]( nil, nil, ^( id result_, NSError* error_ )
+   JFFAsyncOperation loader_ = [ self.api authWithLogin: self.login sid: self.sid ];
+   sequenceOfAsyncOperations( loader_
+                             , [ self privateGetSrvState ]
+                             , nil )( nil, nil, ^( id result_, NSError* error_ )
    {
+      if ( result_ )
+      {
+         if ( [ result_ isKindOfClass: [ NSArray class ] ]
+             && [ result_ count ] > 0 )
+         {
+            id dict_ = [ result_ objectAtIndex: 0 ];
+            id status_ = [ dict_ objectForKey: @"status" ];
+            if ( [ status_ integerValue ] != 1 || [ dict_ count ] != 1 )
+            {
+               NSLog( @"Ping status: %@", status_ );
+            }
+         }
+         NSLog( @"Ping result: %@", result_ );
+      }
       self.buzy = NO;
-      if ( result_ && self.handler )
-         self.handler( result_ );
    } );
 }
 

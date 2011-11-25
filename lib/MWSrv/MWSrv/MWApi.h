@@ -4,7 +4,8 @@
 
 @interface MWApi : NSObject
 
--(JFFAsyncOperation)authWithLogin:( NSString* )login_;
+-(JFFAsyncOperation)authWithLogin:( NSString* )login_
+                              sid:( NSString* )sid_;
 
 -(JFFAsyncOperation)playBattlegroundForSid:( NSString* )sid_;
 
