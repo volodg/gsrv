@@ -7,12 +7,12 @@
    return NO;
 }
 
--(BOOL)isStartGameStateResponse
+-(BOOL)isGameStartedResponse
 {
    return NO;
 }
 
--(BOOL)isGameStartedResponse
+-(BOOL)isGetSymbolsResponse
 {
    return NO;
 }
@@ -27,13 +27,20 @@
      && [ [ self objectForKey: @"status" ] integerValue ] == 1;
 }
 
--(BOOL)isStartGameStateResponse
+-(BOOL)isGameStartedResponse
 {
-   return [ self count ] >= 4
+   return [ self count ] == 4
        && [ self objectForKey: @"field" ]
        && [ self objectForKey: @"field" ]
-       && [ self objectForKey: @"sym" ]
+       && [ self objectForKey: @"sym"   ]
        && [ self objectForKey: @"users" ];
+}
+
+-(BOOL)isGetSymbolsResponse
+{
+   return [ self count ] == 2
+       && [ self objectForKey: @"state" ]
+       && [ self objectForKey: @"sym"   ];
 }
 
 @end
@@ -44,7 +51,15 @@
 {
    return [ self firstMatch: ^BOOL( id object_ )
    {
-      return [ object_ isStartGameStateResponse ];
+      return [ object_ isGameStartedResponse ];
+   } ] != nil;
+}
+
+-(BOOL)isGetSymbolsResponse
+{
+   return [ self firstMatch: ^BOOL( id object_ )
+   {
+      return [ object_ isGetSymbolsResponse ];
    } ] != nil;
 }
 

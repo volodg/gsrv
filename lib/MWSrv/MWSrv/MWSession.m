@@ -4,6 +4,7 @@
 #import "MWStartGameState.h"
 
 #import "NSObject+Parser.h"
+#import "NSArray+Parser.h"
 
 @interface MWSession ()
 
@@ -151,7 +152,7 @@
    {
       result_ = [ result_ firstMatch: ^BOOL( id object_ )
       {
-         return [ object_ isStartGameStateResponse ];
+         return [ object_ isGameStartedResponse ];
       } ];
 
       result_ = result_ ? [ MWStartGameState startGameStateWithDictionary: result_ ] : nil;
@@ -179,6 +180,25 @@
                                     , nil );
 }
 
+-(JFFAsyncOperation)privateGetSymbolsSrvState
+{
+   JFFAsyncOperation loader_ = [ self privateGetSrvState ];
+
+   return asyncOperationWithFinishHookBlock( loader_
+                                            , ^( id result_
+                                                , NSError* error_
+                                                , JFFDidFinishAsyncOperationHandler done_callback_ )
+   {
+      result_ = [ result_ firstMatch: ^BOOL( id object_ )
+      {
+         return [ object_ isGetSymbolsResponse ];
+      } ];
+
+      result_ = result_ ? [ NSArray arraySymbolsWithDictionary: result_ ] : nil;
+      done_callback_( result_, error_ );
+   } );
+}
+
 -(JFFAsyncOperation)getSymbolsCount:( NSUInteger )count_
 {
    JFFAsyncOperation auth_loader_ = [ self authLoader ];
@@ -192,11 +212,10 @@
                                                     , done_callback_ );
    };
 
-   //STODO place 
+   //STODO place in load balancer
    return sequenceOfAsyncOperations( auth_loader_
                                     , cmd_loader_
-                                    , [ self privateGetSrvState ]
-//                                    , [ self getGameStarted ]
+                                    , [ self privateGetSymbolsSrvState ]
                                     , nil );
 }
 
