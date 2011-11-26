@@ -16,4 +16,7 @@
 -(JFFAsyncOperation)getSymbolsWithSid:( NSString* )sid_
                                 count:( NSUInteger )count_;
 
+-(JFFAsyncOperation)doStepWithSid:( NSString* )sid_
+                   symbsAndCoords:( NSArray* )step_;
+
 @end

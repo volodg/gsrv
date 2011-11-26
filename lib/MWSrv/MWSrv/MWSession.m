@@ -213,9 +213,31 @@
    };
 
    //STODO place in load balancer
+   //STODO add start game in sequence
    return sequenceOfAsyncOperations( auth_loader_
                                     , cmd_loader_
                                     , [ self privateGetSymbolsSrvState ]
+                                    , nil );
+}
+
+-(JFFAsyncOperation)doStepWithSymbsAndCoords:( NSArray* )step_
+{
+   JFFAsyncOperation auth_loader_ = [ self authLoader ];
+   JFFAsyncOperation cmd_loader_ = ^( JFFAsyncOperationProgressHandler progress_callback_
+                                     , JFFCancelAsyncOperationHandler cancel_callback_
+                                     , JFFDidFinishAsyncOperationHandler done_callback_ )
+   {
+      return [ self.api doStepWithSid: self.sid
+                       symbsAndCoords: step_ ]( progress_callback_
+                                               , cancel_callback_
+                                               , done_callback_ );
+   };
+
+   //STODO place in load balancer
+   //STODO add start game in sequence
+   return sequenceOfAsyncOperations( auth_loader_
+                                    , cmd_loader_
+//                                    , [ self privateGetNextStepSrvState ]
                                     , nil );
 }
 

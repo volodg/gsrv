@@ -4,10 +4,46 @@
 
 #import "JMonad.h"
 
+#import "MWSymb.h"
+#import "MWSymbWithCoords.h"
+
 #import <AMFUnarchiver.h>
 
 static NSUInteger sidLength_ = 32;
 static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
+
+@interface MWSymbWithCoords (MWApi)
+@end
+
+@implementation MWSymbWithCoords (MWApi)
+
+-(NSString*)toJsonCommandWithIndex:( NSUInteger )index_
+{
+   return [ NSString stringWithFormat: @"\"x%d\"=%d, \"y%d\"=%d, \"state%d\"=%d, \"sym%d\"=\"%@\""
+           , index_, self.x
+           , index_, self.y
+           , index_, self.symb.state
+           , index_, self.symb.symb ];
+}
+
+@end
+
+@interface NSArray (MWApi)
+@end
+
+@implementation NSArray (MWApi)
+
+-(NSString*)toJsonCommand
+{
+   __block NSUInteger index_ = 0;
+   NSArray* result_ = [ self map: ^id( id object_ )
+   {
+      return [ object_ toJsonCommandWithIndex: ++index_ ];
+   } ];
+   return [ result_ componentsJoinedByString: @", " ];
+}
+
+@end
 
 @interface JEitherMonad (MWApi)
 @end
@@ -253,6 +289,32 @@ static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
    NSString* post_format_ = @"{\"command\":\"getSymbols\",\"count\":\"%d\"}";
    NSString* post_        = [ NSString stringWithFormat: post_format_, count_ ];
    NSData*   post_data_   = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
+
+   JFFAsyncOperation loader_ = chunkedURLResponseLoader( url_
+                                                        , post_data_
+                                                        , self.headers );
+
+   JFFDidFinishAsyncOperationHook finish_callback_hook_ = ^void( id result_
+                                                                , NSError* error_
+                                                                , JFFDidFinishAsyncOperationHandler done_callback_ )
+   {
+      JEitherMonad* monad_ = [ self monadForResponse: result_ error: error_ ];
+      [ monad_ notifyDoneBlock: done_callback_ ];
+   };
+
+   return asyncOperationWithFinishHookBlock( loader_, finish_callback_hook_ );
+}
+
+-(JFFAsyncOperation)doStepWithSid:( NSString* )sid_
+                   symbsAndCoords:( NSArray* )step_
+{
+   NSURL* url_ = [ NSURL URLWithSid: sid_ ];
+
+   NSString* post_format_ = @"{\"command\":\"doStep\", %@ }";
+   NSString* post_        = [ NSString stringWithFormat: post_format_, [ step_ description ] ];
+   NSData*   post_data_   = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
+
+   NSLog( @"doStep post: %@", post_ );
 
    JFFAsyncOperation loader_ = chunkedURLResponseLoader( url_
                                                         , post_data_
