@@ -31,9 +31,9 @@
 {
    return [ self count ] == 4
        && [ self objectForKey: @"field" ]
-       && [ self objectForKey: @"field" ]
+       && [ self objectForKey: @"users" ]
        && [ self objectForKey: @"sym"   ]
-       && [ self objectForKey: @"users" ];
+       && [ self objectForKey: @"state" ];
 }
 
 -(BOOL)isGetSymbolsResponse
