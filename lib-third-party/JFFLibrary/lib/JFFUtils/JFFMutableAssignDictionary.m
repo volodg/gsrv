@@ -13,83 +13,110 @@
 
 @implementation JFFAutoRemoveFromDictAssignProxy
 
-@synthesize onDeallocBlock;
+@synthesize onDeallocBlock = _onDeallocBlock;
+
+-(void)dealloc
+{
+   [ _onDeallocBlock release ];
+
+   [ super dealloc ];
+}
 
 -(void)onAddToMutableAssignDictionary:( JFFMutableAssignDictionary* )dict_
                                   key:( id )key_
 {
    __unsafe_unretained JFFMutableAssignDictionary* assign_dict_ = dict_;
-   onDeallocBlock = ^void( void )
+   _onDeallocBlock = ^void( void )
    {
       [ assign_dict_ removeObjectForKey: key_ ];
    };
-   [ self.target addOnDeallocBlock: onDeallocBlock ];
+   [ self.target addOnDeallocBlock: _onDeallocBlock ];
 }
 
 -(void)onRemoveFromMutableAssignDictionary:( JFFMutableAssignDictionary* )array_
 {
-   [ self.target removeOnDeallocBlock: onDeallocBlock ];
-   onDeallocBlock = nil;
+   [ self.target removeOnDeallocBlock: _onDeallocBlock ];
+   _onDeallocBlock = nil;
 }
 
 @end
 
 @interface JFFMutableAssignDictionary ()
 
-@property ( nonatomic, strong ) NSMutableDictionary* mutableDictionary;
+@property ( nonatomic, retain ) NSMutableDictionary* mutableDictionary;
 
 @end
 
 @implementation JFFMutableAssignDictionary
 
-@synthesize mutableDictionary;
+@synthesize mutableDictionary = _mutableDictionary;
 
 -(void)dealloc
 {
    [ self removeAllObjects ];
+   [ _mutableDictionary release ];
+
+   [ super dealloc ];
 }
 
 -(void)removeAllObjects
 {
-   for( JFFAutoRemoveFromDictAssignProxy* proxy_ in [ mutableDictionary allValues ] )
+   for( JFFAutoRemoveFromDictAssignProxy* proxy_ in [ _mutableDictionary allValues ] )
    {
       [  proxy_ onRemoveFromMutableAssignDictionary: self ];
    }
-   [ mutableDictionary removeAllObjects ];
+   [ _mutableDictionary removeAllObjects ];
 }
 
 -(NSMutableDictionary*)mutableDictionary
 {
-   if ( !mutableDictionary )
+   if ( !_mutableDictionary )
    {
-      mutableDictionary = [ NSMutableDictionary new ];
+      _mutableDictionary = [ NSMutableDictionary new ];
    }
-   return mutableDictionary;
+   return _mutableDictionary;
 }
 
 -(NSUInteger)count
 {
-   return [ mutableDictionary count ];
+   return [ _mutableDictionary count ];
 }
 
 -(id)objectForKey:( id )key_
 {
-   JFFAutoRemoveFromDictAssignProxy* proxy_ = [ mutableDictionary objectForKey: key_ ];
+   JFFAutoRemoveFromDictAssignProxy* proxy_ = [ _mutableDictionary objectForKey: key_ ];
    return proxy_.target;
 }
 
 -(void)removeObjectForKey:( id )key_
 {
-   JFFAutoRemoveFromDictAssignProxy* proxy_ = [ mutableDictionary objectForKey: key_ ];
+   JFFAutoRemoveFromDictAssignProxy* proxy_ = [ _mutableDictionary objectForKey: key_ ];
    [ proxy_ onRemoveFromMutableAssignDictionary: self ];
-   [ mutableDictionary removeObjectForKey: key_ ];
+   [ _mutableDictionary removeObjectForKey: key_ ];
 }
 
 -(void)setObject:( id )object_ forKey:( id )key_
 {
+   id previous_object_ = [ self objectForKey: key_ ];
+   if ( previous_object_ )
+   {
+      [ self removeObjectForKey: key_ ];
+   }
+
    JFFAutoRemoveFromDictAssignProxy* proxy_ = [ [ JFFAutoRemoveFromDictAssignProxy alloc ] initWithTarget: object_ ];
    [ self.mutableDictionary setObject: proxy_ forKey: key_ ];
    [ proxy_ onAddToMutableAssignDictionary: self key: key_ ];
+   [ proxy_ release ];
+}
+
+-(NSString*)description
+{
+   return [ _mutableDictionary description ];
+}
+
+-(NSArray*)allKeys
+{
+   return [ _mutableDictionary allKeys ];
 }
 
 @end

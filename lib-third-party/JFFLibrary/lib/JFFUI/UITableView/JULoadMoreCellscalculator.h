@@ -26,8 +26,6 @@
 -(NSUInteger)suggestElementsToAddCountForIndex:( NSUInteger )index_
                                overflowOccured:( BOOL* )out_is_overflow_;
 
-
-
 @property ( nonatomic, assign, readonly ) BOOL hasNoElements;
 @property ( nonatomic, assign, readonly ) BOOL allElementsLoaded;
 @property ( nonatomic, retain, readonly ) NSIndexPath* loadMoreIndexPath;
