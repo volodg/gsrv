@@ -19,7 +19,7 @@ static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
 
 -(NSString*)toJsonCommandWithIndex:( NSUInteger )index_
 {
-   return [ NSString stringWithFormat: @"\"x%d\"=%d, \"y%d\"=%d, \"state%d\"=%d, \"sym%d\"=\"%@\""
+   return [ NSString stringWithFormat: @"\"x%d\":%d, \"y%d\":%d, \"state%d\":%d, \"sym%d\":\"%@\""
            , index_, self.x
            , index_, self.y
            , index_, self.symb.state
