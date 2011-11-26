@@ -43,6 +43,14 @@
    return [ [ [ self alloc ] initWithLogin: login_ ] autorelease ];
 }
 
+-(void)doStepWithSymbsAndCoords:( NSArray* )steps_
+{
+   [ self.session doStepWithSymbsAndCoords: steps_ ](  nil, nil, ^( id result_, NSError* error_ )
+   {
+      NSLog( @"doStepWithSymbsAndCoords RESULT: %@ result: %@ error: %@", self.login, result_, error_ );
+   } );
+}
+
 -(void)start
 {
    [ self.session playBattleground ]( nil, nil, ^( id result_, NSError* error_ )
@@ -57,10 +65,9 @@
       step_.symb = game_first_symb_;
 
       NSArray* steps_ = [ NSArray arrayWithObject: step_ ];
-      [ self.session doStepWithSymbsAndCoords: steps_ ](  nil, nil, ^( id result_, NSError* error_ )
-      {
-         NSLog( @"doStepWithSymbsAndCoords: %@ result: %@ error: %@", self.login, result_, error_ );
-      } );
+      [ self performSelector: @selector( doStepWithSymbsAndCoords: )
+                  withObject: steps_
+                  afterDelay: 2.0 ];
    } );
 }
 
