@@ -1,6 +1,9 @@
 #import "MWPlayer.h"
 
 #import <MWSrv/MWSession.h>
+#import <MWSrv/MWSymb.h>
+#import <MWSrv/MWSymbWithCoords.h>
+#import <MWSrv/MWStartGameState.h>
 
 @interface MWPlayer ()
 
@@ -44,10 +47,19 @@
 {
    [ self.session playBattleground ]( nil, nil, ^( id result_, NSError* error_ )
    {
+      MWStartGameState* game_state_ = result_;
+      MWSymb* game_first_symb_ = [ game_state_.symbols objectAtIndex: 0 ];
       NSLog( @"player: %@ result: %@ error: %@", self.login, result_, error_ );
-      [ self.session getSymbolsCount: 5 ](  nil, nil, ^( id result_, NSError* error_ )
+
+      MWSymbWithCoords* step_ = [ [ MWSymbWithCoords new ] autorelease ];
+      step_.x = 1;
+      step_.y = 1;
+      step_.symb = game_first_symb_;
+
+      NSArray* steps_ = [ NSArray arrayWithObject: step_ ];
+      [ self.session doStepWithSymbsAndCoords: steps_ ](  nil, nil, ^( id result_, NSError* error_ )
       {
-         NSLog( @"getSymbolsCount: %@ result: %@ error: %@", self.login, result_, error_ );
+         NSLog( @"doStepWithSymbsAndCoords: %@ result: %@ error: %@", self.login, result_, error_ );
       } );
    } );
 }
