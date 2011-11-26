@@ -11,4 +11,6 @@
 
 -(JFFAsyncOperation)getSrvStateWithSid:( NSString* )sid_;
 
+-(JFFAsyncOperation)exitGameWithSid:( NSString* )sid_;
+
 @end

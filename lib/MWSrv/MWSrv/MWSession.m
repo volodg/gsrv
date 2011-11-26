@@ -180,6 +180,8 @@
 
 -(void)exitGame
 {
+   if ( self.sid )
+      [ self.api exitGameWithSid: self.sid ]( nil, nil, nil );
    self.sid = nil;
 }
 
