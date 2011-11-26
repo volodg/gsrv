@@ -1,59 +1,43 @@
-//
-//  AppDelegate.m
-//  testSrv
-//
-//  Created by Vladimir on 21.11.11.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
-//
-
 #import "AppDelegate.h"
 
 #import "ViewController.h"
 
-#import <MWSrv/MWSession.h>
+#import "MWPlayer.h"
 
 @interface AppDelegate ()
 
-@property ( nonatomic, retain ) MWSession* session1;
-@property ( nonatomic, retain ) MWSession* session2;
+@property ( nonatomic, retain ) MWPlayer* player1;
+@property ( nonatomic, retain ) MWPlayer* player2;
 
 @end
 
 @implementation AppDelegate
 
-@synthesize window = _window;
+@synthesize window         = _window;
 @synthesize viewController = _viewController;
-@synthesize session1 = _session1;
-@synthesize session2 = _session2;
+@synthesize player1        = _player1;
+@synthesize player2        = _player2;
 
 - (void)dealloc
 {
    [ _window release ];
    [ _viewController release ];
-   [ _session1 release ];
-   [ _session2 release ];
+   [ _player1 release ];
+   [ _player2 release ];
 
    [ super dealloc ];
 }
 
 -(void)loginAndPlayPlayer2
 {
-   self.session2 = [ MWSession sessionWithLogin: @"testUser2" ];
-
-   [ self.session2 playBattleground ]( nil, nil, ^( id result_, NSError* error_ )
-   {
-      NSLog( @"result2: %@ error: %@", result_, error_ );
-   } );
+   self.player2 = [ MWPlayer playerWithLogin: @"testUser2" ];
+   [ self.player2 start ];
 }
 
 -(void)test
 {
-   self.session1 = [ MWSession sessionWithLogin: @"testUser1" ];
-
-   [ self.session1 playBattleground ]( nil, nil, ^( id result_, NSError* error_ )
-   {
-      NSLog( @"result1: %@ error: %@", result_, error_ );
-   } );
+   self.player1 = [ MWPlayer playerWithLogin: @"testUser1" ];
+   [ self.player1 start ];
 
    [ self performSelector: @selector( loginAndPlayPlayer2 )
                withObject: nil

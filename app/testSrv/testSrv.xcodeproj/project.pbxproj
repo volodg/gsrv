@@ -18,6 +18,7 @@
 		6522A054147AD66900D83D06 /* libMWSrv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6522A04D147AD65700D83D06 /* libMWSrv.a */; };
 		6522A056147AD6A600D83D06 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6522A055147AD6A600D83D06 /* CFNetwork.framework */; };
 		6522A05E147AD7E500D83D06 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6522A05D147AD7E500D83D06 /* libz.dylib */; };
+		6585331814813BDB00075ACF /* MWPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6585331714813BDB00075ACF /* MWPlayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,8 @@
 		6522A02C147AD65700D83D06 /* MWSrv.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MWSrv.xcodeproj; path = ../../lib/MWSrv/MWSrv.xcodeproj; sourceTree = "<group>"; };
 		6522A055147AD6A600D83D06 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		6522A05D147AD7E500D83D06 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		6585331614813BDB00075ACF /* MWPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPlayer.h; sourceTree = "<group>"; };
+		6585331714813BDB00075ACF /* MWPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWPlayer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +109,8 @@
 		6522A014147AD62F00D83D06 /* testSrv */ = {
 			isa = PBXGroup;
 			children = (
+				6585331614813BDB00075ACF /* MWPlayer.h */,
+				6585331714813BDB00075ACF /* MWPlayer.m */,
 				6522A01D147AD62F00D83D06 /* AppDelegate.h */,
 				6522A01E147AD62F00D83D06 /* AppDelegate.m */,
 				6522A020147AD62F00D83D06 /* ViewController.h */,
@@ -225,6 +230,7 @@
 				6522A01B147AD62F00D83D06 /* main.m in Sources */,
 				6522A01F147AD62F00D83D06 /* AppDelegate.m in Sources */,
 				6522A022147AD62F00D83D06 /* ViewController.m in Sources */,
+				6585331814813BDB00075ACF /* MWPlayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

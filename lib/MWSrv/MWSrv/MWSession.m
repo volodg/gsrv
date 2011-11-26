@@ -140,7 +140,8 @@
 
    JFFAsyncOperation loader_ = repeatAsyncOperation( [ self privateGetSrvState ]
                                                     , predicate_
-                                                    , 1. );
+                                                    , 1.
+                                                    , 60 );
 
    return asyncOperationWithFinishHookBlock( loader_
                                             , ^( id result_
@@ -175,6 +176,11 @@
                                     , [ self privateGetSrvState ]
                                     , [ self getGameStarted ]
                                     , nil );
+}
+
+-(void)exitGame
+{
+   self.sid = nil;
 }
 
 @end

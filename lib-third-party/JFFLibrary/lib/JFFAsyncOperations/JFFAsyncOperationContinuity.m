@@ -476,7 +476,8 @@ JFFAsyncOperation asyncOperationWithDoneBlock( JFFAsyncOperation loader_
 
 JFFAsyncOperation repeatAsyncOperation( JFFAsyncOperation native_loader_
                                        , PredicateBlock predicate_
-                                       , NSTimeInterval delay_ )
+                                       , NSTimeInterval delay_
+                                       , NSUInteger max_repeat_count_ )
 {
    assert( native_loader_ );// can not be nil
 
@@ -496,7 +497,7 @@ JFFAsyncOperation repeatAsyncOperation( JFFAsyncOperation native_loader_
          JFFResultContext* context_ = [ [ JFFResultContext new ] autorelease ];
          context_.result = result_;
          context_.error  = error_ ;
-         if ( !predicate_( context_ ) )
+         if ( !predicate_( context_ ) || max_repeat_count_ == 0 )
          {
             if ( done_callback_ )
                done_callback_( result_, error_ );
@@ -508,9 +509,14 @@ JFFAsyncOperation repeatAsyncOperation( JFFAsyncOperation native_loader_
             JFFCancelScheduledBlock sch_cancel_ = [ scheduler_ addBlock: ^( JFFCancelScheduledBlock sch_cancel_ )
             {
                sch_cancel_();
-               lc_holder_.cancelBlock = native_loader_( progress_callback_
-                                                       , cancel_callback_
-                                                       , done_callback_ );
+               //GTODO test this
+               JFFAsyncOperation loader_ = repeatAsyncOperation( native_loader_
+                                                                , predicate_
+                                                                , delay_
+                                                                , max_repeat_count_ - 1 );
+               lc_holder_.cancelBlock = loader_( progress_callback_
+                                                , cancel_callback_
+                                                , done_callback_ );
             } duration: delay_ ];
 
             __block BOOL block_canceled_ = NO;

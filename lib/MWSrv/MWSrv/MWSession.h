@@ -12,4 +12,6 @@ typedef void (^MWServerCommandsHandler)( NSArray* commands_ );
 
 -(JFFAsyncOperation)playBattleground;
 
+-(void)exitGame;
+
 @end
