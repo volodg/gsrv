@@ -23,6 +23,12 @@
 		6522A07C147C570400D83D06 /* libCocoaAMF.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6522A079147C56D100D83D06 /* libCocoaAMF.a */; };
 		65853270147EEDDA00075ACF /* JMonad.h in Headers */ = {isa = PBXBuildFile; fileRef = 6585326E147EEDDA00075ACF /* JMonad.h */; };
 		65853271147EEDDA00075ACF /* JMonad.m in Sources */ = {isa = PBXBuildFile; fileRef = 6585326F147EEDDA00075ACF /* JMonad.m */; };
+		6585330C148111C000075ACF /* NSObject+Parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 6585330A148111C000075ACF /* NSObject+Parser.h */; };
+		6585330D148111C000075ACF /* NSObject+Parser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6585330B148111C000075ACF /* NSObject+Parser.m */; };
+		6585331014812D0900075ACF /* MWStartGameState.h in Headers */ = {isa = PBXBuildFile; fileRef = 6585330E14812D0800075ACF /* MWStartGameState.h */; };
+		6585331114812D0900075ACF /* MWStartGameState.m in Sources */ = {isa = PBXBuildFile; fileRef = 6585330F14812D0900075ACF /* MWStartGameState.m */; };
+		6585331414812DA300075ACF /* MWSymb.h in Headers */ = {isa = PBXBuildFile; fileRef = 6585331214812DA300075ACF /* MWSymb.h */; };
+		6585331514812DA300075ACF /* MWSymb.m in Sources */ = {isa = PBXBuildFile; fileRef = 6585331314812DA300075ACF /* MWSymb.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -173,6 +179,12 @@
 		6522A06D147C56D000D83D06 /* CocoaAMF-iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "CocoaAMF-iPhone.xcodeproj"; path = "../../lib-third-party/cocoa-amf/CocoaAMF-iPhone.xcodeproj"; sourceTree = "<group>"; };
 		6585326E147EEDDA00075ACF /* JMonad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMonad.h; sourceTree = "<group>"; };
 		6585326F147EEDDA00075ACF /* JMonad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMonad.m; sourceTree = "<group>"; };
+		6585330A148111C000075ACF /* NSObject+Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Parser.h"; sourceTree = "<group>"; };
+		6585330B148111C000075ACF /* NSObject+Parser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Parser.m"; sourceTree = "<group>"; };
+		6585330E14812D0800075ACF /* MWStartGameState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWStartGameState.h; sourceTree = "<group>"; };
+		6585330F14812D0900075ACF /* MWStartGameState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWStartGameState.m; sourceTree = "<group>"; };
+		6585331214812DA300075ACF /* MWSymb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWSymb.h; sourceTree = "<group>"; };
+		6585331314812DA300075ACF /* MWSymb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWSymb.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,6 +235,11 @@
 		65229F99147AD45900D83D06 /* MWSrv */ = {
 			isa = PBXGroup;
 			children = (
+				6585331214812DA300075ACF /* MWSymb.h */,
+				6585331314812DA300075ACF /* MWSymb.m */,
+				6585330E14812D0800075ACF /* MWStartGameState.h */,
+				6585330F14812D0900075ACF /* MWStartGameState.m */,
+				65853304148111AF00075ACF /* Parser */,
 				65853268147EEDCB00075ACF /* Monad */,
 				6522A068147AEF1200D83D06 /* Extensions */,
 				6522A064147AEE0800D83D06 /* MWApi.h */,
@@ -334,6 +351,15 @@
 			path = Monad;
 			sourceTree = "<group>";
 		};
+		65853304148111AF00075ACF /* Parser */ = {
+			isa = PBXGroup;
+			children = (
+				6585330A148111C000075ACF /* NSObject+Parser.h */,
+				6585330B148111C000075ACF /* NSObject+Parser.m */,
+			);
+			path = Parser;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -345,6 +371,9 @@
 				6522A066147AEE0800D83D06 /* MWApi.h in Headers */,
 				6522A06B147AEF2C00D83D06 /* NSString+RandomString.h in Headers */,
 				65853270147EEDDA00075ACF /* JMonad.h in Headers */,
+				6585330C148111C000075ACF /* NSObject+Parser.h in Headers */,
+				6585331014812D0900075ACF /* MWStartGameState.h in Headers */,
+				6585331414812DA300075ACF /* MWSymb.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -519,6 +548,9 @@
 				6522A067147AEE0800D83D06 /* MWApi.m in Sources */,
 				6522A06C147AEF2C00D83D06 /* NSString+RandomString.m in Sources */,
 				65853271147EEDDA00075ACF /* JMonad.m in Sources */,
+				6585330D148111C000075ACF /* NSObject+Parser.m in Sources */,
+				6585331114812D0900075ACF /* MWStartGameState.m in Sources */,
+				6585331514812DA300075ACF /* MWSymb.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

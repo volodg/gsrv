@@ -7,7 +7,7 @@
 #import <AMFUnarchiver.h>
 
 static NSUInteger sidLength_ = 32;
-static NSString* const host_format_ = @"http://test.bwf.org.ua:3333/%@";
+static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
 
 @interface JEitherMonad (MWApi)
 @end
@@ -55,6 +55,18 @@ static NSString* const host_format_ = @"http://test.bwf.org.ua:3333/%@";
    [ _headers release ];
 
    [ super dealloc ];
+}
+
+-(id)init
+{
+   self = [ super init ];
+
+   if ( self )
+   {
+      srand ( time(NULL) );
+   }
+
+   return self;
 }
 
 -(NSDictionary*)headers

@@ -1,6 +1,9 @@
 #import "MWSession.h"
 
 #import "MWApi.h"
+#import "MWStartGameState.h"
+
+#import "NSObject+Parser.h"
 
 @interface MWSession ()
 
@@ -9,11 +12,9 @@
 @property ( nonatomic, retain ) NSString* login;
 @property ( nonatomic, retain ) NSString* sid;
 @property ( nonatomic, assign ) BOOL gameActive;//???
-@property ( nonatomic, retain ) JFFScheduler* scheduler;
 @property ( nonatomic, assign ) BOOL buzy;
 
 -(JFFAsyncOperation)privateGetSrvState;
--(void)pingServerState;
 
 @end
 
@@ -25,7 +26,6 @@
 @synthesize sid           = _sid;
 @synthesize handler       = _handler;
 @synthesize gameActive    = _gameActive;
-@synthesize scheduler     = _scheduler;
 @synthesize buzy          = _buzy;
 
 -(void)dealloc
@@ -34,7 +34,6 @@
    [ _api           release ];
    [ _login         release ];
    [ _sid           release ];
-   [ _scheduler     release ];
 
    [ super dealloc ];
 }
@@ -47,13 +46,6 @@
    {
       self.login = login_;
       self.api   = [ [ MWApi new ] autorelease ];
-
-      __unsafe_unretained MWSession* self_ = self;
-      self.scheduler = [ [ JFFScheduler new ] autorelease ];
-      [ self.scheduler addBlock: ^( JFFCancelScheduledBlock cancel_ )
-      {
-         [ self_ pingServerState ];
-      } duration: 5.0 ];
    }
 
    return self;
@@ -138,6 +130,33 @@
    } copy ] autorelease ];
 }
 
+//GTODO limit repeat count
+-(JFFAsyncOperation)getGameStarted
+{
+   PredicateBlock predicate_ = ^BOOL( id context_ )
+   {
+      return ![ [ context_ result ] isGameStartedResponse ];
+   };
+
+   JFFAsyncOperation loader_ = repeatAsyncOperation( [ self privateGetSrvState ]
+                                                    , predicate_
+                                                    , 1. );
+
+   return asyncOperationWithFinishHookBlock( loader_
+                                            , ^( id result_
+                                                , NSError* error_
+                                                , JFFDidFinishAsyncOperationHandler done_callback_ )
+   {
+      result_ = [ result_ firstMatch: ^BOOL( id object_ )
+      {
+         return [ object_ isStartGameStateResponse ];
+      } ];
+
+      result_ = result_ ? [ MWStartGameState startGameStateWithDictionary: result_ ] : nil;
+      done_callback_( result_, error_ );
+   } );
+}
+
 -(JFFAsyncOperation)playBattleground
 {
    JFFAsyncOperation auth_loader_ = [ self authLoader ];
@@ -150,39 +169,12 @@
                                                            , done_callback_ );
    };
 
+   //STODO place 
    return sequenceOfAsyncOperations( auth_loader_
                                     , cmd_loader_
                                     , [ self privateGetSrvState ]
+                                    , [ self getGameStarted ]
                                     , nil );
-}
-
--(void)pingServerState
-{
-   if ( !self.sid || self.buzy )
-      return;
-
-   self.buzy = YES;
-   JFFAsyncOperation loader_ = [ self.api authWithLogin: self.login sid: self.sid ];
-   sequenceOfAsyncOperations( loader_
-                             , [ self privateGetSrvState ]
-                             , nil )( nil, nil, ^( id result_, NSError* error_ )
-   {
-      if ( result_ )
-      {
-         if ( [ result_ isKindOfClass: [ NSArray class ] ]
-             && [ result_ count ] > 0 )
-         {
-            id dict_ = [ result_ objectAtIndex: 0 ];
-            id status_ = [ dict_ objectForKey: @"status" ];
-            if ( [ status_ integerValue ] != 1 || [ dict_ count ] != 1 )
-            {
-               NSLog( @"Ping status: %@", status_ );
-            }
-         }
-         NSLog( @"Ping result: %@", result_ );
-      }
-      self.buzy = NO;
-   } );
 }
 
 @end
