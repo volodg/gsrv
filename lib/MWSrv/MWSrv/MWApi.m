@@ -311,7 +311,7 @@ static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
    NSURL* url_ = [ NSURL URLWithSid: sid_ ];
 
    NSString* post_format_ = @"{\"command\":\"doStep\", %@ }";
-   NSString* post_        = [ NSString stringWithFormat: post_format_, [ step_ description ] ];
+   NSString* post_        = [ NSString stringWithFormat: post_format_, [ step_ toJsonCommand ] ];
    NSData*   post_data_   = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
 
    NSLog( @"doStep post: %@", post_ );
