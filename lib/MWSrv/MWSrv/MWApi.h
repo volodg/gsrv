@@ -13,4 +13,7 @@
 
 -(JFFAsyncOperation)exitGameWithSid:( NSString* )sid_;
 
+-(JFFAsyncOperation)getSymbolsWithSid:( NSString* )sid_
+                                count:( NSUInteger )count_;
+
 @end

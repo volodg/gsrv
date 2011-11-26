@@ -7,7 +7,7 @@
 
 @interface MWSession ()
 
-@property ( nonatomic, retain ) NSDate* lastLoginDate;
+@property ( nonatomic, retain ) NSDate* lastLoginDate;//GTODO 5 minutes after last request
 @property ( nonatomic, retain ) MWApi* api;
 @property ( nonatomic, retain ) NSString* login;
 @property ( nonatomic, retain ) NSString* sid;
@@ -62,6 +62,7 @@
    return interval_ < -4.8 * 60;
 }
 
+//GTODO refactor
 -(JFFAsyncOperation)authLoader
 {
    return [ [ ^( JFFAsyncOperationProgressHandler progress_callback_
@@ -175,6 +176,27 @@
                                     , cmd_loader_
                                     , [ self privateGetSrvState ]
                                     , [ self getGameStarted ]
+                                    , nil );
+}
+
+-(JFFAsyncOperation)getSymbolsCount:( NSUInteger )count_
+{
+   JFFAsyncOperation auth_loader_ = [ self authLoader ];
+   JFFAsyncOperation cmd_loader_ = ^( JFFAsyncOperationProgressHandler progress_callback_
+                                     , JFFCancelAsyncOperationHandler cancel_callback_
+                                     , JFFDidFinishAsyncOperationHandler done_callback_ )
+   {
+      return [ self.api getSymbolsWithSid: self.sid
+                                    count: count_ ]( progress_callback_
+                                                    , cancel_callback_
+                                                    , done_callback_ );
+   };
+
+   //STODO place 
+   return sequenceOfAsyncOperations( auth_loader_
+                                    , cmd_loader_
+                                    , [ self privateGetSrvState ]
+//                                    , [ self getGameStarted ]
                                     , nil );
 }
 

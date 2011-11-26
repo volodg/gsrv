@@ -45,6 +45,10 @@
    [ self.session playBattleground ]( nil, nil, ^( id result_, NSError* error_ )
    {
       NSLog( @"player: %@ result: %@ error: %@", self.login, result_, error_ );
+      [ self.session getSymbolsCount: 5 ](  nil, nil, ^( id result_, NSError* error_ )
+      {
+         NSLog( @"getSymbolsCount: %@ result: %@ error: %@", self.login, result_, error_ );
+      } );
    } );
 }
 

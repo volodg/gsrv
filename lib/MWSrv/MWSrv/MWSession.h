@@ -11,6 +11,7 @@ typedef void (^MWServerCommandsHandler)( NSArray* commands_ );
 +(id)sessionWithLogin:( NSString* )login_;
 
 -(JFFAsyncOperation)playBattleground;
+-(JFFAsyncOperation)getSymbolsCount:( NSUInteger )count_;
 
 -(void)exitGame;
 

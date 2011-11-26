@@ -29,6 +29,10 @@
 		6585331114812D0900075ACF /* MWStartGameState.m in Sources */ = {isa = PBXBuildFile; fileRef = 6585330F14812D0900075ACF /* MWStartGameState.m */; };
 		6585331414812DA300075ACF /* MWSymb.h in Headers */ = {isa = PBXBuildFile; fileRef = 6585331214812DA300075ACF /* MWSymb.h */; };
 		6585331514812DA300075ACF /* MWSymb.m in Sources */ = {isa = PBXBuildFile; fileRef = 6585331314812DA300075ACF /* MWSymb.m */; };
+		6585331E14814E6100075ACF /* NSArray+Parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 6585331C14814E6100075ACF /* NSArray+Parser.h */; };
+		6585331F14814E6100075ACF /* NSArray+Parser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6585331D14814E6100075ACF /* NSArray+Parser.m */; };
+		6585332214814F3D00075ACF /* NSString+Parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 6585332014814F3D00075ACF /* NSString+Parser.h */; };
+		6585332314814F3D00075ACF /* NSString+Parser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6585332114814F3D00075ACF /* NSString+Parser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -185,6 +189,10 @@
 		6585330F14812D0900075ACF /* MWStartGameState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWStartGameState.m; sourceTree = "<group>"; };
 		6585331214812DA300075ACF /* MWSymb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWSymb.h; sourceTree = "<group>"; };
 		6585331314812DA300075ACF /* MWSymb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWSymb.m; sourceTree = "<group>"; };
+		6585331C14814E6100075ACF /* NSArray+Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Parser.h"; sourceTree = "<group>"; };
+		6585331D14814E6100075ACF /* NSArray+Parser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Parser.m"; sourceTree = "<group>"; };
+		6585332014814F3D00075ACF /* NSString+Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Parser.h"; sourceTree = "<group>"; };
+		6585332114814F3D00075ACF /* NSString+Parser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Parser.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -356,6 +364,10 @@
 			children = (
 				6585330A148111C000075ACF /* NSObject+Parser.h */,
 				6585330B148111C000075ACF /* NSObject+Parser.m */,
+				6585331C14814E6100075ACF /* NSArray+Parser.h */,
+				6585331D14814E6100075ACF /* NSArray+Parser.m */,
+				6585332014814F3D00075ACF /* NSString+Parser.h */,
+				6585332114814F3D00075ACF /* NSString+Parser.m */,
 			);
 			path = Parser;
 			sourceTree = "<group>";
@@ -374,6 +386,8 @@
 				6585330C148111C000075ACF /* NSObject+Parser.h in Headers */,
 				6585331014812D0900075ACF /* MWStartGameState.h in Headers */,
 				6585331414812DA300075ACF /* MWSymb.h in Headers */,
+				6585331E14814E6100075ACF /* NSArray+Parser.h in Headers */,
+				6585332214814F3D00075ACF /* NSString+Parser.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -551,6 +565,8 @@
 				6585330D148111C000075ACF /* NSObject+Parser.m in Sources */,
 				6585331114812D0900075ACF /* MWStartGameState.m in Sources */,
 				6585331514812DA300075ACF /* MWSymb.m in Sources */,
+				6585331F14814E6100075ACF /* NSArray+Parser.m in Sources */,
+				6585332314814F3D00075ACF /* NSString+Parser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

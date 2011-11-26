@@ -245,4 +245,28 @@ static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
    return asyncOperationWithFinishHookBlock( loader_, finish_callback_hook_ );
 }
 
+-(JFFAsyncOperation)getSymbolsWithSid:( NSString* )sid_
+                                count:( NSUInteger )count_
+{
+   NSURL* url_ = [ NSURL URLWithSid: sid_ ];
+
+   NSString* post_format_ = @"{\"command\":\"getSymbols\",\"count\":\"%d\"}";
+   NSString* post_        = [ NSString stringWithFormat: post_format_, count_ ];
+   NSData*   post_data_   = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
+
+   JFFAsyncOperation loader_ = chunkedURLResponseLoader( url_
+                                                        , post_data_
+                                                        , self.headers );
+
+   JFFDidFinishAsyncOperationHook finish_callback_hook_ = ^void( id result_
+                                                                , NSError* error_
+                                                                , JFFDidFinishAsyncOperationHandler done_callback_ )
+   {
+      JEitherMonad* monad_ = [ self monadForResponse: result_ error: error_ ];
+      [ monad_ notifyDoneBlock: done_callback_ ];
+   };
+
+   return asyncOperationWithFinishHookBlock( loader_, finish_callback_hook_ );
+}
+
 @end
