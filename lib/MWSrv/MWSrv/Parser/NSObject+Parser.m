@@ -29,7 +29,8 @@
 
 -(BOOL)isGameStartedResponse
 {
-   return [ self count ] == 4
+   return [ self count ] == 5
+       && [ self objectForKey: @"currentPlayer" ]
        && [ self objectForKey: @"field" ]
        && [ self objectForKey: @"users" ]
        && [ self objectForKey: @"sym"   ]
