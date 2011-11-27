@@ -6,14 +6,17 @@
 
 @implementation MWStartGameState
 
-@synthesize field   = _field;
-@synthesize users   = _users;
-@synthesize symbols = _symbols;
+@synthesize field         = _field;
+@synthesize users         = _users;
+@synthesize symbols       = _symbols;
+@synthesize currentPlayer = _currentPlayer;
+@synthesize youFirst      = _youFirst;
 
 -(void)dealloc
 {
-   [ _users   release ];
-   [ _symbols release ];
+   [ _users         release ];
+   [ _symbols       release ];
+   [ _currentPlayer release ];
 
    [ super dealloc ];
 }
@@ -24,8 +27,9 @@
 
    if ( self )
    {
-      self.field = [ [ dict_ objectForKey: @"field" ] integerValue ];
-      self.users = [ [ dict_ objectForKey: @"users" ] arrayOfStringsSeparatedByComma ];
+      self.field         = [ [ dict_ objectForKey: @"field" ] integerValue ];
+      self.users         = [ [ dict_ objectForKey: @"users" ] arrayOfStringsSeparatedByComma ];
+      self.currentPlayer = [ dict_ objectForKey: @"currentPlayer" ];
 
       self.symbols = [ NSArray arraySymbolsWithDictionary: dict_ ];
    }
