@@ -532,6 +532,8 @@ JFFAsyncOperation repeatAsyncOperation( JFFAsyncOperation native_loader_
 
                if ( canceled_ )
                {
+                  [ scheduler_ release ];
+                  scheduler_ = nil;
                   sch_cancel_();
                }
                if ( lc_holder_.cancelBlock )

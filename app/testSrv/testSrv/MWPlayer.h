@@ -6,5 +6,7 @@
 
 -(void)start;
 -(void)doStepWithSymb:( NSString* )symb_;
+-(void)wait;
+-(void)skipStep;
 
 @end

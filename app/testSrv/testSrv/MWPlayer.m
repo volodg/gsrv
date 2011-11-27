@@ -50,13 +50,9 @@
 
 -(void)doStepWithSymb:( NSString* )symb_
 {
-   if ( self.justWait )
+   if ( !symb_ )
    {
-      self.justWait = NO;
-      [ self.session doStepWithSymbsAndCoords: nil ](  nil, nil, ^( id result_, NSError* error_ )
-      {
-         NSLog( @"doStep RESULT: %@ result: %@ error: %@", self.login, result_, error_ );
-      } );
+      //GTODO assert
       return;
    }
 
@@ -81,7 +77,27 @@
    {
       NSLog( @"didStart player: %@ state: %@", self.login, result_ );
       self.gameState = result_;
-      self.justWait = !self.gameState.youFirst;
+
+      if ( !self.gameState.youFirst )
+      {
+         [ self wait ];
+      }
+   } );
+}
+
+-(void)wait
+{
+   [ self.session waitFirstStep ](  nil, nil, ^( id result_, NSError* error_ )
+   {
+      NSLog( @"wait RESULT: %@ result: %@ error: %@", self.login, result_, error_ );
+   } );
+}
+
+-(void)skipStep
+{
+   [ self.session skipStep ](  nil, nil, ^( id result_, NSError* error_ )
+   {
+      NSLog( @"skipStep RESULT: %@ result: %@ error: %@", self.login, result_, error_ );
    } );
 }
 

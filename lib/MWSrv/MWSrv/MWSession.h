@@ -14,6 +14,9 @@ typedef void (^MWServerCommandsHandler)( NSArray* commands_ );
 -(JFFAsyncOperation)getSymbolsCount:( NSUInteger )count_;
 -(JFFAsyncOperation)doStepWithSymbsAndCoords:( NSArray* )step_;
 
+-(JFFAsyncOperation)waitFirstStep;
+-(JFFAsyncOperation)skipStep;
+
 -(void)exitGame;
 
 @end

@@ -1,11 +1,3 @@
-//
-//  ViewController.m
-//  testSrv
-//
-//  Created by Vladimir on 21.11.11.
-//  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
-//
-
 #import "ViewController.h"
 
 #import "MWPlayer.h"
@@ -57,6 +49,22 @@
 
 -(IBAction)doStep2:(id)sender {
    [ self.player2 doStepWithSymb: self.secondLetter.text ];
+}
+
+- (IBAction)doSkip2:(id)sender {
+   [ self.player2 skipStep ];
+}
+
+- (IBAction)doSkip1:(id)sender {
+   [ self.player1 skipStep ];
+}
+
+- (IBAction)doWait1:(id)sender {
+   [ self.player1 wait ];
+}
+
+- (IBAction)doWait2:(id)sender {
+   [ self.player2 wait ];
 }
 
 - (void)didReceiveMemoryWarning
