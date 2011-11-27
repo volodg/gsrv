@@ -480,6 +480,7 @@ JFFAsyncOperation repeatAsyncOperation( JFFAsyncOperation native_loader_
                                        , NSUInteger max_repeat_count_ )
 {
    assert( native_loader_ );// can not be nil
+   assert( predicate_     );// can not be nil
 
    native_loader_ = [ [ native_loader_ copy ] autorelease ];
    predicate_     = [ [ predicate_     copy ] autorelease ];
