@@ -35,6 +35,8 @@
 		6585332314814F3D00075ACF /* NSString+Parser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6585332114814F3D00075ACF /* NSString+Parser.m */; };
 		658533261481544F00075ACF /* MWSymbWithCoords.h in Headers */ = {isa = PBXBuildFile; fileRef = 658533241481544F00075ACF /* MWSymbWithCoords.h */; };
 		658533271481544F00075ACF /* MWSymbWithCoords.m in Sources */ = {isa = PBXBuildFile; fileRef = 658533251481544F00075ACF /* MWSymbWithCoords.m */; };
+		658533C9148269A600075ACF /* MWCurrentGameState.h in Headers */ = {isa = PBXBuildFile; fileRef = 658533C7148269A400075ACF /* MWCurrentGameState.h */; };
+		658533CA148269A600075ACF /* MWCurrentGameState.m in Sources */ = {isa = PBXBuildFile; fileRef = 658533C8148269A500075ACF /* MWCurrentGameState.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -197,6 +199,8 @@
 		6585332114814F3D00075ACF /* NSString+Parser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Parser.m"; sourceTree = "<group>"; };
 		658533241481544F00075ACF /* MWSymbWithCoords.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWSymbWithCoords.h; sourceTree = "<group>"; };
 		658533251481544F00075ACF /* MWSymbWithCoords.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWSymbWithCoords.m; sourceTree = "<group>"; };
+		658533C7148269A400075ACF /* MWCurrentGameState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCurrentGameState.h; sourceTree = "<group>"; };
+		658533C8148269A500075ACF /* MWCurrentGameState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWCurrentGameState.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -253,6 +257,8 @@
 				658533251481544F00075ACF /* MWSymbWithCoords.m */,
 				6585330E14812D0800075ACF /* MWStartGameState.h */,
 				6585330F14812D0900075ACF /* MWStartGameState.m */,
+				658533C7148269A400075ACF /* MWCurrentGameState.h */,
+				658533C8148269A500075ACF /* MWCurrentGameState.m */,
 				65853304148111AF00075ACF /* Parser */,
 				65853268147EEDCB00075ACF /* Monad */,
 				6522A068147AEF1200D83D06 /* Extensions */,
@@ -395,6 +401,7 @@
 				6585331E14814E6100075ACF /* NSArray+Parser.h in Headers */,
 				6585332214814F3D00075ACF /* NSString+Parser.h in Headers */,
 				658533261481544F00075ACF /* MWSymbWithCoords.h in Headers */,
+				658533C9148269A600075ACF /* MWCurrentGameState.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -575,6 +582,7 @@
 				6585331F14814E6100075ACF /* NSArray+Parser.m in Sources */,
 				6585332314814F3D00075ACF /* NSString+Parser.m in Sources */,
 				658533271481544F00075ACF /* MWSymbWithCoords.m in Sources */,
+				658533CA148269A600075ACF /* MWCurrentGameState.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

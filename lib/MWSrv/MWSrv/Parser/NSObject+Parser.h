@@ -5,5 +5,6 @@
 -(BOOL)isStatusOKResponse;
 -(BOOL)isGameStartedResponse;
 -(BOOL)isGetSymbolsResponse;
+-(BOOL)isCurrentGameSateResponse;
 
 @end

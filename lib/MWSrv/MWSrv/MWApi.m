@@ -308,11 +308,23 @@ static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
 -(JFFAsyncOperation)doStepWithSid:( NSString* )sid_
                    symbsAndCoords:( NSArray* )step_
 {
+   NSAssert( sid_, @"can not be empty" );
+
    NSURL* url_ = [ NSURL URLWithSid: sid_ ];
 
    NSString* post_format_ = @"{\"command\":\"doStep\", %@ }";
-   NSString* post_        = [ NSString stringWithFormat: post_format_, [ step_ toJsonCommand ] ];
-   NSData*   post_data_   = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
+   NSString* post_        = nil;
+
+   if ( step_ )
+   {
+      post_ = [ NSString stringWithFormat: post_format_, [ step_ toJsonCommand ] ];
+   }
+   else
+   {
+      post_ = @"{\"command\":\"doStep\"}";
+   }
+
+   NSData* post_data_ = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
 
    NSLog( @"doStep post: %@", post_ );
 

@@ -44,10 +44,11 @@
 
 -(NSString*)description
 {
-   return [ NSString stringWithFormat: @"<MWStartGameState field: %d, users: %@, symbs: %@"
+   return [ NSString stringWithFormat: @"<MWStartGameState field: %d, users: %@, symbs: %@ youFirst: %d"
            , self.field
            , self.users
-           , self.symbols ];
+           , self.symbols
+           , self.youFirst ];
 }
 
 @end

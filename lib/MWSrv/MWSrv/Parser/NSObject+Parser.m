@@ -17,6 +17,11 @@
    return NO;
 }
 
+-(BOOL)isCurrentGameSateResponse
+{
+   return NO;
+}
+
 @end
 
 @implementation NSDictionary ( Parser )
@@ -44,6 +49,16 @@
        && [ self objectForKey: @"sym"   ];
 }
 
+-(BOOL)isCurrentGameSateResponse
+{
+   return [ self count ] == 5
+      && [ self objectForKey: @"currentPlayer" ]
+      && [ self objectForKey: @"state" ]
+      && [ self objectForKey: @"sym" ]
+      && [ self objectForKey: @"x" ]
+      && [ self objectForKey: @"y" ];
+}
+
 @end
 
 @implementation NSArray ( Parser )
@@ -61,6 +76,14 @@
    return [ self firstMatch: ^BOOL( id object_ )
    {
       return [ object_ isGetSymbolsResponse ];
+   } ] != nil;
+}
+
+-(BOOL)isCurrentGameSateResponse
+{
+   return [ self firstMatch: ^BOOL( id object_ )
+   {
+      return [ object_ isCurrentGameSateResponse ];
    } ] != nil;
 }
 

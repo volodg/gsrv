@@ -13,4 +13,12 @@
    [ super dealloc ];
 }
 
+-(NSString*)description
+{
+   return [ NSString stringWithFormat: @"<MWSymbWithCoords symb: %@, x: %d, y: %d"
+           , self.symb
+           , self.x
+           , self.y ];
+}
+
 @end

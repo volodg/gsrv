@@ -1,1 +1,14 @@
 *.pbxproj -crlf -diff -merge
+
+
+
+        {
+        status = 1;
+    },
+        {
+        currentPlayer = testUser2;
+        state = "0,";
+        sym = "q,";
+        x = "1,";
+        y = "1,";
+    }

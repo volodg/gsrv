@@ -2,46 +2,20 @@
 
 #import "ViewController.h"
 
-#import "MWPlayer.h"
-
 @interface AppDelegate ()
-
-@property ( nonatomic, retain ) MWPlayer* player1;
-@property ( nonatomic, retain ) MWPlayer* player2;
-
 @end
 
 @implementation AppDelegate
 
 @synthesize window         = _window;
 @synthesize viewController = _viewController;
-@synthesize player1        = _player1;
-@synthesize player2        = _player2;
 
 - (void)dealloc
 {
    [ _window release ];
    [ _viewController release ];
-   [ _player1 release ];
-   [ _player2 release ];
 
    [ super dealloc ];
-}
-
--(void)loginAndPlayPlayer2
-{
-   self.player2 = [ MWPlayer playerWithLogin: @"testUser2" ];
-   [ self.player2 start ];
-}
-
--(void)test
-{
-   self.player1 = [ MWPlayer playerWithLogin: @"testUser1" ];
-   [ self.player1 start ];
-
-   [ self performSelector: @selector( loginAndPlayPlayer2 )
-               withObject: nil
-               afterDelay: 2.0 ];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -51,8 +25,6 @@
    self.viewController = [[[ViewController alloc] initWithNibName:@"ViewController" bundle:nil] autorelease];
    self.window.rootViewController = self.viewController;
    [ self.window makeKeyAndVisible ];
-
-   [ self test ];
 
    return YES;
 }

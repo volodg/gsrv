@@ -2,6 +2,7 @@
 
 #import "MWApi.h"
 #import "MWStartGameState.h"
+#import "MWCurrentGameState.h"
 
 #import "NSObject+Parser.h"
 #import "NSArray+Parser.h"
@@ -16,6 +17,7 @@
 @property ( nonatomic, assign ) BOOL buzy;
 
 -(JFFAsyncOperation)privateGetSrvState;
+-(JFFAsyncOperation)privateExitGame;
 
 @end
 
@@ -135,29 +137,35 @@
 //GTODO limit repeat count
 -(JFFAsyncOperation)getGameStarted
 {
-   PredicateBlock predicate_ = ^BOOL( id context_ )
+   return [ [ ^( JFFAsyncOperationProgressHandler progress_callback_
+                , JFFCancelAsyncOperationHandler cancel_callback_
+                , JFFDidFinishAsyncOperationHandler done_callback_ )
    {
-      return ![ [ context_ result ] isGameStartedResponse ];
-   };
+      JFFAsyncOperation loader_ = [ self privateGetSrvState ];
 
-   JFFAsyncOperation loader_ = repeatAsyncOperation( [ self privateGetSrvState ]
-                                                    , predicate_
-                                                    , 1.
-                                                    , 60 );
-
-   return asyncOperationWithFinishHookBlock( loader_
-                                            , ^( id result_
-                                                , NSError* error_
-                                                , JFFDidFinishAsyncOperationHandler done_callback_ )
-   {
-      result_ = [ result_ firstMatch: ^BOOL( id object_ )
+      loader_ = asyncOperationWithFinishHookBlock( loader_
+                                               , ^( id result_
+                                                   , NSError* error_
+                                                   , JFFDidFinishAsyncOperationHandler done_callback_ )
       {
-         return [ object_ isGameStartedResponse ];
-      } ];
+         result_ = [ result_ firstMatch: ^BOOL( id object_ )
+         {
+            return [ object_ isGameStartedResponse ];
+         } ];
 
-      result_ = result_ ? [ MWStartGameState startGameStateWithDictionary: result_ ] : nil;
-      done_callback_( result_, error_ );
-   } );
+         if ( result_ )
+         {
+            MWStartGameState* state_ = [ MWStartGameState startGameStateWithDictionary: result_ ];
+            state_.youFirst = [ self.login isEqualToString: state_.currentPlayer ];
+            result_ = state_;
+         }
+
+         done_callback_( result_, error_ );
+      } );
+      return loader_( progress_callback_
+                     , cancel_callback_
+                     , done_callback_ );
+   } copy ] autorelease ];
 }
 
 -(JFFAsyncOperation)playBattleground
@@ -174,6 +182,7 @@
 
    //STODO place 
    return sequenceOfAsyncOperations( auth_loader_
+                                    , [ self privateExitGame ]
                                     , cmd_loader_
                                     , [ self privateGetSrvState ]
                                     , [ self getGameStarted ]
@@ -220,9 +229,59 @@
                                     , nil );
 }
 
+-(JFFAsyncOperation)privateGetNextStepSrvState
+{
+   return [ [ ^( JFFAsyncOperationProgressHandler progress_callback_
+                , JFFCancelAsyncOperationHandler cancel_callback_
+                , JFFDidFinishAsyncOperationHandler done_callback_ )
+   {
+      JFFAsyncOperation loader_ = [ self privateGetSrvState ];
+
+      loader_ = asyncOperationWithFinishHookBlock( loader_
+                                                  , ^( id result_
+                                                      , NSError* error_
+                                                      , JFFDidFinishAsyncOperationHandler done_callback_ )
+      {
+         result_ = [ result_ firstMatch: ^BOOL( id object_ )
+         {
+            return [ object_ isCurrentGameSateResponse ];
+         } ];
+
+         result_ = result_ ? [ MWCurrentGameState currentGameStateWithDictionary: result_ ] : nil;
+         done_callback_( result_, error_ );
+      } );
+
+      return loader_( progress_callback_, cancel_callback_, done_callback_ );
+   } copy ] autorelease ];
+}
+
+-(JFFAsyncOperation)privateExitGame
+{
+   JFFAsyncOperation cmd_loader_ = ^( JFFAsyncOperationProgressHandler progress_callback_
+                                     , JFFCancelAsyncOperationHandler cancel_callback_
+                                     , JFFDidFinishAsyncOperationHandler done_callback_ )
+   {
+      return [ self.api exitGameWithSid: self.sid ]( progress_callback_
+                                                    , cancel_callback_
+                                                    , done_callback_ );
+   };
+   return sequenceOfAsyncOperations( cmd_loader_
+                                    , [ self privateGetSrvState ]
+                                    , nil );
+}
+
 -(JFFAsyncOperation)doStepWithSymbsAndCoords:( NSArray* )step_
 {
-   JFFAsyncOperation auth_loader_ = [ self authLoader ];
+   JFFAsyncOperation auth_loader_ = ^( JFFAsyncOperationProgressHandler progress_callback_
+                                      , JFFCancelAsyncOperationHandler cancel_callback_
+                                      , JFFDidFinishAsyncOperationHandler done_callback_ )
+   {
+      self.sid = nil;
+      return [ self authLoader ]( progress_callback_
+                                 , cancel_callback_
+                                 , done_callback_ );
+   };
+
    JFFAsyncOperation cmd_loader_ = ^( JFFAsyncOperationProgressHandler progress_callback_
                                      , JFFCancelAsyncOperationHandler cancel_callback_
                                      , JFFDidFinishAsyncOperationHandler done_callback_ )
@@ -232,13 +291,20 @@
                                                , cancel_callback_
                                                , done_callback_ );
    };
+   cmd_loader_ = sequenceOfAsyncOperations( cmd_loader_
+                                           , [ self privateGetNextStepSrvState ]
+                                           , nil );
+
+   PredicateBlock predicate_ = ^BOOL( id context_ )
+   {
+      return ![ context_ result ];
+   };
+
+   cmd_loader_ = repeatAsyncOperation( cmd_loader_, predicate_, 1., 60 );
 
    //STODO place in load balancer
    //STODO add start game in sequence
-   return sequenceOfAsyncOperations( auth_loader_
-                                    , cmd_loader_
-//                                    , [ self privateGetNextStepSrvState ]
-                                    , nil );
+   return sequenceOfAsyncOperations( auth_loader_, cmd_loader_, nil );
 }
 
 -(void)exitGame

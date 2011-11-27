@@ -505,10 +505,13 @@ JFFAsyncOperation repeatAsyncOperation( JFFAsyncOperation native_loader_
          }
          else
          {
-            JFFScheduler* scheduler_ = [ [ JFFScheduler new ] autorelease ];
+            __block JFFScheduler* scheduler_ = [ JFFScheduler new ];
+
             JFFCancelAyncOperationBlockHolder* lc_holder_ = [ [ JFFCancelAyncOperationBlockHolder new ] autorelease ];
             JFFCancelScheduledBlock sch_cancel_ = [ scheduler_ addBlock: ^( JFFCancelScheduledBlock sch_cancel_ )
             {
+               [ scheduler_ release ];
+               scheduler_ = nil;
                sch_cancel_();
                //GTODO test this
                JFFAsyncOperation loader_ = repeatAsyncOperation( native_loader_
