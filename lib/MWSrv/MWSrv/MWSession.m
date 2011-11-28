@@ -310,32 +310,12 @@
                                            , nil );
 
    //STODO place in load balancer
-   //STODO add start game in sequence
    return sequenceOfAsyncOperations( auth_loader_, cmd_loader_, nil );
 }
 
 -(JFFAsyncOperation)waitFirstStep
 {
-   JFFAsyncOperation cmd_loader_ = ^( JFFAsyncOperationProgressHandler progress_callback_
-                                     , JFFCancelAsyncOperationHandler cancel_callback_
-                                     , JFFDidFinishAsyncOperationHandler done_callback_ )
-   {
-      return [ self.api playBattlegroundForSid: self.sid ]( progress_callback_
-                                                           , cancel_callback_
-                                                           , done_callback_ );
-   };
-   
-   //STODO place in load balancer
-   cmd_loader_ = sequenceOfAsyncOperations( cmd_loader_
-                                           , [ self privateGetNextStepSrvState ]
-                                           , nil );
-
-   PredicateBlock predicate_ = ^BOOL( id context_ )
-   {
-      return ![ context_ result ];
-   };
-
-   return repeatAsyncOperation( cmd_loader_, predicate_, 1., 60000 );
+   return [ self privateGetNextStepSrvState ];
 }
 
 -(void)exitGame
