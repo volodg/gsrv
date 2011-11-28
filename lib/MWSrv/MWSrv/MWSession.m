@@ -272,15 +272,7 @@
 
 -(JFFAsyncOperation)doStepWithSymbsAndCoords:( NSArray* )step_
 {
-   JFFAsyncOperation auth_loader_ = ^( JFFAsyncOperationProgressHandler progress_callback_
-                                      , JFFCancelAsyncOperationHandler cancel_callback_
-                                      , JFFDidFinishAsyncOperationHandler done_callback_ )
-   {
-      self.sid = nil;
-      return [ self authLoader ]( progress_callback_
-                                 , cancel_callback_
-                                 , done_callback_ );
-   };
+   JFFAsyncOperation auth_loader_ = [ self authLoader ];
 
    JFFAsyncOperation cmd_loader_ = ^( JFFAsyncOperationProgressHandler progress_callback_
                                      , JFFCancelAsyncOperationHandler cancel_callback_
@@ -291,26 +283,18 @@
                                                , cancel_callback_
                                                , done_callback_ );
    };
-   cmd_loader_ = sequenceOfAsyncOperations( cmd_loader_
-                                           , [ self privateGetNextStepSrvState ]
-                                           , nil );
 
    //STODO place in load balancer
    //STODO add start game in sequence
-   return sequenceOfAsyncOperations( auth_loader_, cmd_loader_, nil );
+   return sequenceOfAsyncOperations( auth_loader_
+                                    , cmd_loader_
+                                    , [ self privateGetNextStepSrvState ]
+                                    , nil );
 }
 
 -(JFFAsyncOperation)skipStep
 {
-   JFFAsyncOperation auth_loader_ = ^( JFFAsyncOperationProgressHandler progress_callback_
-                                      , JFFCancelAsyncOperationHandler cancel_callback_
-                                      , JFFDidFinishAsyncOperationHandler done_callback_ )
-   {
-      self.sid = nil;
-      return [ self authLoader ]( progress_callback_
-                                 , cancel_callback_
-                                 , done_callback_ );
-   };
+   JFFAsyncOperation auth_loader_ = [ self authLoader ];
 
    JFFAsyncOperation cmd_loader_ = ^( JFFAsyncOperationProgressHandler progress_callback_
                                      , JFFCancelAsyncOperationHandler cancel_callback_
