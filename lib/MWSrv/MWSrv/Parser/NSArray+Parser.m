@@ -46,7 +46,7 @@
       smartSymb_.y = [ [ y_crds_ objectAtIndex: index_ ] integerValue ];
       smartSymb_.symb = symb_;
 
-      [ result_ addObject: symb_ ];
+      [ result_ addObject: smartSymb_ ];
    }
 
    return result_;

@@ -34,12 +34,13 @@
 
 -(BOOL)isGameStartedResponse
 {
-   return [ self count ] == 5
+   return [ self count ] >= 6
        && [ self objectForKey: @"currentPlayer" ]
-       && [ self objectForKey: @"field" ]
-       && [ self objectForKey: @"users" ]
-       && [ self objectForKey: @"sym"   ]
-       && [ self objectForKey: @"state" ];
+       && [ self objectForKey: @"field"         ]
+       && [ self objectForKey: @"points"        ]
+       && [ self objectForKey: @"users"         ]
+       && [ self objectForKey: @"sym"           ]
+       && [ self objectForKey: @"state"         ];
 }
 
 -(BOOL)isGetSymbolsResponse
@@ -51,12 +52,13 @@
 
 -(BOOL)isCurrentGameSateResponse
 {
-   return [ self count ] == 5
+   return [ self count ] >= 6
       && [ self objectForKey: @"currentPlayer" ]
-      && [ self objectForKey: @"state" ]
-      && [ self objectForKey: @"sym" ]
-      && [ self objectForKey: @"x" ]
-      && [ self objectForKey: @"y" ];
+      && [ self objectForKey: @"points"        ]
+      && [ self objectForKey: @"state"         ]
+      && [ self objectForKey: @"sym"           ]
+      && [ self objectForKey: @"x"             ]
+      && [ self objectForKey: @"y"             ];
 }
 
 @end

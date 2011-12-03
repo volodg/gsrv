@@ -7,14 +7,36 @@
 #import "NSObject+Parser.h"
 #import "NSArray+Parser.h"
 
+@interface MWSessionState : NSObject
+
+@property ( nonatomic, retain ) NSString* sid;
+@property ( nonatomic, retain ) MWStartGameState* startGameState;
+@property ( nonatomic, assign ) NSUInteger lastStepPoints;
+
+@end
+
+@implementation MWSessionState
+
+@synthesize sid            = _sid;
+@synthesize startGameState = _startGameStatel;
+@synthesize lastStepPoints = _lastStepPoints;
+
+-(void)dealloc
+{
+   [ _sid             release ];
+   [ _startGameStatel release ];
+
+   [ super dealloc ];
+}
+
+@end
+
 @interface MWSession ()
 
 @property ( nonatomic, retain ) NSDate* lastLoginDate;//GTODO 5 minutes after last request
 @property ( nonatomic, retain ) MWApi* api;
 @property ( nonatomic, retain ) NSString* login;
-@property ( nonatomic, retain ) NSString* sid;
-@property ( nonatomic, assign ) BOOL gameActive;//???
-@property ( nonatomic, assign ) BOOL buzy;
+@property ( nonatomic, retain ) MWSessionState* sessionState;
 
 -(JFFAsyncOperation)privateGetSrvState;
 -(JFFAsyncOperation)privateExitGame;
@@ -26,17 +48,15 @@
 @synthesize lastLoginDate = _lastLoginDate;
 @synthesize api           = _api;
 @synthesize login         = _login;
-@synthesize sid           = _sid;
 @synthesize handler       = _handler;
-@synthesize gameActive    = _gameActive;
-@synthesize buzy          = _buzy;
+@synthesize sessionState  = _sessionState;
 
 -(void)dealloc
 {
    [ _lastLoginDate release ];
    [ _api           release ];
    [ _login         release ];
-   [ _sid           release ];
+   [ _sessionState  release ];
 
    [ super dealloc ];
 }
@@ -47,8 +67,8 @@
 
    if ( self )
    {
-      self.login = login_;
-      self.api   = [ [ MWApi new ] autorelease ];
+      self.login        = login_;
+      self.api          = [ [ MWApi new ] autorelease ];
    }
 
    return self;
@@ -57,6 +77,15 @@
 +(id)sessionWithLogin:( NSString* )login_
 {
    return [ [ [ self alloc ] initWithLogin: login_ ] autorelease ];
+}
+
+-(MWSessionState*)sessionState
+{
+   if ( !_sessionState )
+   {
+      _sessionState = [ MWSessionState new ];
+   }
+   return _sessionState;
 }
 
 -(BOOL)loginDateExpared
@@ -85,7 +114,7 @@
                                                          , JFFDidFinishAsyncOperationHandler done_callback_ )
          {
             context_.result = result_;
-            self.sid = result_;
+            self.sessionState.sid = result_;
             done_callback_( result_, error_ );
          } );
 
@@ -109,13 +138,14 @@
       {
          self.lastLoginDate = [ NSDate date ];
       };
-      loader_ = [ self asyncOperationForPropertyWithName: @"sid"
-                                          asyncOperation: loader_
-                                  didFinishLoadDataBlock: did_finish_operation_ ];
+      loader_ = [ self.sessionState asyncOperationForPropertyWithName: @"sid"
+                                                       asyncOperation: loader_
+                                               didFinishLoadDataBlock: did_finish_operation_ ];
 
       if ( self.lastLoginDate == nil || [ self loginDateExpared ] )
       {
-         self.sid = nil;
+         //GTODO remove this
+         self.sessionState.sid = nil;
       }
 
       return loader_( progress_callback_, cancel_callback_, done_callback_ );
@@ -128,8 +158,8 @@
                 , JFFCancelAsyncOperationHandler cancel_callback_
                 , JFFDidFinishAsyncOperationHandler done_callback_ )
    {
-      NSAssert( self.sid, @"sid can not be empty" );
-      JFFAsyncOperation loader_ = [ self.api getSrvStateWithSid: self.sid ];
+      NSAssert( _sessionState.sid, @"sid can not be empty" );
+      JFFAsyncOperation loader_ = [ self.api getSrvStateWithSid: self.sessionState.sid ];
       return loader_( progress_callback_, cancel_callback_, done_callback_ );
    } copy ] autorelease ];
 }
@@ -148,6 +178,8 @@
                                                    , NSError* error_
                                                    , JFFDidFinishAsyncOperationHandler done_callback_ )
       {
+         //NSLog( @"getGameStarted: %@", result_ );
+         //GTODO check response on NSNull
          result_ = [ result_ firstMatch: ^BOOL( id object_ )
          {
             return [ object_ isGameStartedResponse ];
@@ -157,6 +189,8 @@
          {
             MWStartGameState* state_ = [ MWStartGameState startGameStateWithDictionary: result_ ];
             state_.youFirst = [ self.login isEqualToString: state_.currentPlayer ];
+            self.sessionState.startGameState = state_;
+
             result_ = state_;
          }
 
@@ -175,9 +209,9 @@
                                      , JFFCancelAsyncOperationHandler cancel_callback_
                                      , JFFDidFinishAsyncOperationHandler done_callback_ )
    {
-      return [ self.api playBattlegroundForSid: self.sid ]( progress_callback_
-                                                           , cancel_callback_
-                                                           , done_callback_ );
+      return [ self.api playBattlegroundForSid: self.sessionState.sid ]( progress_callback_
+                                                                        , cancel_callback_
+                                                                        , done_callback_ );
    };
 
    //STODO place 
@@ -215,7 +249,7 @@
                                      , JFFCancelAsyncOperationHandler cancel_callback_
                                      , JFFDidFinishAsyncOperationHandler done_callback_ )
    {
-      return [ self.api getSymbolsWithSid: self.sid
+      return [ self.api getSymbolsWithSid: self.sessionState.sid
                                     count: count_ ]( progress_callback_
                                                     , cancel_callback_
                                                     , done_callback_ );
@@ -242,12 +276,29 @@
                                                       , NSError* error_
                                                       , JFFDidFinishAsyncOperationHandler done_callback_ )
       {
+         //NSLog( @"privateGetNextStepSrvState: %@", result_ );
+         if ( [ result_ isKindOfClass: [ NSNull class ] ] )
+         {
+            //GTODO finish game here
+            done_callback_( nil, [ JFFError errorWithDescription: @"wait timeout" ] );
+            return;
+         }
          result_ = [ result_ firstMatch: ^BOOL( id object_ )
          {
             return [ object_ isCurrentGameSateResponse ];
          } ];
 
-         result_ = result_ ? [ MWCurrentGameState currentGameStateWithDictionary: result_ ] : nil;
+         if ( result_ )
+         {
+            //self.sessionState.startGameState
+            NSArray* cids_ = self.sessionState.startGameState.users;
+            MWCurrentGameState* currState_ = [ MWCurrentGameState currentGameStateWithDictionary: result_
+                                                                                         userCid: self.login//GTODO change login on cid here
+                                                                                       usersCids: cids_ ];
+
+            result_ = currState_;
+         }
+
          done_callback_( result_, error_ );
       } );
 
@@ -261,9 +312,9 @@
                                      , JFFCancelAsyncOperationHandler cancel_callback_
                                      , JFFDidFinishAsyncOperationHandler done_callback_ )
    {
-      return [ self.api exitGameWithSid: self.sid ]( progress_callback_
-                                                    , cancel_callback_
-                                                    , done_callback_ );
+      return [ self.api exitGameWithSid: self.sessionState.sid ]( progress_callback_
+                                                                 , cancel_callback_
+                                                                 , done_callback_ );
    };
    return sequenceOfAsyncOperations( cmd_loader_
                                     , [ self privateGetSrvState ]
@@ -271,6 +322,7 @@
 }
 
 -(JFFAsyncOperation)doStepWithSymbsAndCoords:( NSArray* )step_
+                                      points:( NSUInteger )points_
 {
    JFFAsyncOperation auth_loader_ = [ self authLoader ];
 
@@ -278,10 +330,12 @@
                                      , JFFCancelAsyncOperationHandler cancel_callback_
                                      , JFFDidFinishAsyncOperationHandler done_callback_ )
    {
-      return [ self.api doStepWithSid: self.sid
-                       symbsAndCoords: step_ ]( progress_callback_
-                                               , cancel_callback_
-                                               , done_callback_ );
+      self.sessionState.lastStepPoints = points_;
+      return [ self.api doStepWithSid: self.sessionState.sid
+                       symbsAndCoords: step_
+                               points: points_ ]( progress_callback_
+                                                 , cancel_callback_
+                                                 , done_callback_ );
    };
 
    //STODO place in load balancer
@@ -300,10 +354,12 @@
                                      , JFFCancelAsyncOperationHandler cancel_callback_
                                      , JFFDidFinishAsyncOperationHandler done_callback_ )
    {
-      return [ self.api doStepWithSid: self.sid
-                       symbsAndCoords: nil ]( progress_callback_
-                                             , cancel_callback_
-                                             , done_callback_ );
+      JFFAsyncOperation loader_ = [ self.api doStepWithSid: self.sessionState.sid
+                                            symbsAndCoords: nil
+                                                    points: self.sessionState.lastStepPoints ];
+      return loader_( progress_callback_
+                     , cancel_callback_
+                     , done_callback_ );
    };
    cmd_loader_ = sequenceOfAsyncOperations( cmd_loader_
                                            , [ self privateGetNextStepSrvState ]
@@ -313,16 +369,16 @@
    return sequenceOfAsyncOperations( auth_loader_, cmd_loader_, nil );
 }
 
--(JFFAsyncOperation)waitFirstStep
+-(JFFAsyncOperation)waitStep
 {
    return [ self privateGetNextStepSrvState ];
 }
 
 -(void)exitGame
 {
-   if ( self.sid )
-      [ self.api exitGameWithSid: self.sid ]( nil, nil, nil );
-   self.sid = nil;
+   if ( _sessionState.sid )
+      [ self.api exitGameWithSid: self.sessionState.sid ]( nil, nil, nil );
+   self.sessionState = nil;
 }
 
 @end

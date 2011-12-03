@@ -65,7 +65,7 @@
    smartSymb_.state = 0;
    step_.symb = smartSymb_;
    NSArray* steps_ = [ NSArray arrayWithObject: step_ ];
-   [ self.session doStepWithSymbsAndCoords: steps_ ](  nil, nil, ^( id result_, NSError* error_ )
+   [ self.session doStepWithSymbsAndCoords: steps_ points: 25 + rand()%4 ](  nil, nil, ^( id result_, NSError* error_ )
    {
       NSLog( @"doStep RESULT: %@ result: %@ error: %@", self.login, result_, error_ );
    } );
@@ -75,10 +75,10 @@
 {
    [ self.session playBattleground ]( nil, nil, ^( id result_, NSError* error_ )
    {
-      NSLog( @"didStart player: %@ state: %@", self.login, result_ );
+      NSLog( @"didStart player: %@ state: %@ error: %@", self.login, result_, error_ );
       self.gameState = result_;
 
-      if ( !self.gameState.youFirst )
+      if ( !self.gameState.youFirst && !error_ )
       {
          [ self wait ];
       }
@@ -87,7 +87,7 @@
 
 -(void)wait
 {
-   [ self.session waitFirstStep ](  nil, nil, ^( id result_, NSError* error_ )
+   [ self.session waitStep ](  nil, nil, ^( id result_, NSError* error_ )
    {
       NSLog( @"wait RESULT: %@ result: %@ error: %@", self.login, result_, error_ );
    } );

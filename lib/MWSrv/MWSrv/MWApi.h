@@ -17,6 +17,7 @@
                                 count:( NSUInteger )count_;
 
 -(JFFAsyncOperation)doStepWithSid:( NSString* )sid_
-                   symbsAndCoords:( NSArray* )step_;
+                   symbsAndCoords:( NSArray* )step_
+                           points:( NSUInteger )points_;
 
 @end

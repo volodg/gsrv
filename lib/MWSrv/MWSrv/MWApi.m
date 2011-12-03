@@ -241,6 +241,7 @@ static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
                                                  value: value_ ];
          } ];
 
+         //NSLog( @"getSrvStateWithSid resp: %@", monad_.value );
          [ monad_ notifyDoneBlock: done_callback_ ];
       };
 
@@ -307,21 +308,26 @@ static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
 
 -(JFFAsyncOperation)doStepWithSid:( NSString* )sid_
                    symbsAndCoords:( NSArray* )step_
+                           points:( NSUInteger )points_
 {
    NSAssert( sid_, @"can not be empty" );
 
    NSURL* url_ = [ NSURL URLWithSid: sid_ ];
 
-   NSString* post_format_ = @"{\"command\":\"doStep\", %@ }";
-   NSString* post_        = nil;
+   NSString* post_ = nil;
 
    if ( step_ )
    {
-      post_ = [ NSString stringWithFormat: post_format_, [ step_ toJsonCommand ] ];
+      NSString* post_format_ = @"{\"command\":\"doStep\", %@, \"point\": \"%d\" }";
+      post_ = [ NSString stringWithFormat: post_format_
+               , [ step_ toJsonCommand ]
+               , points_ ];
    }
    else
    {
-      post_ = @"{\"command\":\"doStep\"}";
+      NSString* post_format_ = @"{\"command\":\"doStep\", \"point\": \"%d\" }";
+      post_ = [ NSString stringWithFormat: post_format_
+               , points_ ];
    }
 
    NSData* post_data_ = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];

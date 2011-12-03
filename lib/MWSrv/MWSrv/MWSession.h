@@ -12,9 +12,10 @@ typedef void (^MWServerCommandsHandler)( NSArray* commands_ );
 
 -(JFFAsyncOperation)playBattleground;
 -(JFFAsyncOperation)getSymbolsCount:( NSUInteger )count_;
--(JFFAsyncOperation)doStepWithSymbsAndCoords:( NSArray* )step_;
+-(JFFAsyncOperation)doStepWithSymbsAndCoords:( NSArray* )step_
+                                      points:( NSUInteger )points_;
 
--(JFFAsyncOperation)waitFirstStep;
+-(JFFAsyncOperation)waitStep;
 -(JFFAsyncOperation)skipStep;
 
 -(void)exitGame;
