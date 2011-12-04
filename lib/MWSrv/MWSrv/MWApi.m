@@ -119,7 +119,7 @@ static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
 -(id< JMonad >)monadForResponse:( id< JNUrlResponse > )response_
                           error:( NSError* )error_
 {
-   id value_ = [ NSNull null ];
+   id value_ = error_ ? nil : response_;
    if ( error_ == nil && 200 != response_.statusCode )
    {
       value_ = nil;
@@ -241,7 +241,8 @@ static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
                                                  value: value_ ];
          } ];
 
-         //NSLog( @"getSrvStateWithSid resp: %@", monad_.value );
+         //NSLog( @"<<<1>>>getSrvStateWithSid resp: %@", monad_.value );
+         //NSLog( @"<<<2>>>getSrvStateWithSid resp: %@ error: %@", result_, error_ );
          [ monad_ notifyDoneBlock: done_callback_ ];
       };
 
@@ -249,6 +250,8 @@ static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
       progress_callback_ = ^( id progress_data_ )
       {
          [ response_data_ appendData: progress_data_ ];
+         //NSString* str_ = [ [ [ NSString alloc ] initWithData: progress_data_ encoding: NSUTF8StringEncoding ] autorelease ];
+         //NSLog( @"<<<1.1>>>getSrvStateWithSid chunk: %@", str_ );
          if ( progress_callback_ )
             progress_callback_( progress_data_ );
       };

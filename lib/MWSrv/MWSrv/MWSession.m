@@ -37,6 +37,7 @@
 @property ( nonatomic, retain ) MWApi* api;
 @property ( nonatomic, retain ) NSString* login;
 @property ( nonatomic, retain ) MWSessionState* sessionState;
+@property ( nonatomic, retain ) MWCurrentGameState* currentGameState;
 
 -(JFFAsyncOperation)privateGetSrvState;
 -(JFFAsyncOperation)privateExitGame;
@@ -48,8 +49,8 @@
 @synthesize lastLoginDate = _lastLoginDate;
 @synthesize api           = _api;
 @synthesize login         = _login;
-@synthesize handler       = _handler;
 @synthesize sessionState  = _sessionState;
+@synthesize currentGameState = _currentGameState;
 
 -(void)dealloc
 {
@@ -160,7 +161,12 @@
    {
       NSAssert( _sessionState.sid, @"sid can not be empty" );
       JFFAsyncOperation loader_ = [ self.api getSrvStateWithSid: self.sessionState.sid ];
-      return loader_( progress_callback_, cancel_callback_, done_callback_ );
+      done_callback_ = [ [ done_callback_ copy ] autorelease ];
+      return loader_( progress_callback_, cancel_callback_, ^( id result_, NSError* error_ )
+      {
+         if ( done_callback_ )
+            done_callback_( result_, error_ );
+      } );
    } copy ] autorelease ];
 }
 
@@ -173,12 +179,26 @@
    {
       JFFAsyncOperation loader_ = [ self privateGetSrvState ];
 
+//      PredicateBlock predicate_ = ^BOOL( JFFResultContext* object_ )
+//      {
+//         BOOL result_ = ![ object_.result isKindOfClass: [ NSArray class ] ]
+//         || [ object_.result firstMatch: ^BOOL( id object_ )
+//         {
+//            return [ object_ isGameStartedResponse ];
+//         } ] == nil;
+//         return result_;
+//      };
+//      loader_ = repeatAsyncOperation( loader_
+//                                     , predicate_
+//                                     , 1.
+//                                     , 60 );
+
       loader_ = asyncOperationWithFinishHookBlock( loader_
                                                , ^( id result_
                                                    , NSError* error_
                                                    , JFFDidFinishAsyncOperationHandler done_callback_ )
       {
-         //NSLog( @"getGameStarted: %@", result_ );
+         //NSLog( @"done getGameStarted!!!: %@ error: %@", result_, error_ );
          //GTODO check response on NSNull
          result_ = [ result_ firstMatch: ^BOOL( id object_ )
          {
@@ -274,9 +294,9 @@
       loader_ = asyncOperationWithFinishHookBlock( loader_
                                                   , ^( id result_
                                                       , NSError* error_
-                                                      , JFFDidFinishAsyncOperationHandler done_callback_ )
+                                                      , JFFDidFinishAsyncOperationHandler lc_done_callback_ )
       {
-         //NSLog( @"privateGetNextStepSrvState: %@", result_ );
+         NSLog( @"privateGetNextStepSrvState SRV: %@", result_ );
          if ( [ result_ isKindOfClass: [ NSNull class ] ] )
          {
             //GTODO finish game here
@@ -295,11 +315,12 @@
             MWCurrentGameState* currState_ = [ MWCurrentGameState currentGameStateWithDictionary: result_
                                                                                          userCid: self.login//GTODO change login on cid here
                                                                                        usersCids: cids_ ];
+            self.currentGameState = currState_;
 
             result_ = currState_;
          }
 
-         done_callback_( result_, error_ );
+         lc_done_callback_( result_, error_ );
       } );
 
       return loader_( progress_callback_, cancel_callback_, done_callback_ );
@@ -322,7 +343,7 @@
 }
 
 -(JFFAsyncOperation)doStepWithSymbsAndCoords:( NSArray* )step_
-                                      points:( NSUInteger )points_
+                                      scores:( NSUInteger )points_
 {
    JFFAsyncOperation auth_loader_ = [ self authLoader ];
 

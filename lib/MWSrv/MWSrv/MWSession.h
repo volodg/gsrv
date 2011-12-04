@@ -2,18 +2,18 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^MWServerCommandsHandler)( NSArray* commands_ );
+@class MWCurrentGameState;
 
 @interface MWSession : NSObject
 
-@property ( nonatomic, copy ) MWServerCommandsHandler handler;
+@property ( nonatomic, retain, readonly ) MWCurrentGameState* currentGameState;
 
 +(id)sessionWithLogin:( NSString* )login_;
 
 -(JFFAsyncOperation)playBattleground;
 -(JFFAsyncOperation)getSymbolsCount:( NSUInteger )count_;
 -(JFFAsyncOperation)doStepWithSymbsAndCoords:( NSArray* )step_
-                                      points:( NSUInteger )points_;
+                                      scores:( NSUInteger )points_;
 
 -(JFFAsyncOperation)waitStep;
 -(JFFAsyncOperation)skipStep;

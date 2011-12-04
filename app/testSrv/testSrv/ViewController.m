@@ -14,13 +14,13 @@
 
 @synthesize firstLetter;
 @synthesize secondLetter;
-@synthesize player1        = _player1;
-@synthesize player2        = _player2;
+@synthesize player1 = _player1;
+@synthesize player2 = _player2;
 
 -(void)dealloc
 {
-   [firstLetter release];
-   [secondLetter release];
+   [ firstLetter release ];
+   [ secondLetter release ];
    [ _player1 release ];
    [ _player2 release ];
 
@@ -37,7 +37,7 @@
 {
    self.player1 = [ MWPlayer playerWithLogin: @"testUser1" ];
    [ self.player1 start ];
-   
+
    [ self performSelector: @selector( loginAndPlayPlayer2 )
                withObject: nil
                afterDelay: 2.0 ];

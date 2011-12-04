@@ -17,12 +17,14 @@
 @synthesize allPoints       = _allPoints;
 @synthesize ownPoints       = _ownPoints;
 @synthesize opponentPoints  = _opponentPoints;
+@synthesize opponentName    = _opponentName;
 
 -(void)dealloc
 {
    [ _symbolsAndCoods release ];
    [ _currentPlayer   release ];
    [ _allPoints       release ];
+   [ _opponentName    release ];
 
    [ super dealloc ];
 }
@@ -48,6 +50,9 @@
 
       self.ownPoints      = [ [ self.allPoints objectAtIndex: ownIndex_      ] integerValue ];
       self.opponentPoints = [ [ self.allPoints objectAtIndex: opponentIndex_ ] integerValue ];
+
+      //GTODO ose names instead of cids
+      self.opponentName = [ cids_ objectAtIndex: opponentIndex_ ];
    }
 
    return self;

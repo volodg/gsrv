@@ -201,13 +201,6 @@
 		658533251481544F00075ACF /* MWSymbWithCoords.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWSymbWithCoords.m; sourceTree = "<group>"; };
 		658533C7148269A400075ACF /* MWCurrentGameState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCurrentGameState.h; sourceTree = "<group>"; };
 		658533C8148269A500075ACF /* MWCurrentGameState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWCurrentGameState.m; sourceTree = "<group>"; };
-		65D2A51F148426050089E6FA /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
-		65D2A522148426050089E6FA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		65D2A523148426050089E6FA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		65D2A524148426050089E6FA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		65D2A527148426050089E6FA /* MWSrvMacOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MWSrvMacOS-Prefix.pch"; sourceTree = "<group>"; };
-		65D2A528148426050089E6FA /* MWSrvMacOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWSrvMacOS.h; sourceTree = "<group>"; };
-		65D2A529148426050089E6FA /* MWSrvMacOS.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MWSrvMacOS.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,7 +226,6 @@
 			isa = PBXGroup;
 			children = (
 				65229F99147AD45900D83D06 /* MWSrv */,
-				65D2A525148426050089E6FA /* MWSrvMacOS */,
 				65229F96147AD45900D83D06 /* Frameworks */,
 				65229F95147AD45900D83D06 /* Products */,
 				65229FA4147AD48900D83D06 /* Dependencies */,
@@ -252,8 +244,6 @@
 			isa = PBXGroup;
 			children = (
 				65229F97147AD45900D83D06 /* Foundation.framework */,
-				65D2A51F148426050089E6FA /* Cocoa.framework */,
-				65D2A521148426050089E6FA /* Other Frameworks */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -392,34 +382,6 @@
 				6585332114814F3D00075ACF /* NSString+Parser.m */,
 			);
 			path = Parser;
-			sourceTree = "<group>";
-		};
-		65D2A521148426050089E6FA /* Other Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				65D2A522148426050089E6FA /* AppKit.framework */,
-				65D2A523148426050089E6FA /* CoreData.framework */,
-				65D2A524148426050089E6FA /* Foundation.framework */,
-			);
-			name = "Other Frameworks";
-			sourceTree = "<group>";
-		};
-		65D2A525148426050089E6FA /* MWSrvMacOS */ = {
-			isa = PBXGroup;
-			children = (
-				65D2A528148426050089E6FA /* MWSrvMacOS.h */,
-				65D2A529148426050089E6FA /* MWSrvMacOS.m */,
-				65D2A526148426050089E6FA /* Supporting Files */,
-			);
-			path = MWSrvMacOS;
-			sourceTree = "<group>";
-		};
-		65D2A526148426050089E6FA /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				65D2A527148426050089E6FA /* MWSrvMacOS-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -679,7 +641,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -687,7 +649,7 @@
 					"../../lib-third-party/cocoa-amf/CocoaAMF",
 					"../../lib-third-party/JFFLibrary/lib",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -699,7 +661,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -707,7 +669,7 @@
 					"../../lib-third-party/cocoa-amf/CocoaAMF",
 					"../../lib-third-party/JFFLibrary/lib",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

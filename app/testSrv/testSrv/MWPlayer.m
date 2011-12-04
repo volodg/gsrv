@@ -65,7 +65,7 @@
    smartSymb_.state = 0;
    step_.symb = smartSymb_;
    NSArray* steps_ = [ NSArray arrayWithObject: step_ ];
-   [ self.session doStepWithSymbsAndCoords: steps_ points: 25 + rand()%4 ](  nil, nil, ^( id result_, NSError* error_ )
+   [ self.session doStepWithSymbsAndCoords: steps_ scores: 25 + rand()%4 ](  nil, nil, ^( id result_, NSError* error_ )
    {
       NSLog( @"doStep RESULT: %@ result: %@ error: %@", self.login, result_, error_ );
    } );

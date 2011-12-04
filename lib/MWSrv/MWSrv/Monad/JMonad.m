@@ -4,6 +4,13 @@
 
 @synthesize value = _value;
 
+-(void)dealloc
+{
+   [ _value release ];
+
+   [ super dealloc ];
+}
+
 -(id)initWithValue:( id )value_
 {
    self = [ super init ];
