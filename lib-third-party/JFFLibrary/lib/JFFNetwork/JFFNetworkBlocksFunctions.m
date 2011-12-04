@@ -26,7 +26,7 @@ JFFAsyncOperation genericChunkedURLResponseLoader(
                                              : [ factory_ createStandardConnection ];
 
       connection_.shouldAcceptCertificateBlock = certificate_callback_;
-      
+
       progress_callback_ = [ [ progress_callback_ copy ] autorelease ];
       connection_.didReceiveDataBlock = ^( NSData* data_ )
       {
