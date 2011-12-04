@@ -43,6 +43,14 @@
 @synthesize error = _error;
 @synthesize value = _value;
 
+-(void)dealloc
+{
+   [ _error release ];
+   [ _value release ];
+
+   [ super dealloc ];
+}
+
 -(id)initWithError:( NSError* )error_
              value:( id )value_
 {
