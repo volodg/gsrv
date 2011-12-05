@@ -1,0 +1,61 @@
+
+<erl>
+	% test in shell:
+	% 1. touch report.yaws*; wget -q -a=report.yaws localhost:8000/report.yaws &
+	% 2. tail -f report.yaws.1
+	out(Arg) ->
+		io:fwrite( "HERE 1.0~n", [] ),
+		Self = self(),
+		io:fwrite( "HERE 2.0~n", [] ),
+		Pid = spawn(fun() ->
+				rec_loop( Arg#arg.clisock )
+			end),
+		[ {header, {content_length, -1}},
+			{header, {"Transfer-Encoding", "chunked"} },
+			{header, {"Connection", "keep-alive"} },
+			{streamcontent_from_pid, "text/plain", Pid}].
+
+	rec_loop(Socket) ->
+		io:fwrite( "HERE 3.0~n", [] ),
+		receive
+			{discard, YawsPid} ->
+				io:fwrite( "HERE 4.0~n", [] ),
+				yaws_api:stream_process_end(Socket, YawsPid);
+			{ok, YawsPid} ->
+				io:fwrite( "HERE 5.0~n", [] ),
+				connect_report(Socket, YawsPid);
+			Other ->
+				{ html, "error" }
+		end,
+		exit(normal).
+
+    send_game_started_resp( Socket, YawsPid, Response ) ->
+		yaws_api:stream_process_deliver_chunk(Socket, Response),
+		yaws_api:stream_process_deliver_final_chunk(Socket, <<>>),
+		yaws_api:stream_process_end(closed, YawsPid).
+
+	connect_report( Socket, YawsPid ) ->
+		io:fwrite( "HERE 6.0~n", [] ),
+		case mw_start:play_battleground( "MyCid" ) of
+			wait ->
+				io:fwrite( "HERE 7.0~n", [] ),
+				receive
+					{ start_game, _GamePid } ->
+						send_game_started_resp(Socket, YawsPid, "Game started");
+					_Other ->
+						io:fwrite( "TODO Check this response ~p~n", [_Other] ),
+						send_game_started_resp(Socket, YawsPid, "Socket closed")
+				after 1000000 ->
+					%STODO unsibscribe self from wait
+					io:fwrite( "reconnect after delay~n" )
+				end;
+			{ start_game, _GamePid } ->
+				io:fwrite( "HERE 8.0~n", [] ),
+				send_game_started_resp(Socket, YawsPid, "Game started");
+			_Other ->
+				io:fwrite( "HERE 9.0~n", [] ),
+				io:fwrite( "TODO 1 Check this response ~n", [] ),
+				send_game_started_resp(Socket, YawsPid, "Socket closed")
+		end.
+
+</erl>

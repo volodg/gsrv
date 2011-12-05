@@ -1,0 +1,30 @@
+
+CLIENT
+yaws -sname trade
+
+SERVER
+1. erl -sname server
+% Node: server@Mac-Pro-Vladimir
+2. c(bn_server).
+3. bn_server:start_link().
+4. bn_server:stop().
+
+Compile all - lc([benchmark,bn_common,bn_dealer,bn_report,bn_server,datetime,selftest]).
+
+///////////////////////////////////////////////
+
+1. yaws
+
+///////////////////////////////////////////////
+
+2. Install
+ cd yaws
+# autoconf; ./configure; make; make local_install
+    
+Alternatively, to make a proper install
+
+# cd yaws
+# ./configure --help
+# ./configure --localstatedir=/var --sysconfdir=/etc
+# make
+# make install
