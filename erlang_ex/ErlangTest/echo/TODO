@@ -1,0 +1,30 @@
+calendar:universal_time().
+calendar:local_time().
+calendar:time_difference()
+
+now_to_datetime(Now)
+now_to_local_time(Now)
+
+calendar:time_to_seconds(time()).
+
+{{2011,10,23},{10,40,18}}
+
+http://localhost:8000/report.yaws
+
+http://localhost:8000/echo.yaws?echo=test
+
+http://localhost:8000/test/random_deal.yaws
+
+//////////////////////////////////////////////////////////////
+
+CFLAGS=-O0 ./configure --prefix=/usr/share/erlang --enable-threads --enable-darwin-64bit --enable-readline
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+1.1. add save state at restarting dealer
+
+2. Document all
+
+3. Test different issues, errors and timeouts
+
+7. Fix all ETODO

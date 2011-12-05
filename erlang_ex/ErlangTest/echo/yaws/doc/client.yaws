@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+   <head>
+      <link rel="scm-forward" href="http://ws-vlg.dk.sitecore.net/Nicam.aspx" />
+      <link rel="scm-back" href="http://ws-vlg.dk.sitecore.net/Products.aspx" />
+
+      <meta charset="UTF-8">
+         <title>Example document</title>
+      <script type="text/javascript"> 
+         function test_web_socket() {
+//			alert( "test_web_socket" );
+            var webSocket = new WebSocket( 'ws://10.38.12.115:8000/websockets.yaws' );
+
+            webSocket.onopen = function(event) {
+				webSocket.send("client-connected");
+            };
+
+            webSocket.onmessage = function(event) {
+            };
+
+            webSocket.onerror = function(event) {
+				alert( "onerror" );
+				webSocket.close();
+            };
+
+            webSocket.onclose = function(event) {
+				alert( "onclose" );
+            };
+         }
+      </script>
+     </head>
+   <body>
+      <p>Example paragraph</p>
+      <form>
+         <input type="BUTTON" value="Test web socket" onclick="test_web_socket()"> 
+      </form>
+   </body>
+</html>
+
+<erl>
+
+out(A) ->
+    io:format("out called !!!!!~n").
+
+</erl>
