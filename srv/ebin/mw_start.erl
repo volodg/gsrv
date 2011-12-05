@@ -65,21 +65,16 @@ init([]) ->
 %% Description: Handling call messages
 %%--------------------------------------------------------------------
 handle_call({play_battleground, Cid}, From, State) ->
-	io:fwrite( "HERE XXX 20.0 ~n", [] ),
 	case get_pending_player( State ) of
 		nil ->
-			NewState = set_pending_player( State, { Cid, From } ),
+			{Pid,_Tag} = From,
+			NewState = set_pending_player( State, { Cid, Pid } ),
 			{reply, wait, NewState};
-		{ _PendingPlayerCid, PendingPlayerPid } ->
+		{ PendingPlayerCid, PendingPlayerPid } ->
 			%STODO create game
-			io:fwrite( "HERE 21.0 ~n", [] ),
-			NewState2 = set_pending_player( State, nil ),
-			io:fwrite( "HERE 22.0 ~n", [] ),
-			PendingPlayerPid ! { start_game, game_pid },
-			io:fwrite( "HERE 23.0 ~n", [] ),
-			{reply, { start_game, game_pid }, NewState2};
-		_Other ->
-			io:fwrite( "HERE Other 22.0 ~p~n", [_Other] )
+			NewState = set_pending_player( State, nil ),
+			PendingPlayerPid ! { start_game, PendingPlayerCid },
+			{reply, { start_game, game_pid }, NewState}
 	end.
 
 %%--------------------------------------------------------------------
