@@ -72,6 +72,7 @@ handle_call({play_battleground, Cid}, From, State) ->
 			{reply, wait, NewState};
 		{ PendingPlayerCid, PendingPlayerPid } ->
 			%STODO create game
+			%STODO check date of PendingPlayer
 			NewState = set_pending_player( State, nil ),
 			PendingPlayerPid ! { start_game, PendingPlayerCid },
 			{reply, { start_game, game_pid }, NewState}
