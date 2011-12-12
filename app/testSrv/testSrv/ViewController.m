@@ -19,23 +19,23 @@
 
 -(void)dealloc
 {
-   [ firstLetter release ];
+   [ firstLetter  release ];
    [ secondLetter release ];
-   [ _player1 release ];
-   [ _player2 release ];
+   [ _player1     release ];
+   [ _player2     release ];
 
-   [super dealloc];
+   [ super dealloc ];
 }
 
 -(void)loginAndPlayPlayer2
 {
-   self.player2 = [ MWPlayer playerWithLogin: @"testUser2" ];
+   self.player2 = [ MWPlayer playerWithLogin: @"user2" ];
    [ self.player2 start ];
 }
 
 -(void)test
 {
-   self.player1 = [ MWPlayer playerWithLogin: @"testUser1" ];
+   self.player1 = [ MWPlayer playerWithLogin: @"user1" ];
    [ self.player1 start ];
 
    [ self performSelector: @selector( loginAndPlayPlayer2 )

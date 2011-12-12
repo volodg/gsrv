@@ -80,6 +80,7 @@
 
       if ( !self.gameState.youFirst && !error_ )
       {
+//          NSLog( @"start wait srv state" );
          [ self wait ];
       }
    } );
