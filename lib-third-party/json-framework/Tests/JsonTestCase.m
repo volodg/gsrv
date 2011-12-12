@@ -32,13 +32,30 @@
 
 #import "JsonTestCase.h"
 
+@interface JsonTestCase ()
+
+@property ( nonatomic, retain ) SBJsonWriter * writer;
+@property ( nonatomic, retain ) SBJsonParser * parser;
+
+@end
 
 @implementation JsonTestCase
 
+@synthesize writer = _writer;
+@synthesize parser = _parser;
+
+-(void)dealloc
+{
+   [ _writer release ];
+   [ _parser release ];
+
+   [ super dealloc ];
+}
+
 - (void)setUp {
     count = 0;
-    parser = [[SBJsonParser alloc] init];
-    writer = [[SBJsonWriter alloc] init];
+    self.parser = [[[SBJsonParser alloc] init]autorelease];
+    self.writer = [[[SBJsonWriter alloc] init]autorelease];
 }
 
 - (NSString*)otherFileName {

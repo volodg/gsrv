@@ -35,28 +35,48 @@
 #import <SBJson/SBJson.h>
 
 @interface StreamParserIntegrationTest : SenTestCase < SBJsonStreamParserAdapterDelegate> {
-	SBJsonStreamParser *parser;
-	SBJsonStreamParserAdapter *adapter;
+	SBJsonStreamParser *_parser;
+	SBJsonStreamParserAdapter *_adapter;
 	NSUInteger arrayCount, objectCount;
-	NSDirectoryEnumerator *files;
-	NSString *path;
+	NSDirectoryEnumerator *_files;
+	NSString *_path;
 }
+
+@property ( nonatomic, retain ) SBJsonStreamParserAdapter *adapter;
+@property ( nonatomic, retain ) SBJsonStreamParser *parser;
+@property ( nonatomic, retain ) NSDirectoryEnumerator *files;
+@property ( nonatomic, retain ) NSString *path;
 @end
 
 @implementation StreamParserIntegrationTest
 
+@synthesize adapter = _adapter;
+@synthesize parser = _parser;
+@synthesize files = _files;
+@synthesize path = _path;
+
+-(void)dealloc
+{
+   [ _adapter release ];
+   [ _parser release ];
+   [ _files release ];
+   [ _path release ];
+
+   [ super dealloc ];
+}
+
 - (void)setUp {
-	adapter = [SBJsonStreamParserAdapter new];
-	adapter.delegate = self;
+	self.adapter = [[SBJsonStreamParserAdapter new]autorelease];
+	self.adapter.delegate = self;
 	
-	parser = [SBJsonStreamParser new];
-	parser.delegate = adapter;
-	parser.supportMultipleDocuments = YES;
+	self.parser = [[SBJsonStreamParser new]autorelease];
+	self.parser.delegate = self.adapter;
+	self.parser.supportMultipleDocuments = YES;
 	
 	arrayCount = objectCount = 0u;
 
-	path = @"Tests/Stream";
-	files = [[NSFileManager defaultManager] enumeratorAtPath:path];
+	self.path = @"Tests/Stream";
+	self.files = [[NSFileManager defaultManager] enumeratorAtPath:self.path];
 
 }
 
@@ -76,29 +96,29 @@
  */
 - (void)testMultipleDocuments {
 	NSString *fileName;
-    while ((fileName = [files nextObject])) {
-		NSString *file = [path stringByAppendingPathComponent:fileName];
+    while ((fileName = [self.files nextObject])) {
+		NSString *file = [self.path stringByAppendingPathComponent:fileName];
 		NSLog(@"Parsing file: %@", file);
 		
 		NSData *data = [NSData dataWithContentsOfMappedFile:file];
 		STAssertNotNil(data, nil);
 	
-		STAssertEquals([parser parse:data], SBJsonStreamParserWaitingForData, @"%@ - %@", file, parser.error);
+		STAssertEquals([self.parser parse:data], SBJsonStreamParserWaitingForData, @"%@ - %@", file, self.parser.error);
 	}
 	STAssertEquals(arrayCount, (NSUInteger)0, nil);
 	STAssertEquals(objectCount, (NSUInteger)98, nil);
 }
 
 - (void)parseArrayOfObjects {
-	[parser parse:[NSData dataWithBytes:"[" length:1]];
+	[self.parser parse:[NSData dataWithBytes:"[" length:1]];
 	for (int i = 1;; i++) {
 		char *utf8 = "{\"foo\":[],\"bar\":[]}";
-		[parser parse:[NSData dataWithBytes:utf8 length:strlen(utf8)]];
+		[self.parser parse:[NSData dataWithBytes:utf8 length:strlen(utf8)]];
 		if (i == 100)
 			break;
-		[parser parse:[NSData dataWithBytes:"," length:1]];
+		[self.parser parse:[NSData dataWithBytes:"," length:1]];
 	}
-	[parser parse:[NSData dataWithBytes:"]" length:1]];
+	[self.parser parse:[NSData dataWithBytes:"]" length:1]];
 }
 
 - (void)testSingleArray {
@@ -108,14 +128,14 @@
 }
 
 - (void)testSkipArray {
-	adapter.levelsToSkip = 1;
+	self.adapter.levelsToSkip = 1;
 	[self parseArrayOfObjects];
 	STAssertEquals(arrayCount, (NSUInteger)0, nil);
 	STAssertEquals(objectCount, (NSUInteger)100, nil);	
 }
 
 - (void)testSkipArrayAndObject {
-	adapter.levelsToSkip = 2;
+	self.adapter.levelsToSkip = 2;
 	[self parseArrayOfObjects];
 	STAssertEquals(arrayCount, (NSUInteger)200, nil);
 	STAssertEquals(objectCount, (NSUInteger)0, nil);	

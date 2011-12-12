@@ -55,7 +55,7 @@
 
 @implementation Bool
 - (id)proxyForJson {
-    return [NSArray arrayWithObjects:[True new], [False new], nil];
+    return [NSArray arrayWithObjects:[[True new]autorelease], [[False new]autorelease], nil];
 }
 @end
 
@@ -68,32 +68,44 @@
 #pragma mark Tests
 
 @interface ProxyTest : SenTestCase {
-	SBJsonWriter * writer;
+	SBJsonWriter * _writer;
 }
+
+@property ( nonatomic, retain ) SBJsonWriter * writer;
+
 @end
 
 
 @implementation ProxyTest
+
+@synthesize writer = _writer;
+
+-(void)dealloc
+{
+   [ _writer release ];
+
+   [ super dealloc ];
+}
 
 - (void)setUp {
     writer = [SBJsonWriter new];
 }
 
 - (void)testUnsupportedWithoutProxy {
-    STAssertNil([writer stringWithObject:[NSArray arrayWithObject:[NSObject new]]], nil);
+    STAssertNil([writer stringWithObject:[NSArray arrayWithObject:[[NSObject new]autorelease]]], nil);
 	STAssertEqualObjects(writer.error, @"JSON serialisation not supported for NSObject", nil);
 }
 
 - (void)testUnsupportedWithProxy {
-    STAssertEqualObjects([writer stringWithObject:[NSArray arrayWithObject:[True new]]], @"[true]", nil);
+    STAssertEqualObjects([writer stringWithObject:[NSArray arrayWithObject:[[True new]autorelease]]], @"[true]", nil);
 }
 
 - (void)testUnsupportedWithProxyWithoutWrapper {
-    STAssertNil([writer stringWithObject:[True new]], nil);
+    STAssertNil([writer stringWithObject:[[True new]autorelease]], nil);
 }
 
 - (void)testUnsupportedWithNestedProxy {
-    STAssertEqualObjects([writer stringWithObject:[NSArray arrayWithObject:[Bool new]]], @"[[true,false]]", nil);
+    STAssertEqualObjects([writer stringWithObject:[NSArray arrayWithObject:[[Bool new]autorelease]]], @"[[true,false]]", nil);
 }
 
 - (void)testUnsupportedWithProxyAsCategory {

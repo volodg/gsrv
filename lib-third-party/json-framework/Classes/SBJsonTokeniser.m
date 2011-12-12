@@ -41,11 +41,18 @@
 @synthesize error = _error;
 @synthesize stream = _stream;
 
+-(void)dealloc
+{
+   [ _stream release ];
+   [ _error release ];
+
+   [ super dealloc ];
+}
+
 - (id)init {
     self = [super init];
     if (self) {
         _stream = [[SBJsonUTF8Stream alloc] init];
-
     }
 
     return self;

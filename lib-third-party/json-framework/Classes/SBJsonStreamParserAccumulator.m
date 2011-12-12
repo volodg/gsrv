@@ -31,17 +31,23 @@
 
 @implementation SBJsonStreamParserAccumulator
 
-@synthesize value;
+@synthesize value = _value;
 
+-(void)dealloc
+{
+   [ _value release ];
+
+   [ super dealloc ];
+}
 
 #pragma mark SBJsonStreamParserAdapterDelegate
 
 - (void)parser:(SBJsonStreamParser*)parser foundArray:(NSArray *)array {
-	value = array;
+	self.value = array;
 }
 
 - (void)parser:(SBJsonStreamParser*)parser foundObject:(NSDictionary *)dict {
-	value = dict;
+	self.value = dict;
 }
 
 @end

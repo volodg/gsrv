@@ -32,14 +32,19 @@
 #import <SBJson/SBJson.h>
 
 @interface WriterTest : SenTestCase {
-	SBJsonWriter * writer;
+	SBJsonWriter * _writer;
 }
+
+@property ( nonatomic, retain ) SBJsonWriter * writer;
+
 @end
 
 @implementation WriterTest
 
+@synthesize writer = _writer;
+
 - (void)setUp {
-    writer = [SBJsonWriter new];
+    self.writer = [ [SBJsonWriter new] autorelease];
 }
 
 - (void)testInfinity {
@@ -69,7 +74,7 @@
 
 
 - (void)testWriteToStream {
-	SBJsonStreamWriter *streamWriter = [[SBJsonStreamWriter alloc] init];
+	SBJsonStreamWriter *streamWriter = [[[SBJsonStreamWriter alloc] init]autorelease];
 	
 	STAssertTrue([streamWriter writeArray:[NSArray array]], nil);
 	

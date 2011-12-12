@@ -41,8 +41,15 @@
 @synthesize sortKeys;
 @synthesize humanReadable;
 
-@synthesize error;
+@synthesize error = _error;
 @synthesize maxDepth;
+
+-(void)dealloc
+{
+   [ _error release ];
+
+   [ super dealloc ];
+}
 
 - (id)init {
     self = [super init];
@@ -56,7 +63,7 @@
 - (NSString*)stringWithObject:(id)value {
 	NSData *data = [self dataWithObject:value];
 	if (data)
-		return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+		return [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]autorelease];
 	return nil;
 }	
 
@@ -66,7 +73,7 @@
         return tmp;
     
     if (error_) {
-		NSDictionary *ui = [NSDictionary dictionaryWithObjectsAndKeys:error, NSLocalizedDescriptionKey, nil];
+		NSDictionary *ui = [NSDictionary dictionaryWithObjectsAndKeys:self.error, NSLocalizedDescriptionKey, nil];
         *error_ = [NSError errorWithDomain:@"org.brautaset.SBJsonWriter.ErrorDomain" code:0 userInfo:ui];
 	}
 	
@@ -76,9 +83,9 @@
 - (NSData*)dataWithObject:(id)object {	
     self.error = nil;
 
-    SBJsonStreamWriterAccumulator *accumulator = [[SBJsonStreamWriterAccumulator alloc] init];
+    SBJsonStreamWriterAccumulator *accumulator = [[[SBJsonStreamWriterAccumulator alloc] init]autorelease];
     
-	SBJsonStreamWriter *streamWriter = [[SBJsonStreamWriter alloc] init];
+	SBJsonStreamWriter *streamWriter = [[[SBJsonStreamWriter alloc] init]autorelease];
 	streamWriter.sortKeys = self.sortKeys;
 	streamWriter.maxDepth = self.maxDepth;
 	streamWriter.humanReadable = self.humanReadable;
