@@ -438,7 +438,7 @@
 		65229F8B147AD45800D83D06 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = 65229F8E147AD45800D83D06 /* Build configuration list for PBXProject "MWSrv" */;
 			compatibilityVersion = "Xcode 3.2";

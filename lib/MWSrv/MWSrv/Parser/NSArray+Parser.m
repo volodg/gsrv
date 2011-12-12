@@ -17,7 +17,7 @@
                        withBlock: ^void( id first_object_, id second_object_ )
    {
       MWSymb* symb_ = [ [ MWSymb new ] autorelease ];
-      symb_.symb  = first_object_;
+      symb_.symb  = [ first_object_ uppercaseString ];
       symb_.state = [ second_object_ integerValue ];
       [ symbols_ addObject: symb_ ];
    } ];
@@ -38,7 +38,7 @@
    for ( NSUInteger index_ = 0; index_ < size_; ++index_ )
    {
       MWSymb* symb_ = [ [ MWSymb new ] autorelease ];
-      symb_.symb  = [ letters_ objectAtIndex: index_ ];
+      symb_.symb  = [ [ letters_ objectAtIndex: index_ ] uppercaseString ];
       symb_.state = [ [ states_ objectAtIndex: index_ ] integerValue ];
 
       MWSymbWithCoords* smartSymb_ = [ [ MWSymbWithCoords new ] autorelease ];

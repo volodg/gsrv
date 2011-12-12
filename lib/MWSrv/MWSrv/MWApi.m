@@ -19,7 +19,7 @@ static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
 
 -(NSString*)toJsonCommandWithIndex:( NSUInteger )index_
 {
-   return [ NSString stringWithFormat: @"\"x%d\":%d, \"y%d\":%d, \"state%d\":%d, \"sym%d\":\"%@\""
+   return [ NSString stringWithFormat: @"\"x%d\":%d, \"y%d\":%d, \"state%d\":\"%d\", \"sym%d\":\"%@\""
            , index_, self.x
            , index_, self.y
            , index_, self.symb.state
@@ -145,6 +145,8 @@ static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
                              , login_ ? login_ : @"" ];
    NSData*   post_data_   = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
 
+    NSLog( @"authWithLogin: %@", login_ );
+
    JFFAsyncOperation loader_ = chunkedURLResponseLoader( url_
                                                         , post_data_
                                                         , self.headers );
@@ -153,8 +155,10 @@ static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
                                                                 , NSError* error_
                                                                 , JFFDidFinishAsyncOperationHandler done_callback_ )
    {
+       NSLog( @"done auth" );
       JEitherMonad* monad_ = [ [ self monadForResponse: result_ error: error_ ]
-      bindVoidOperation: ^id<JMonad>{
+      bindVoidOperation: ^id<JMonad>( void )
+      {
          return [ JEitherMonad eitherMonadWithError: nil
                                               value: sid_ ];
       } ];
@@ -169,7 +173,7 @@ static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
 {
    NSURL* url_ = [ NSURL URLWithSid: sid_ ];
 
-   NSString* post_      = @"{\"command\":\"playBattleground\"}";
+   NSString* post_      = @"{\"cmd\":\"playBattleground\"}";
    NSData*   post_data_ = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
 
    JFFAsyncOperation loader_ = chunkedURLResponseLoader( url_
@@ -249,6 +253,8 @@ static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
       progress_callback_ = [ [ progress_callback_ copy ] autorelease ];
       progress_callback_ = ^( id progress_data_ )
       {
+          NSLog( @"got data: %@", [ [ NSString alloc ] initWithData: progress_data_
+                                                           encoding: NSUTF8StringEncoding ] );
          [ response_data_ appendData: progress_data_ ];
          //NSString* str_ = [ [ [ NSString alloc ] initWithData: progress_data_ encoding: NSUTF8StringEncoding ] autorelease ];
          //NSLog( @"<<<1.1>>>getSrvStateWithSid chunk: %@", str_ );
@@ -263,12 +269,69 @@ static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
    } copy ] autorelease ];
 }
 
+/*-(JFFAsyncOperation)getSrvStateWithSid:( NSString* )sid_
+{
+    return [ [ ^( JFFAsyncOperationProgressHandler progress_callback_
+                 , JFFCancelAsyncOperationHandler cancel_callback_
+                 , JFFDidFinishAsyncOperationHandler done_callback_ )
+              {
+                  //NSURL* url_ = [ NSURL URLWithString: @"http://test.bwf.org.ua:3333" ];
+                  NSURL* url_ = [ NSURL URLWithSid: sid_ ];
+                  
+                  static char data_[1] = { 0 };
+                  NSData* post_data_ = [ NSData dataWithBytes: data_ length: 1 ];
+                  
+                  //      NSMutableData* response_data_ = [ NSMutableData data ];
+                  
+                  //      JFFAsyncOperation loader_ = chunkedURLResponseLoader( url_
+                  //                                                           , post_data_
+                  //                                                           , nil );
+                  
+                  NSLog( @"try getSrvStateWithSid %@", url_ );
+                  
+                  dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0);
+                  dispatch_async( queue, ^()
+                 {
+                     NSMutableURLRequest *request = [ NSMutableURLRequest requestWithURL: url_ ];
+                     [ request setHTTPBody: post_data_ ];
+                     NSError* error = nil;
+                     NSData * resp_ = [ NSURLConnection sendSynchronousRequest: request
+                                                             returningResponse: nil
+                                                                         error: &error ];
+                     
+                     NSLog( @"getSrvStateWithSid res: %@", [ [ NSString alloc ] initWithData: resp_
+                                                                                    encoding: NSUTF8StringEncoding ] );
+                     JEitherMonad* monad_ = [ [ JEitherMonad eitherMonadWithError: error value: resp_ ]
+                                             bindOperation: ^id<JMonad>( id value_a_ )
+                                             {
+                                                 id chunks_ = [ self splitResponseData: resp_ ];
+                                                 id value_ = [ chunks_ map: ^id( id chunk_ )
+                                                  {
+                                                      return [ AMFUnarchiver unarchiveObjectWithData: chunk_
+                                                                                            encoding: kAMF3Encoding ];
+                                                  } ];
+                                                 return [ JEitherMonad eitherMonadWithError: nil
+                                                                                      value: value_ ];
+                                             } ];
+                     
+                     dispatch_async(dispatch_get_main_queue(), ^()
+                                    {
+                                        [ monad_ notifyDoneBlock: done_callback_ ];
+                                    });
+                 });
+                  
+                  return JFFEmptyCancelAsyncOperationBlock;
+              } copy ] autorelease ];
+}*/
+
 -(JFFAsyncOperation)exitGameWithSid:( NSString* )sid_
 {
    NSURL* url_ = [ NSURL URLWithSid: sid_ ];
 
-   NSString* post_      = @"{\"command\":\"exitGame\"}";
+   NSString* post_      = @"{\"cmd\":\"exitGame\"}";
    NSData*   post_data_ = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
+
+   NSLog( @"exitGameWithSid post: %@", post_ );
 
    JFFAsyncOperation loader_ = chunkedURLResponseLoader( url_
                                                         , post_data_
@@ -290,7 +353,7 @@ static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
 {
    NSURL* url_ = [ NSURL URLWithSid: sid_ ];
 
-   NSString* post_format_ = @"{\"command\":\"getSymbols\",\"count\":\"%d\"}";
+   NSString* post_format_ = @"{\"cmd\":\"getSymbols\",\"count\":\"%d\"}";
    NSString* post_        = [ NSString stringWithFormat: post_format_, count_ ];
    NSData*   post_data_   = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
 
@@ -321,21 +384,21 @@ static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
 
    if ( step_ )
    {
-      NSString* post_format_ = @"{\"command\":\"doStep\", %@, \"point\": \"%d\" }";
+      NSString* post_format_ = @"{\"cmd\":\"doStep\", %@, \"point\": \"%d\" }";
       post_ = [ NSString stringWithFormat: post_format_
                , [ step_ toJsonCommand ]
                , points_ ];
    }
    else
    {
-      NSString* post_format_ = @"{\"command\":\"doStep\", \"point\": \"%d\" }";
+      NSString* post_format_ = @"{\"cmd\":\"doStep\", \"point\": \"%d\" }";
       post_ = [ NSString stringWithFormat: post_format_
                , points_ ];
    }
 
    NSData* post_data_ = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
 
-   NSLog( @"doStep post: %@", post_ );
+   NSLog( @"doStep post: %@ url: %@", post_, url_ );
 
    JFFAsyncOperation loader_ = chunkedURLResponseLoader( url_
                                                         , post_data_

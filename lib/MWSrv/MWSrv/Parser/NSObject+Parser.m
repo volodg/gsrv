@@ -35,12 +35,12 @@
 -(BOOL)isGameStartedResponse
 {
    return [ self count ] >= 6
-       && [ self objectForKey: @"currentPlayer" ]
-       && [ self objectForKey: @"field"         ]
-       && [ self objectForKey: @"points"        ]
-       && [ self objectForKey: @"users"         ]
-       && [ self objectForKey: @"sym"           ]
-       && [ self objectForKey: @"state"         ];
+        && [ self objectForKey: @"currentPlayer" ]
+        && [ self objectForKey: @"field"         ]
+        && [ self objectForKey: @"points"        ]
+        && [ self objectForKey: @"state"         ]
+        && [ self objectForKey: @"sym"           ]
+        && [ self objectForKey: @"users"         ];
 }
 
 -(BOOL)isGetSymbolsResponse
