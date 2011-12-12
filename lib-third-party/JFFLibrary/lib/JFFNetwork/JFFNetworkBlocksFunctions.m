@@ -21,15 +21,15 @@ JFFAsyncOperation genericChunkedURLResponseLoader(
                                                                             headers: headers_ ];
       [ factory_ autorelease ];
 
-      id< JNUrlConnection > connection_ = use_live_connection_ 
-                                             ? [ factory_ createFastConnection     ]
-                                             : [ factory_ createStandardConnection ];
+      id< JNUrlConnection > connection_ = [ factory_ createFastConnection ];
 
       connection_.shouldAcceptCertificateBlock = certificate_callback_;
 
       progress_callback_ = [ [ progress_callback_ copy ] autorelease ];
       connection_.didReceiveDataBlock = ^( NSData* data_ )
       {
+          NSLog( @"got nat data: %@", [ [ NSString alloc ] initWithData: data_
+                                                               encoding: NSUTF8StringEncoding ] );
          if ( progress_callback_ )
             progress_callback_( data_ );
       };
@@ -45,6 +45,7 @@ JFFAsyncOperation genericChunkedURLResponseLoader(
 
       connection_.didReceiveResponseBlock = ^( id/*< JNUrlResponse >*/ response_ )
       {
+          NSLog( @"START" );
          result_context_.result = response_;
       };
 
@@ -59,6 +60,7 @@ JFFAsyncOperation genericChunkedURLResponseLoader(
             cancel_callback_( canceled_ );
       } copy ] autorelease ];
 
+       NSLog( @"START" );
       [ connection_ start ];
 
       return cancel_callback_block_holder_.onceCancelBlock;

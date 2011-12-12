@@ -25,7 +25,7 @@
 -(void)onAddToMutableAssignDictionary:( JFFMutableAssignDictionary* )dict_
                                   key:( id )key_
 {
-   __unsafe_unretained JFFMutableAssignDictionary* assign_dict_ = dict_;
+   __block JFFMutableAssignDictionary* assign_dict_ = dict_;
    _onDeallocBlock = ^void( void )
    {
       [ assign_dict_ removeObjectForKey: key_ ];

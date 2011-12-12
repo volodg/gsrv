@@ -56,4 +56,7 @@ JFFAsyncOperation asyncOperationWithDoneBlock( JFFAsyncOperation loader_
 JFFAsyncOperation repeatAsyncOperation( JFFAsyncOperation loader_
                                        , PredicateBlock predicate_
                                        , NSTimeInterval delay_
-                                       , NSUInteger max_repeat_count_ );
+                                       , NSInteger max_repeat_count_ );
+
+JFFAsyncOperation asyncOperationAfterDelay( NSTimeInterval delay_
+                                           , JFFAsyncOperation loader_ );

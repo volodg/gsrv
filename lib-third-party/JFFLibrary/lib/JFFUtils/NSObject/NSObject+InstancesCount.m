@@ -73,7 +73,7 @@
 {
    [ JFFNSObjectInstancesCounter incrementInstancesCountForClass: class_ ];
    NSObject* result_ = native_();
-   [ result_ addOnDeallocBlock: ^void()
+   [ result_ addOnDeallocBlock: ^void( void )
    {
       [ JFFNSObjectInstancesCounter decrementInstancesCountForClass: class_ ];
    } ];

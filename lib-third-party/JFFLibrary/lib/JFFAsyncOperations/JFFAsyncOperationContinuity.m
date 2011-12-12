@@ -477,7 +477,7 @@ JFFAsyncOperation asyncOperationWithDoneBlock( JFFAsyncOperation loader_
 JFFAsyncOperation repeatAsyncOperation( JFFAsyncOperation native_loader_
                                        , PredicateBlock predicate_
                                        , NSTimeInterval delay_
-                                       , NSUInteger max_repeat_count_ )
+                                       , NSInteger max_repeat_count_ )
 {
    assert( native_loader_ );// can not be nil
    assert( predicate_     );// can not be nil
@@ -489,6 +489,10 @@ JFFAsyncOperation repeatAsyncOperation( JFFAsyncOperation native_loader_
                 , JFFCancelAsyncOperationHandler cancel_callback_
                 , JFFDidFinishAsyncOperationHandler done_callback_ )
    {
+      progress_callback_ = [ [ progress_callback_ copy ] autorelease ];
+      cancel_callback_   = [ [ cancel_callback_   copy ] autorelease ];
+      done_callback_     = [ [ done_callback_     copy ] autorelease ];
+
       JFFCancelAyncOperationBlockHolder* holder_ = [ [ JFFCancelAyncOperationBlockHolder new ] autorelease ];
 
       JFFDidFinishAsyncOperationHook finish_callback_hook_ = ^( id result_
@@ -514,10 +518,13 @@ JFFAsyncOperation repeatAsyncOperation( JFFAsyncOperation native_loader_
                scheduler_ = nil;
                sch_cancel_();
                //GTODO test this
+               NSUInteger newMaxRepeatCount_ = max_repeat_count_ > 0
+                  ? max_repeat_count_ - 1
+                  : max_repeat_count_;
                JFFAsyncOperation loader_ = repeatAsyncOperation( native_loader_
                                                                 , predicate_
                                                                 , delay_
-                                                                , max_repeat_count_ - 1 );
+                                                                , newMaxRepeatCount_ );
                lc_holder_.cancelBlock = loader_( progress_callback_
                                                 , cancel_callback_
                                                 , done_callback_ );
@@ -559,5 +566,49 @@ JFFAsyncOperation repeatAsyncOperation( JFFAsyncOperation native_loader_
       {
          holder_.onceCancelBlock( canceled_ );
       } copy ] autorelease ];
+   } copy ] autorelease ];
+}
+
+JFFAsyncOperation asyncOperationAfterDelay( NSTimeInterval delay_
+                                           , JFFAsyncOperation loader_ )
+{
+   loader_ = [ [ loader_ copy ] autorelease ];
+   return [ [ ^( JFFAsyncOperationProgressHandler progress_callback_
+                , JFFCancelAsyncOperationHandler cancel_callback_
+                , JFFDidFinishAsyncOperationHandler done_callback_ )
+   {
+      progress_callback_ = [ [ progress_callback_ copy ] autorelease ];
+      cancel_callback_   = [ [ cancel_callback_   copy ] autorelease ];
+      done_callback_     = [ [ done_callback_     copy ] autorelease ];
+
+      JFFCancelAyncOperationBlockHolder* lc_holder_ = [ [ JFFCancelAyncOperationBlockHolder new ] autorelease ];
+
+      __block JFFScheduler* scheduler_ = [ JFFScheduler new ];
+
+      JFFCancelScheduledBlock sch_cancel_ = [ scheduler_ addBlock: ^( JFFCancelScheduledBlock sch_cancel_ )
+      {
+         [ scheduler_ release ];
+         scheduler_ = nil;
+         sch_cancel_();
+
+         lc_holder_.cancelBlock = loader_( progress_callback_
+                                          , cancel_callback_
+                                          , done_callback_ );
+      } duration: delay_ ];
+
+      lc_holder_.cancelBlock = ^( BOOL canceled_ )
+      {
+         if ( canceled_ )
+         {
+            [ scheduler_ release ];
+            scheduler_ = nil;
+            sch_cancel_();
+         }
+         //JTODO implement unsubscribe
+         if ( cancel_callback_ )
+            cancel_callback_( canceled_ );
+      };
+
+      return lc_holder_.onceCancelBlock;
    } copy ] autorelease ];
 }
