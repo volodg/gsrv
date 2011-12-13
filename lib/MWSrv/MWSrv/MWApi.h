@@ -20,4 +20,6 @@
                    symbsAndCoords:( NSArray* )step_
                            points:( NSUInteger )points_;
 
+-(JFFAsyncOperation)keepAliveForSid:( NSString* )sid_;
+
 @end

@@ -62,7 +62,6 @@ JFFAsyncOperation genericChunkedURLResponseLoader(
             cancel_callback_( canceled_ );
       } copy ] autorelease ];
 
-       NSLog( @"START" );
       [ connection_ start ];
 
       return cancel_callback_block_holder_.onceCancelBlock;

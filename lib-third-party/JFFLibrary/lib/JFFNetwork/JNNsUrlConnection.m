@@ -146,7 +146,7 @@ canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protection_space_
 didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge_ 
 {
    BOOL is_trust_check_ = [ challenge_.protectionSpace.authenticationMethod isEqualToString: NSURLAuthenticationMethodServerTrust ];
-  
+
    if ( is_trust_check_ )
    {
       BOOL is_trusted_host_ = NO;
