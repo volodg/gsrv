@@ -21,7 +21,9 @@ JFFAsyncOperation genericChunkedURLResponseLoader(
                                                                             headers: headers_ ];
       [ factory_ autorelease ];
 
-      id< JNUrlConnection > connection_ = [ factory_ createFastConnection ];
+      id< JNUrlConnection > connection_ = use_live_connection_ 
+                                             ? [ factory_ createFastConnection     ]
+                                             : [ factory_ createStandardConnection ];
 
       connection_.shouldAcceptCertificateBlock = certificate_callback_;
 
