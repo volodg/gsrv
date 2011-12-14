@@ -10,7 +10,7 @@
 #import <AMFUnarchiver.h>
 
 static NSUInteger sidLength_ = 32;
-static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
+static NSString* const host_format_ = @"?????";
 
 @interface MWSymbWithCoords (MWApi)
 @end
