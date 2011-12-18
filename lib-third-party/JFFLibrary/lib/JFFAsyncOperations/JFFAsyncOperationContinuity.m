@@ -509,49 +509,15 @@ JFFAsyncOperation repeatAsyncOperation( JFFAsyncOperation native_loader_
          }
          else
          {
-            __block JFFScheduler* scheduler_ = [ JFFScheduler new ];
+            currentLeftCount = currentLeftCount > 0
+               ? currentLeftCount - 1
+               : currentLeftCount;
 
-            JFFCancelAyncOperationBlockHolder* lc_holder_ = [ [ JFFCancelAyncOperationBlockHolder new ] autorelease ];
-            JFFCancelScheduledBlock sch_cancel_ = [ scheduler_ addBlock: ^( JFFCancelScheduledBlock sch_cancel_ )
-            {
-               [ scheduler_ release ];
-               scheduler_ = nil;
-               sch_cancel_();
-               //GTODO test this
-               NSUInteger newMaxRepeatCount_ = max_repeat_count_ > 0
-                  ? max_repeat_count_ - 1
-                  : max_repeat_count_;
-               JFFAsyncOperation loader_ = repeatAsyncOperation( native_loader_
-                                                                , predicate_
-                                                                , delay_
-                                                                , newMaxRepeatCount_ );
-               lc_holder_.cancelBlock = loader_( progress_callback_
-                                                , cancel_callback_
-                                                , done_callback_ );
-            } duration: delay_ ];
+            JFFAsyncOperation loader_ = asyncOperationWithFinishHookBlock( native_loader_
+                                                                          , hoolHolder_ );
+            loader_ = asyncOperationAfterDelay( delay_, loader_ );
 
-            __block BOOL block_canceled_ = NO;
-            holder_.cancelBlock = ^( BOOL canceled_ )
-            {
-               if ( block_canceled_ )
-                  return;
-               block_canceled_ = YES;
-
-               if ( canceled_ )
-               {
-                  [ scheduler_ release ];
-                  scheduler_ = nil;
-                  sch_cancel_();
-               }
-               if ( lc_holder_.cancelBlock )
-               {
-                  lc_holder_.onceCancelBlock( canceled_ );
-               }
-               else
-               {
-                  cancel_callback_( canceled_ );
-               }
-            };
+            holder_.cancelBlock = loader_( progress_callback_, cancel_callback_, done_callback_ );
          }
       };
 

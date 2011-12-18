@@ -40,7 +40,7 @@
       self.currentPlayer   = [ dict_ objectForKey: @"currentPlayer" ];
       self.symbolsAndCoods = [ NSArray arraySymbolsAndCoordsWithDictionary: dict_ ];
       NSArray* allPointsStrings_ = [ [ dict_ objectForKey: @"points" ] arrayOfStringsSeparatedByComma ];
-      self.allPoints = [ allPointsStrings_ map: ^id( NSString* str_ )
+      self.allPoints = [ allPointsStrings_ map: ^id( id str_ )
       {
          return [ NSNumber numberWithUnsignedInteger: [ str_ integerValue ] ];
       } ];

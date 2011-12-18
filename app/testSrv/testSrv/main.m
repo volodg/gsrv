@@ -12,7 +12,8 @@
 
 int main(int argc, char *argv[])
 {
-   @autoreleasepool {
-       return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
-   }
+	NSAutoreleasePool* pool = [ NSAutoreleasePool new ];
+    int res = UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
+	[ pool release ];
+	return res;
 }

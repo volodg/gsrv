@@ -302,7 +302,8 @@
                  , JFFCancelAsyncOperationHandler cancel_callback_
                  , JFFDidFinishAsyncOperationHandler done_callback_ )
     {
-        self.symbolsCallback = [ [ done_callback_ copy ] autorelease ];
+        done_callback_ = [ [ done_callback_ copy ] autorelease ];
+        self.symbolsCallback = done_callback_;
         cancel_callback_ = [ [ cancel_callback_ copy ] autorelease ];
         return [ [ ^void( BOOL canceled_ )
         {
@@ -317,36 +318,63 @@
     } copy ] autorelease ];
 }
 
+-(JFFAsyncOperation)secondResultForFirstLoader:( JFFAsyncOperation )firstLoader_
+                                  secondLoader:( JFFAsyncOperation )secondLoader_
+{
+    JFFResultContext* context_ = [ [ JFFResultContext new ] autorelease ];
+
+    secondLoader_ = asyncOperationWithFinishHookBlock( secondLoader_
+                                                      , ^( id result_
+                                                          , NSError* error_
+                                                          , JFFDidFinishAsyncOperationHandler done_callback_ )
+    {
+        context_.result = result_;
+        context_.error  = error_;
+        done_callback_( result_, error_ );
+    } );
+
+    JFFAsyncOperation loader_ = failOnFirstErrorGroupOfAsyncOperations( firstLoader_
+                                                                       , secondLoader_
+                                                                       , nil );
+
+    JFFAsyncOperation resultLoader_ = ^( JFFAsyncOperationProgressHandler progress_callback_
+                                        , JFFCancelAsyncOperationHandler cancel_callback_
+                                        , JFFDidFinishAsyncOperationHandler done_callback_ )
+    {
+        if ( done_callback_ )
+            done_callback_( context_.result, nil );
+        return JFFEmptyCancelAsyncOperationBlock;
+    };
+    return sequenceOfAsyncOperations( loader_, resultLoader_, nil );
+}
+
 -(JFFAsyncOperation)getSymbolsCount:( NSUInteger )count_
 {
-   JFFAsyncOperation cmd_loader_ = ^( JFFAsyncOperationProgressHandler progress_callback_
-                                     , JFFCancelAsyncOperationHandler cancel_callback_
-                                     , JFFDidFinishAsyncOperationHandler done_callback_ )
-   {
-      return [ self.api getSymbolsWithSid: self.sessionState.sid
-                                    count: count_ ]( progress_callback_
-                                                    , cancel_callback_
-                                                    , done_callback_ );
-   };
+    JFFAsyncOperation cmd_loader_ = ^( JFFAsyncOperationProgressHandler progress_callback_
+                                      , JFFCancelAsyncOperationHandler cancel_callback_
+                                      , JFFDidFinishAsyncOperationHandler done_callback_ )
+    {
+        return [ self.api getSymbolsWithSid: self.sessionState.sid
+                                      count: count_ ]( progress_callback_
+                                                      , cancel_callback_
+                                                      , done_callback_ );
+    };
 
-   return failOnFirstErrorGroupOfAsyncOperations( cmd_loader_
-                                                 , [ self privateGetSymbolsSrvState ]
-                                                 , nil );
+    return [ self secondResultForFirstLoader: cmd_loader_
+                                secondLoader: [ self privateGetSymbolsSrvState ] ];
 }
 
 //GTODO implement
 -(JFFAsyncOperation)privateExitGame
 {
-   JFFAsyncOperation cmd_loader_ = ^( JFFAsyncOperationProgressHandler progress_callback_
-                                     , JFFCancelAsyncOperationHandler cancel_callback_
-                                     , JFFDidFinishAsyncOperationHandler done_callback_ )
+   return [ [ ^( JFFAsyncOperationProgressHandler progress_callback_
+                , JFFCancelAsyncOperationHandler cancel_callback_
+                , JFFDidFinishAsyncOperationHandler done_callback_ )
    {
       return [ self.api exitGameWithSid: self.sessionState.sid ]( progress_callback_
                                                                  , cancel_callback_
                                                                  , done_callback_ );
-   };
-   return sequenceOfAsyncOperations( cmd_loader_
-                                    , nil );
+   } copy ] autorelease ];
 }
 
 -(JFFAsyncOperation)privateGetNextStepSrvState
@@ -355,7 +383,8 @@
                  , JFFCancelAsyncOperationHandler cancel_callback_
                  , JFFDidFinishAsyncOperationHandler done_callback_ )
     {
-        self.stateGameCallback = [ [ done_callback_ copy ] autorelease ];
+        done_callback_ = [ [ done_callback_ copy ] autorelease ];
+        self.stateGameCallback = done_callback_;
         cancel_callback_ = [ [ cancel_callback_ copy ] autorelease ];
         return [ [ ^void( BOOL canceled_ )
         {
@@ -385,9 +414,8 @@
                                                  , done_callback_ );
    };
 
-   return failOnFirstErrorGroupOfAsyncOperations( cmd_loader_
-                                                 , [ self privateGetNextStepSrvState ]
-                                                 , nil );
+    return [ self secondResultForFirstLoader: cmd_loader_
+                                secondLoader: [ self privateGetNextStepSrvState ] ];
 }
 
 -(JFFAsyncOperation)skipStep
@@ -404,9 +432,8 @@
                        , done_callback_ );
     };
 
-    return failOnFirstErrorGroupOfAsyncOperations( cmd_loader_
-                                                  , [ self privateGetNextStepSrvState ]
-                                                  , nil );
+    return [ self secondResultForFirstLoader: cmd_loader_
+                                secondLoader: [ self privateGetNextStepSrvState ] ];
 }
 
 -(JFFAsyncOperation)waitStep

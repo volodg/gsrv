@@ -19,7 +19,7 @@
 @synthesize session   = _session;
 @synthesize login     = _login;
 @synthesize gameState = _gameState;
-@synthesize justWait = _justWait;
+@synthesize justWait  = _justWait;
 
 -(void)dealloc
 {
@@ -88,9 +88,9 @@
 
 -(void)wait
 {
-   [ self.session waitStep ](  nil, nil, ^( id result_, NSError* error_ )
+   [ self.session getSymbolsCount: 7 ](  nil, nil, ^( id result_, NSError* error_ )
    {
-      NSLog( @"wait RESULT: %@ result: %@ error: %@", self.login, result_, error_ );
+      NSLog( @"getSymbolsCount RESULT: %@ result: %@ error: %@", self.login, result_, error_ );
    } );
 }
 

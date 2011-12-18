@@ -73,7 +73,7 @@
 {
    static const NSTimeInterval timeout_ = 60.;
    NSMutableURLRequest* request_ = [ NSMutableURLRequest requestWithURL: self.url
-                                                            cachePolicy: NSURLRequestReloadIgnoringLocalAndRemoteCacheData 
+                                                            cachePolicy: NSURLRequestReloadIgnoringLocalCacheData 
                                                         timeoutInterval: timeout_ ];
 
    NSString* http_method_ = self.postData ? @"POST" : @"GET";
