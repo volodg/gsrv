@@ -10,7 +10,7 @@
 #import <AMFUnarchiver.h>
 
 static NSUInteger sidLength_ = 32;
-static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
+static NSString* const host_format_ = @"???";
 
 @interface MWSymbWithCoords (MWApi)
 @end
@@ -145,8 +145,6 @@ static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
                              , login_ ? login_ : @"" ];
    NSData*   post_data_   = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
 
-    NSLog( @"authWithLogin: %@", login_ );
-
    JFFAsyncOperation loader_ = chunkedURLResponseLoader( url_
                                                         , post_data_
                                                         , self.headers );
@@ -155,7 +153,6 @@ static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
                                                                 , NSError* error_
                                                                 , JFFDidFinishAsyncOperationHandler done_callback_ )
    {
-       NSLog( @"done auth" );
       JEitherMonad* monad_ = [ [ self monadForResponse: result_ error: error_ ]
       bindVoidOperation: ^id<JMonad>( void )
       {
@@ -267,19 +264,13 @@ static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
                                                  value: value_ ];
          } ];
 
-         //NSLog( @"<<<1>>>getSrvStateWithSid resp: %@", monad_.value );
-         //NSLog( @"<<<2>>>getSrvStateWithSid resp: %@ error: %@", result_, error_ );
          [ monad_ notifyDoneBlock: done_callback_ ];
       };
 
       progress_callback_ = [ [ progress_callback_ copy ] autorelease ];
       progress_callback_ = ^( id progress_data_ )
       {
-          NSLog( @"got data: %@", [ [ NSString alloc ] initWithData: progress_data_
-                                                           encoding: NSUTF8StringEncoding ] );
          [ response_data_ appendData: progress_data_ ];
-         //NSString* str_ = [ [ [ NSString alloc ] initWithData: progress_data_ encoding: NSUTF8StringEncoding ] autorelease ];
-         //NSLog( @"<<<1.1>>>getSrvStateWithSid chunk: %@", str_ );
          if ( progress_callback_ )
             progress_callback_( progress_data_ );
       };
@@ -290,61 +281,6 @@ static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
                      , done_callback_  );
    } copy ] autorelease ];
 }
-
-/*-(JFFAsyncOperation)getSrvStateWithSid:( NSString* )sid_
-{
-    return [ [ ^( JFFAsyncOperationProgressHandler progress_callback_
-                 , JFFCancelAsyncOperationHandler cancel_callback_
-                 , JFFDidFinishAsyncOperationHandler done_callback_ )
-              {
-                  //NSURL* url_ = [ NSURL URLWithString: @"http://test.bwf.org.ua:3333" ];
-                  NSURL* url_ = [ NSURL URLWithSid: sid_ ];
-                  
-                  static char data_[1] = { 0 };
-                  NSData* post_data_ = [ NSData dataWithBytes: data_ length: 1 ];
-                  
-                  //      NSMutableData* response_data_ = [ NSMutableData data ];
-                  
-                  //      JFFAsyncOperation loader_ = chunkedURLResponseLoader( url_
-                  //                                                           , post_data_
-                  //                                                           , nil );
-                  
-                  NSLog( @"try getSrvStateWithSid %@", url_ );
-                  
-                  dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0);
-                  dispatch_async( queue, ^()
-                 {
-                     NSMutableURLRequest *request = [ NSMutableURLRequest requestWithURL: url_ ];
-                     [ request setHTTPBody: post_data_ ];
-                     NSError* error = nil;
-                     NSData * resp_ = [ NSURLConnection sendSynchronousRequest: request
-                                                             returningResponse: nil
-                                                                         error: &error ];
-                     
-                     NSLog( @"getSrvStateWithSid res: %@", [ [ NSString alloc ] initWithData: resp_
-                                                                                    encoding: NSUTF8StringEncoding ] );
-                     JEitherMonad* monad_ = [ [ JEitherMonad eitherMonadWithError: error value: resp_ ]
-                                             bindOperation: ^id<JMonad>( id value_a_ )
-                                             {
-                                                 id chunks_ = [ self splitResponseData: resp_ ];
-                                                 id value_ = [ chunks_ map: ^id( id chunk_ )
-                                                  {
-                                                      return [ AMFUnarchiver unarchiveObjectWithData: chunk_
-                                                                                            encoding: kAMF3Encoding ];
-                                                  } ];
-                                                 return [ JEitherMonad eitherMonadWithError: nil
-                                                                                      value: value_ ];
-                                             } ];
-                     
-                     dispatch_async(dispatch_get_main_queue(), ^()
-                                    {
-                                        [ monad_ notifyDoneBlock: done_callback_ ];
-                                    });
-                 });
-                  
-                  return JFFEmptyCancelAsyncOperationBlock;
-              } copy ] autorelease ];
-}*/
 
 -(JFFAsyncOperation)exitGameWithSid:( NSString* )sid_
 {
