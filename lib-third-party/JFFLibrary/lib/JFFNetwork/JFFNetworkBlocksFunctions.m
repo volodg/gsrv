@@ -30,8 +30,6 @@ JFFAsyncOperation genericChunkedURLResponseLoader(
       progress_callback_ = [ [ progress_callback_ copy ] autorelease ];
       connection_.didReceiveDataBlock = ^( NSData* data_ )
       {
-          NSLog( @"got nat data: %@", [ [ NSString alloc ] initWithData: data_
-                                                               encoding: NSUTF8StringEncoding ] );
          if ( progress_callback_ )
             progress_callback_( data_ );
       };
@@ -47,7 +45,6 @@ JFFAsyncOperation genericChunkedURLResponseLoader(
 
       connection_.didReceiveResponseBlock = ^( id/*< JNUrlResponse >*/ response_ )
       {
-          NSLog( @"START" );
          result_context_.result = response_;
       };
 
@@ -79,8 +76,11 @@ JFFAsyncOperation genericDataURLResponseLoader(
                                        , JFFCancelAsyncOperationHandler cancel_callback_
                                        , JFFDidFinishAsyncOperationHandler done_callback_ )
    {
-      JFFAsyncOperation loader_ = genericChunkedURLResponseLoader( 
-         url_, post_data_, headers_, use_live_connection_, certificate_callback_ );
+      JFFAsyncOperation loader_ = genericChunkedURLResponseLoader( url_
+                                                                  , post_data_
+                                                                  , headers_
+                                                                  , use_live_connection_
+                                                                  , certificate_callback_ );
 
       NSMutableData* response_data_ = [ NSMutableData data ];
       JFFAsyncOperationProgressHandler data_progress_callback_ = ^void( id progress_info_ )

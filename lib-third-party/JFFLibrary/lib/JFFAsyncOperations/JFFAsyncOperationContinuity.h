@@ -51,6 +51,8 @@ JFFAsyncOperation asyncOperationWithFinishHookBlock( JFFAsyncOperation loader_
 JFFAsyncOperation asyncOperationWithDoneBlock( JFFAsyncOperation loader_
                                               , JFFSimpleBlock done_callback_hook_ );
 
+JFFAsyncOperation asyncOperationWithResult( id result_ );
+
 ///////////////////////// AUTO REPEAT CIRCLE ////////////////////////
 
 JFFAsyncOperation repeatAsyncOperation( JFFAsyncOperation loader_
