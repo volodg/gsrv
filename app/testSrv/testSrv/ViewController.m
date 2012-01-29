@@ -7,6 +7,8 @@
 
 @property ( nonatomic, retain ) MWPlayer* player1;
 @property ( nonatomic, retain ) MWPlayer* player2;
+@property ( nonatomic, retain ) MWPlayer* player3;
+@property ( nonatomic, retain ) MWPlayer* player4;
 
 @end
 
@@ -16,15 +18,19 @@
 @synthesize secondLetter;
 @synthesize player1 = _player1;
 @synthesize player2 = _player2;
+@synthesize player3 = _player3;
+@synthesize player4 = _player4;
 
 -(void)dealloc
 {
-   [ firstLetter  release ];
-   [ secondLetter release ];
-   [ _player1     release ];
-   [ _player2     release ];
+    [ firstLetter  release ];
+    [ secondLetter release ];
+    [ _player1     release ];
+    [ _player2     release ];
+    [ _player3     release ];
+    [ _player4     release ];
 
-   [ super dealloc ];
+    [ super dealloc ];
 }
 
 -(void)loginAndPlayPlayer2
@@ -33,6 +39,19 @@
    [ self.player2 start ];
 }
 
+-(void)loginAndPlayPlayer3
+{
+    self.player2 = [ MWPlayer playerWithLogin: @"user3" ];
+    [ self.player2 start ];
+}
+
+-(void)loginAndPlayPlayer4
+{
+    self.player2 = [ MWPlayer playerWithLogin: @"user4" ];
+    [ self.player2 start ];
+}
+
+
 -(void)test
 {
    self.player1 = [ MWPlayer playerWithLogin: @"user1" ];
@@ -40,7 +59,15 @@
 
    [ self performSelector: @selector( loginAndPlayPlayer2 )
                withObject: nil
-               afterDelay: 2.0 ];
+               afterDelay: 12.0 ];
+
+    [ self performSelector: @selector( loginAndPlayPlayer3 )
+                withObject: nil
+                afterDelay: 8.0 ];
+
+    [ self performSelector: @selector( loginAndPlayPlayer4 )
+                withObject: nil
+                afterDelay: 17.0 ];
 }
 
 -(IBAction)doStep1:(id)sender {

@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 
-@interface NSString (Parser)
+@interface NSString (MWSrvParser)
 
 -(NSArray*)arrayOfStringsSeparatedByComma;
 

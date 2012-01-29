@@ -40,7 +40,7 @@
             } copy ] autorelease ];
          };
 
-         operation_ = [ obj_ weakAsyncOperation: operation_ ];
+         operation_ = [ obj_ autoUnsubsribeOnDeallocAsyncOperation: operation_ ];
 
          cancel_ = operation_( nil, ^( BOOL canceled_ )
          {
@@ -91,7 +91,7 @@
             } copy ] autorelease ];
          };
 
-         operation_ = [ obj_ weakAsyncOperation: operation_ ];
+         operation_ = [ obj_ autoUnsubsribeOnDeallocAsyncOperation: operation_ ];
 
          operation_( nil, nil, nil );
 
@@ -130,7 +130,7 @@
          } copy ] autorelease ];
       };
 
-      operation_ = [ obj_ weakAsyncOperation: operation_ ];
+      operation_ = [ obj_ autoUnsubsribeOnDeallocAsyncOperation: operation_ ];
 
       __block BOOL cancel_callback_called_ = NO;
 
@@ -156,6 +156,8 @@
 // When unsubscribe from autoCancelAsyncOperation -> native should not be canceled
 -(void)testUnsubscribeFromAutoCancel
 {
+   __block BOOL deallocated_ = NO;
+
    @autoreleasepool
    {
       NSObject* operation_owner_ = [ NSObject new ];
@@ -177,8 +179,10 @@
 
       JFFAsyncOperation auto_cancel_operation_ = [ operation_owner_ autoCancelOnDeallocAsyncOperation: operation_ ];
 
-      __block BOOL deallocated_ = NO;
+      __block BOOL cancel_callback_called_ = NO;
 
+      @autoreleasepool
+      {
       NSObject* owned_by_callbacks_ = [ NSObject new ];
       [ owned_by_callbacks_ addOnDeallocBlock: ^void( void )
       {
@@ -190,7 +194,6 @@
          //simulate using object in callback block
          [ owned_by_callbacks_ class ];
       };
-      __block BOOL cancel_callback_called_ = NO;
       JFFCancelAsyncOperationHandler cancel_callback_ = ^void( BOOL canceled_ )
       {
          cancel_callback_called_ = !canceled_;
@@ -212,15 +215,17 @@
       GHAssertFalse( deallocated_, @"owned_by_callbacks_ object should not be deallocated" );
 
       cancel_( NO );
+      }
 
       GHAssertTrue( native_cancel_block_called_, @"Native cancel block should not be called" );
+      //???
       GHAssertTrue( deallocated_, @"owned_by_callbacks_ objet should be deallocated" );
       GHAssertTrue( cancel_callback_called_, @"cancel callback should ba called" );
 
       [ operation_owner_ release ];
    }
 
-   GHAssertTrue( 0 == [ JFFSimpleBlockHolder                  instancesCount ], @"All object of this class should be deallocated" );
+   GHAssertTrue( 0 == [ JFFSimpleBlockHolder                  instancesCount ], @"OK" );
    GHAssertTrue( 0 == [ JFFCancelAyncOperationBlockHolder     instancesCount ], @"All object of this class should be deallocated" );
    GHAssertTrue( 0 == [ JFFAsyncOperationProgressBlockHolder  instancesCount ], @"All object of this class should be deallocated" );
    GHAssertTrue( 0 == [ JFFDidFinishAsyncOperationBlockHolder instancesCount ], @"All object of this class should be deallocated" );

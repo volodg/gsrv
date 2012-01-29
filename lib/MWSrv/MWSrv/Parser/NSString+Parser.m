@@ -1,6 +1,6 @@
 #import "NSString+Parser.h"
 
-@implementation NSString (Parser)
+@implementation NSString (MWSrvParser)
 
 -(NSArray*)arrayOfStringsSeparatedByComma
 {

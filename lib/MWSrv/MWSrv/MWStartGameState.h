@@ -4,6 +4,7 @@
 
 @property ( nonatomic, assign ) NSUInteger field;
 @property ( nonatomic, retain ) NSArray* users;
+@property ( nonatomic, retain ) NSArray* startPoints;
 @property ( nonatomic, retain ) NSArray* symbols;
 @property ( nonatomic, retain ) NSString* currentPlayer;
 @property ( nonatomic, assign ) BOOL youFirst;

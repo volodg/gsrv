@@ -6,14 +6,14 @@ static NSString* const letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRS
 
 +(NSString*)randomStringWithLength:( NSUInteger )length_
 {
-   NSMutableString* randomString = [ NSMutableString stringWithCapacity: length_ ];
+    NSMutableString* randomString = [ NSMutableString stringWithCapacity: length_ ];
 
-   for ( int i = 0; i < length_; i++ )
-   {
-      [ randomString appendFormat: @"%c", [ letters characterAtIndex: rand() % [ letters length ] ] ];
-   }
+    for ( int i = 0; i < length_; i++ )
+    {
+        [ randomString appendFormat: @"%C", [ letters characterAtIndex: rand() % [ letters length ] ] ];
+    }
 
-   return randomString;
+    return randomString;
 }
 
 @end

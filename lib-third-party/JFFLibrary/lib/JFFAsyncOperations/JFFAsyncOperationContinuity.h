@@ -3,6 +3,10 @@
 
 @class NSArray;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 ///////////////////////////////////// SEQUENCE /////////////////////////////////////
 
 //calls loaders while success
@@ -45,11 +49,11 @@ JFFAsyncOperation asyncOperationWithFinishCallbackBlock( JFFAsyncOperation loade
 
 //finish_callback_hook_ called instead loader_'s JFFDidFinishAsyncOperationHandler
 JFFAsyncOperation asyncOperationWithFinishHookBlock( JFFAsyncOperation loader_
-                                                    , JFFDidFinishAsyncOperationHook finish_callback_hook_ );
+                                                    , JFFDidFinishAsyncOperationHook finishCallbackHook_ );
 
 //done_callback_hook_ called an cancel or finish loader_'s callbacks
 JFFAsyncOperation asyncOperationWithDoneBlock( JFFAsyncOperation loader_
-                                              , JFFSimpleBlock done_callback_hook_ );
+                                              , JFFSimpleBlock doneCallbackHook_ );
 
 JFFAsyncOperation asyncOperationWithResult( id result_ );
 
@@ -62,3 +66,7 @@ JFFAsyncOperation repeatAsyncOperation( JFFAsyncOperation loader_
 
 JFFAsyncOperation asyncOperationAfterDelay( NSTimeInterval delay_
                                            , JFFAsyncOperation loader_ );
+
+#ifdef __cplusplus
+}
+#endif

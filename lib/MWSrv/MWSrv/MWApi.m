@@ -6,11 +6,14 @@
 
 #import "MWSymb.h"
 #import "MWSymbWithCoords.h"
+#import "MWDoStepState.h"
 
 #import <AMFUnarchiver.h>
 
 static NSUInteger sidLength_ = 32;
-static NSString* const host_format_ = @"???";
+//static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
+//static NSString* const host_format_ = @"http://test.bwf.org.ua:3333/%@";
+static NSString* const host_format_ = @"http://188.95.152.130:3333/%@";
 
 @interface MWSymbWithCoords (MWApi)
 @end
@@ -28,6 +31,20 @@ static NSString* const host_format_ = @"???";
 
 @end
 
+@interface MWSymb (MWApi)
+@end
+
+@implementation MWSymb (MWApi)
+
+-(NSString*)toJsonCommandWithIndex:( NSUInteger )index_
+{
+    return [ NSString stringWithFormat: @"\"sym%d\":\"%@\", \"state%d\":\"%d\""
+            , index_, self.symb
+            , index_, self.state ];
+}
+
+@end
+
 @interface NSArray (MWApi)
 @end
 
@@ -41,6 +58,36 @@ static NSString* const host_format_ = @"???";
       return [ object_ toJsonCommandWithIndex: ++index_ ];
    } ];
    return [ result_ componentsJoinedByString: @", " ];
+}
+
+@end
+
+@interface MWDoStepState (MWApi)
+@end
+
+@implementation MWDoStepState (MWApi)
+
+-(NSString*)toJsonCommand
+{
+    return [ NSString stringWithFormat: @"\"point\": \"%d\", \"stused\": \"%d\", \"mnused\": \"%d\", \"tperturn\": \"%f\", \"jadvise\": \"%d\", \"sp1\": \"%d\", \"sp2\": \"%d\", \"sp3\": \"%d\", \"sp4\": \"%d\", \"elem1\": \"%d\", \"elem2\": \"%d\", \"elem3\": \"%d\", \"elem4\": \"%d\", \"bnst1\": \"%d\", \"bnst2\": \"%d\", \"bnst3\": \"%d\", \"bnst4\": \"%d\""
+            , self.points
+            , self.stused
+            , self.mnused
+            , self.tperturn
+            , self.jadvise
+            , self.sp1
+            , self.sp2
+            , self.sp3
+            , self.sp4
+            , self.elem1
+            , self.elem2
+            , self.elem3
+            , self.elem4
+            , self.bnst1
+            , self.bnst2
+            , self.bnst3
+            , self.bnst4
+            ];
 }
 
 @end
@@ -136,56 +183,86 @@ static NSString* const host_format_ = @"???";
 -(JFFAsyncOperation)authWithLogin:( NSString* )login_
                               sid:( NSString* )sid_
 {
-   sid_ = sid_ ? sid_ : [ NSString randomStringWithLength: sidLength_ ];
-   NSURL*    url_ = [ NSURL URLWithSid: sid_ ];
+    sid_ = sid_ ? sid_ : [ NSString randomStringWithLength: sidLength_ ];
+    NSURL*    url_ = [ NSURL URLWithSid: sid_ ];
 
-   NSString* post_format_ = @"{\"cmd\":\"enter\",\"env\":1,\"cid\":\"%@\",\"name\":\"%@\"}";
-   NSString* post_        = [ NSString stringWithFormat: post_format_
-                             , login_ ? login_ : @""
-                             , login_ ? login_ : @"" ];
-   NSData*   post_data_   = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
+    NSString* post_format_ = @"{\"cmd\":\"enter\",\"env\":1,\"cid\":\"%@\",\"name\":\"%@\"}";
+    NSString* post_        = [ NSString stringWithFormat: post_format_
+                              , login_ ? login_ : @""
+                              , login_ ? login_ : @"" ];
+    NSData*   post_data_   = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
 
-   JFFAsyncOperation loader_ = chunkedURLResponseLoader( url_
-                                                        , post_data_
-                                                        , self.headers );
+    NSLog( @"authWithLogin: %@", login_ );
 
-   JFFDidFinishAsyncOperationHook finish_callback_hook_ = ^void( id result_
-                                                                , NSError* error_
-                                                                , JFFDidFinishAsyncOperationHandler done_callback_ )
-   {
-      JEitherMonad* monad_ = [ [ self monadForResponse: result_ error: error_ ]
-      bindVoidOperation: ^id<JMonad>( void )
-      {
-         return [ JEitherMonad eitherMonadWithError: nil
-                                              value: sid_ ];
-      } ];
+    JFFAsyncOperation loader_ = chunkedURLResponseLoader( url_
+                                                         , post_data_
+                                                         , self.headers );
 
-      [ monad_ notifyDoneBlock: done_callback_ ];
-   };
+    JFFDidFinishAsyncOperationHook finish_callback_hook_ = ^void( id result_
+                                                                 , NSError* error_
+                                                                 , JFFDidFinishAsyncOperationHandler done_callback_ )
+    {
+        NSLog( @"done auth" );
+        JEitherMonad* monad_ = [ [ self monadForResponse: result_ error: error_ ]
+                                bindVoidOperation: ^id<JMonad>( void )
+        {
+            return [ JEitherMonad eitherMonadWithError: nil
+                                                 value: sid_ ];
+        } ];
 
-   return asyncOperationWithFinishHookBlock( loader_, finish_callback_hook_ );
+        [ monad_ notifyDoneBlock: done_callback_ ];
+    };
+
+    return asyncOperationWithFinishHookBlock( loader_, finish_callback_hook_ );
 }
 
 -(JFFAsyncOperation)playBattlegroundForSid:( NSString* )sid_
 {
-   NSURL* url_ = [ NSURL URLWithSid: sid_ ];
+    NSURL* url_ = [ NSURL URLWithSid: sid_ ];
 
-   NSString* post_      = @"{\"cmd\":\"playBattleground\"}";
-   NSData*   post_data_ = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
+    NSString* post_      = @"{\"cmd\":\"playBattleground\"}";
+    NSData*   post_data_ = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
 
-   JFFAsyncOperation loader_ = chunkedURLResponseLoader( url_
-                                                        , post_data_
-                                                        , self.headers );
+    NSLog( @"playBattleground: %@", post_ );
 
-   JFFDidFinishAsyncOperationHook finish_callback_hook_ = ^void( id result_
-                                                                , NSError* error_
-                                                                , JFFDidFinishAsyncOperationHandler done_callback_ )
-   {
-      JEitherMonad* monad_ = [ self monadForResponse: result_ error: error_ ];
-      [ monad_ notifyDoneBlock: done_callback_ ];
-   };
+    JFFAsyncOperation loader_ = chunkedURLResponseLoader( url_
+                                                         , post_data_
+                                                         , self.headers );
 
-   return asyncOperationWithFinishHookBlock( loader_, finish_callback_hook_ );
+    JFFDidFinishAsyncOperationHook finish_callback_hook_ = ^void( id result_
+                                                                 , NSError* error_
+                                                                 , JFFDidFinishAsyncOperationHandler done_callback_ )
+    {
+        NSLog( @"playBattleground done" );
+        JEitherMonad* monad_ = [ self monadForResponse: result_ error: error_ ];
+        [ monad_ notifyDoneBlock: done_callback_ ];
+    };
+
+    return asyncOperationWithFinishHookBlock( loader_, finish_callback_hook_ );
+}
+
+-(JFFAsyncOperation)playDuelForSid:( NSString* )sid_
+{
+    NSURL* url_ = [ NSURL URLWithSid: sid_ ];
+    
+    NSString* post_      = @"{\"cmd\":\"playDuel\"}";
+    NSData*   post_data_ = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
+
+    NSLog( @"playDuel: %@", post_ );
+
+    JFFAsyncOperation loader_ = chunkedURLResponseLoader( url_
+                                                         , post_data_
+                                                         , self.headers );
+
+    JFFDidFinishAsyncOperationHook finish_callback_hook_ = ^void( id result_
+                                                                 , NSError* error_
+                                                                 , JFFDidFinishAsyncOperationHandler done_callback_ )
+    {
+        JEitherMonad* monad_ = [ self monadForResponse: result_ error: error_ ];
+        [ monad_ notifyDoneBlock: done_callback_ ];
+    };
+
+    return asyncOperationWithFinishHookBlock( loader_, finish_callback_hook_ );
 }
 
 -(JFFAsyncOperation)keepAliveForSid:( NSString* )sid_
@@ -194,6 +271,8 @@ static NSString* const host_format_ = @"???";
 
     NSString* post_      = @"{\"cmd\":\"keepAlive\"}";
     NSData*   post_data_ = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
+
+    NSLog( @"keepAlive: %@", post_ );
 
     JFFAsyncOperation loader_ = chunkedURLResponseLoader( url_
                                                          , post_data_
@@ -247,7 +326,7 @@ static NSString* const host_format_ = @"???";
                                                            , post_data_
                                                            , nil );
 
-      JFFDidFinishAsyncOperationHook finish_callback_hook_ = ^void( id result_
+       JFFDidFinishAsyncOperationHook finish_callback_hook_ = ^void( id result_
                                                                    , NSError* error_
                                                                    , JFFDidFinishAsyncOperationHandler done_callback_ )
       {
@@ -264,13 +343,19 @@ static NSString* const host_format_ = @"???";
                                                  value: value_ ];
          } ];
 
+         //NSLog( @"<<<1>>>getSrvStateWithSid resp: %@", monad_.value );
+         //NSLog( @"<<<2>>>getSrvStateWithSid resp: %@ error: %@", result_, error_ );
          [ monad_ notifyDoneBlock: done_callback_ ];
       };
 
       progress_callback_ = [ [ progress_callback_ copy ] autorelease ];
       progress_callback_ = ^( id progress_data_ )
       {
+          NSLog( @"got data: %@", [ [ NSString alloc ] initWithData: progress_data_
+                                                           encoding: NSUTF8StringEncoding ] );
          [ response_data_ appendData: progress_data_ ];
+         //NSString* str_ = [ [ [ NSString alloc ] initWithData: progress_data_ encoding: NSUTF8StringEncoding ] autorelease ];
+         //NSLog( @"<<<1.1>>>getSrvStateWithSid chunk: %@", str_ );
          if ( progress_callback_ )
             progress_callback_( progress_data_ );
       };
@@ -282,28 +367,53 @@ static NSString* const host_format_ = @"???";
    } copy ] autorelease ];
 }
 
+-(JFFAsyncOperation)validatedResponseLoaderWithUrl:( NSURL* )url_
+                                          postData:( NSData* )data_
+{
+    JFFAsyncOperation loader_ = chunkedURLResponseLoader( url_
+                                                         , data_
+                                                         , self.headers );
+
+    JFFDidFinishAsyncOperationHook finish_callback_hook_ = ^void( id result_
+                                                                 , NSError* error_
+                                                                 , JFFDidFinishAsyncOperationHandler done_callback_ )
+    {
+        JEitherMonad* monad_ = [ self monadForResponse: result_ error: error_ ];
+        [ monad_ notifyDoneBlock: done_callback_ ];
+    };
+
+    return asyncOperationWithFinishHookBlock( loader_, finish_callback_hook_ );
+}
+
 -(JFFAsyncOperation)exitGameWithSid:( NSString* )sid_
 {
-   NSURL* url_ = [ NSURL URLWithSid: sid_ ];
+    NSURL* url_ = [ NSURL URLWithSid: sid_ ];
 
-   NSString* post_      = @"{\"cmd\":\"exitGame\"}";
-   NSData*   post_data_ = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
+    NSString* post_      = @"{\"cmd\":\"exitGame\"}";
+    NSData*   post_data_ = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
 
-   NSLog( @"exitGameWithSid post: %@", post_ );
+    NSLog( @"exitGameWithSid post: %@", post_ );
 
-   JFFAsyncOperation loader_ = chunkedURLResponseLoader( url_
-                                                        , post_data_
-                                                        , self.headers );
+    return [ self validatedResponseLoaderWithUrl: url_
+                                        postData: post_data_ ];
+}
 
-   JFFDidFinishAsyncOperationHook finish_callback_hook_ = ^void( id result_
-                                                                , NSError* error_
-                                                                , JFFDidFinishAsyncOperationHandler done_callback_ )
-   {
-      JEitherMonad* monad_ = [ self monadForResponse: result_ error: error_ ];
-      [ monad_ notifyDoneBlock: done_callback_ ];
-   };
+-(JFFAsyncOperation)returnSymbolsWithSid:( NSString* )sid_
+                                 symbols:( NSArray* )symbols_
+{
+    NSURL* url_ = [ NSURL URLWithSid: sid_ ];
 
-   return asyncOperationWithFinishHookBlock( loader_, finish_callback_hook_ );
+    if ( [ symbols_ count ] == 0 )
+        return asyncOperationWithResult( [ NSNull null ] );
+
+    NSString* post_format_ = @"{\"cmd\":\"returnSymbols\", %@}";
+    NSString* post_        = [ NSString stringWithFormat: post_format_, [ symbols_ toJsonCommand ] ];
+    NSData*   post_data_   = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
+
+    NSLog( @"returnSymbols post: %@ url: %@", post_, url_ );
+
+    return [ self validatedResponseLoaderWithUrl: url_
+                                        postData: post_data_ ];
 }
 
 -(JFFAsyncOperation)getSymbolsWithSid:( NSString* )sid_
@@ -315,62 +425,55 @@ static NSString* const host_format_ = @"???";
    NSString* post_        = [ NSString stringWithFormat: post_format_, count_ ];
    NSData*   post_data_   = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
 
-   JFFAsyncOperation loader_ = chunkedURLResponseLoader( url_
-                                                        , post_data_
-                                                        , self.headers );
+    NSLog( @"getSymbols post: %@ url: %@", post_, url_ );
 
-   JFFDidFinishAsyncOperationHook finish_callback_hook_ = ^void( id result_
-                                                                , NSError* error_
-                                                                , JFFDidFinishAsyncOperationHandler done_callback_ )
-   {
-      JEitherMonad* monad_ = [ self monadForResponse: result_ error: error_ ];
-      [ monad_ notifyDoneBlock: done_callback_ ];
-   };
-
-   return asyncOperationWithFinishHookBlock( loader_, finish_callback_hook_ );
+    return [ self validatedResponseLoaderWithUrl: url_
+                                        postData: post_data_ ];
 }
 
 -(JFFAsyncOperation)doStepWithSid:( NSString* )sid_
                    symbsAndCoords:( NSArray* )step_
-                           points:( NSUInteger )points_
+                            state:( MWDoStepState* )state_
 {
-   NSAssert( sid_, @"can not be empty" );
+    NSAssert( sid_, @"can not be empty" );
 
-   NSURL* url_ = [ NSURL URLWithSid: sid_ ];
+    NSURL* url_ = [ NSURL URLWithSid: sid_ ];
 
-   NSString* post_ = nil;
+    NSString* post_ = nil;
 
-   if ( step_ )
-   {
-      NSString* post_format_ = @"{\"cmd\":\"doStep\", %@, \"point\": \"%d\" }";
-      post_ = [ NSString stringWithFormat: post_format_
-               , [ step_ toJsonCommand ]
-               , points_ ];
-   }
-   else
-   {
-      NSString* post_format_ = @"{\"cmd\":\"doStep\", \"point\": \"%d\" }";
-      post_ = [ NSString stringWithFormat: post_format_
-               , points_ ];
-   }
+    if ( step_ )
+    {
+       NSString* post_format_ = @"{\"cmd\":\"doStep\", %@, %@ }";
+       post_ = [ NSString stringWithFormat: post_format_
+                , [ step_ toJsonCommand ]
+                , [ state_ toJsonCommand ] ];
+    }
+    else
+    {
+       NSString* post_format_ = @"{\"cmd\":\"doStep\", \"point\": \"%d\" }";
+       post_ = [ NSString stringWithFormat: post_format_
+                , state_.points ];
+    }
 
-   NSData* post_data_ = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
+    NSData* post_data_ = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
 
-   NSLog( @"doStep post: %@ url: %@", post_, url_ );
+    NSLog( @"doStep post: %@ url: %@", post_, url_ );
 
-   JFFAsyncOperation loader_ = chunkedURLResponseLoader( url_
-                                                        , post_data_
-                                                        , self.headers );
+    return [ self validatedResponseLoaderWithUrl: url_
+                                        postData: post_data_ ];
+}
 
-   JFFDidFinishAsyncOperationHook finish_callback_hook_ = ^void( id result_
-                                                                , NSError* error_
-                                                                , JFFDidFinishAsyncOperationHandler done_callback_ )
-   {
-      JEitherMonad* monad_ = [ self monadForResponse: result_ error: error_ ];
-      [ monad_ notifyDoneBlock: done_callback_ ];
-   };
+-(JFFAsyncOperation)statisticForSid:( NSString* )sid_
+{
+    NSURL* url_ = [ NSURL URLWithSid: sid_ ];
 
-   return asyncOperationWithFinishHookBlock( loader_, finish_callback_hook_ );
+    NSString* post_      = @"{\"cmd\":\"getStatistic\"}";
+    NSData*   post_data_ = [ post_ dataUsingEncoding: NSUTF8StringEncoding ];
+
+    NSLog( @"getStatistic post: %@ url: %@", post_, url_ );
+
+    return [ self validatedResponseLoaderWithUrl: url_
+                                        postData: post_data_ ];
 }
 
 @end

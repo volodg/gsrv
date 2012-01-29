@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 
-@interface NSArray (Parser)
+@interface NSArray (MWSrvParser)
 
 +(id)arraySymbolsWithDictionary:( NSDictionary* )dict_;
 

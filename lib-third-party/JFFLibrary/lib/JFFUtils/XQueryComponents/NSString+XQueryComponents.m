@@ -4,16 +4,19 @@
 
 -(NSString*)stringByDecodingURLFormat
 {
-   NSString* result_ = [ self stringByReplacingOccurrencesOfString: @"+" withString: @" " ];
-   result_ = [ result_ stringByReplacingPercentEscapesUsingEncoding: NSUTF8StringEncoding ];
-   return result_;
+   return [ self stringByReplacingPercentEscapesUsingEncoding: NSUTF8StringEncoding ];
 }
 
 -(NSString*)stringByEncodingURLFormat
 {
-   NSString* result_ = [ self stringByReplacingOccurrencesOfString: @" " withString: @"+" ];
-   result_ = [ result_ stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding ];
-   return result_;
+    static NSString* unsafe_ = @" <>#%'\";?:@&=+$/,{}|\\^~[]`-_*!()";
+    CFStringRef ref_ = CFURLCreateStringByAddingPercentEscapes( kCFAllocatorDefault
+                                                               , (CFStringRef)self
+                                                               , NULL
+                                                               , (CFStringRef)unsafe_
+                                                               , kCFStringEncodingUTF8 );
+    NSString* result_ = (NSString*)ref_;
+    return [ result_ autorelease ];
 }
 
 -(NSDictionary*)dictionaryFromQueryComponents

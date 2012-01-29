@@ -1,10 +1,12 @@
 #import <Foundation/Foundation.h>
 
-@interface NSObject (Parser)
+@interface NSObject (MWSrvParser)
 
--(BOOL)isStatusOKResponse;
 -(BOOL)isGameStartedResponse;
 -(BOOL)isGetSymbolsResponse;
 -(BOOL)isCurrentGameSateResponse;
+-(BOOL)isGameFinishedResponse;
+-(BOOL)isStatisticResponse;
+-(BOOL)isKeepAlive;
 
 @end

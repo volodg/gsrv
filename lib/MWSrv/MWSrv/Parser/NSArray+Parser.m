@@ -5,7 +5,7 @@
 
 #import "NSString+Parser.h"
 
-@implementation NSArray (Parser)
+@implementation NSArray (MWSrvParser)
 
 +(id)arraySymbolsWithDictionary:( NSDictionary* )dict_
 {

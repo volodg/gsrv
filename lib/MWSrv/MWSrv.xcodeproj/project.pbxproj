@@ -8,19 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		65229F98147AD45900D83D06 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65229F97147AD45900D83D06 /* Foundation.framework */; };
-		65229FF7147AD55300D83D06 /* libESBlockRuntime.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65229FAD147AD4A200D83D06 /* libESBlockRuntime.a */; };
-		65229FF8147AD55300D83D06 /* libJFFAsyncOperations.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65229FD2147AD4BC00D83D06 /* libJFFAsyncOperations.a */; };
-		65229FF9147AD55300D83D06 /* libJFFNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65229FC8147AD4B500D83D06 /* libJFFNetwork.a */; };
-		65229FFA147AD55300D83D06 /* libJFFScheduler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65229FBF147AD4B100D83D06 /* libJFFScheduler.a */; };
-		65229FFB147AD55300D83D06 /* libJFFUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65229FB6147AD4AA00D83D06 /* libJFFUtils.a */; };
-		65229FFC147AD55300D83D06 /* libsbjson-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65229FE8147AD52D00D83D06 /* libsbjson-ios.a */; };
 		6522A062147AECFE00D83D06 /* MWSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 6522A060147AECFE00D83D06 /* MWSession.h */; };
 		6522A063147AECFE00D83D06 /* MWSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 6522A061147AECFE00D83D06 /* MWSession.m */; };
 		6522A066147AEE0800D83D06 /* MWApi.h in Headers */ = {isa = PBXBuildFile; fileRef = 6522A064147AEE0800D83D06 /* MWApi.h */; };
 		6522A067147AEE0800D83D06 /* MWApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 6522A065147AEE0800D83D06 /* MWApi.m */; };
 		6522A06B147AEF2C00D83D06 /* NSString+RandomString.h in Headers */ = {isa = PBXBuildFile; fileRef = 6522A069147AEF2C00D83D06 /* NSString+RandomString.h */; };
 		6522A06C147AEF2C00D83D06 /* NSString+RandomString.m in Sources */ = {isa = PBXBuildFile; fileRef = 6522A06A147AEF2C00D83D06 /* NSString+RandomString.m */; };
-		6522A07C147C570400D83D06 /* libCocoaAMF.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6522A079147C56D100D83D06 /* libCocoaAMF.a */; };
+		6532663214C1A876004E90B0 /* MWDoStepState+doStepStateWithPrevState.h in Headers */ = {isa = PBXBuildFile; fileRef = 6532663014C1A876004E90B0 /* MWDoStepState+doStepStateWithPrevState.h */; };
+		6532663314C1A876004E90B0 /* MWDoStepState+doStepStateWithPrevState.m in Sources */ = {isa = PBXBuildFile; fileRef = 6532663114C1A876004E90B0 /* MWDoStepState+doStepStateWithPrevState.m */; };
+		65460AFB14BA16AD00664376 /* MWGameStatistic.h in Headers */ = {isa = PBXBuildFile; fileRef = 65460AF914BA16AC00664376 /* MWGameStatistic.h */; };
+		65460AFC14BA16AD00664376 /* MWGameStatistic.m in Sources */ = {isa = PBXBuildFile; fileRef = 65460AFA14BA16AD00664376 /* MWGameStatistic.m */; };
+		65460B0014BA182C00664376 /* MWGameStatistic+Parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 65460AFE14BA182B00664376 /* MWGameStatistic+Parser.h */; };
+		65460B0114BA182C00664376 /* MWGameStatistic+Parser.m in Sources */ = {isa = PBXBuildFile; fileRef = 65460AFF14BA182C00664376 /* MWGameStatistic+Parser.m */; };
+		654BB54B14B9CC68000369F9 /* MWDoStepState.h in Headers */ = {isa = PBXBuildFile; fileRef = 654BB54914B9CC68000369F9 /* MWDoStepState.h */; };
+		654BB54C14B9CC68000369F9 /* MWDoStepState.m in Sources */ = {isa = PBXBuildFile; fileRef = 654BB54A14B9CC68000369F9 /* MWDoStepState.m */; };
 		65853270147EEDDA00075ACF /* JMonad.h in Headers */ = {isa = PBXBuildFile; fileRef = 6585326E147EEDDA00075ACF /* JMonad.h */; };
 		65853271147EEDDA00075ACF /* JMonad.m in Sources */ = {isa = PBXBuildFile; fileRef = 6585326F147EEDDA00075ACF /* JMonad.m */; };
 		6585330C148111C000075ACF /* NSObject+Parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 6585330A148111C000075ACF /* NSObject+Parser.h */; };
@@ -37,154 +38,32 @@
 		658533271481544F00075ACF /* MWSymbWithCoords.m in Sources */ = {isa = PBXBuildFile; fileRef = 658533251481544F00075ACF /* MWSymbWithCoords.m */; };
 		658533C9148269A600075ACF /* MWCurrentGameState.h in Headers */ = {isa = PBXBuildFile; fileRef = 658533C7148269A400075ACF /* MWCurrentGameState.h */; };
 		658533CA148269A600075ACF /* MWCurrentGameState.m in Sources */ = {isa = PBXBuildFile; fileRef = 658533C8148269A500075ACF /* MWCurrentGameState.m */; };
+		65A9949C14C1F382001D36AE /* MWFinishGameStatistic.h in Headers */ = {isa = PBXBuildFile; fileRef = 65A9949A14C1F382001D36AE /* MWFinishGameStatistic.h */; };
+		65A9949D14C1F382001D36AE /* MWFinishGameStatistic.m in Sources */ = {isa = PBXBuildFile; fileRef = 65A9949B14C1F382001D36AE /* MWFinishGameStatistic.m */; };
+		65A994A014C1F45C001D36AE /* MWFinishGameStatistic+Parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 65A9949E14C1F45C001D36AE /* MWFinishGameStatistic+Parser.h */; };
+		65A994A114C1F45C001D36AE /* MWFinishGameStatistic+Parser.m in Sources */ = {isa = PBXBuildFile; fileRef = 65A9949F14C1F45C001D36AE /* MWFinishGameStatistic+Parser.m */; };
+		65A994A414C225DB001D36AE /* MWSessionGameState.h in Headers */ = {isa = PBXBuildFile; fileRef = 65A994A214C225DB001D36AE /* MWSessionGameState.h */; };
+		65A994A514C225DB001D36AE /* MWSessionGameState.m in Sources */ = {isa = PBXBuildFile; fileRef = 65A994A314C225DB001D36AE /* MWSessionGameState.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		65229FAC147AD4A200D83D06 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 65229FA5147AD4A100D83D06 /* ESBlockRuntime.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D2AAC07E0554694100DB518D;
-			remoteInfo = ESBlockRuntime;
-		};
-		65229FB5147AD4AA00D83D06 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 65229FAE147AD4AA00D83D06 /* JFFUtils.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D2AAC07E0554694100DB518D;
-			remoteInfo = JFFUtils;
-		};
-		65229FBE147AD4B100D83D06 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 65229FB7147AD4B100D83D06 /* JFFScheduler.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D2AAC07E0554694100DB518D;
-			remoteInfo = JFFScheduler;
-		};
-		65229FC7147AD4B500D83D06 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 65229FC0147AD4B500D83D06 /* JFFNetwork.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5AE6DB13F3E6C600EB6143;
-			remoteInfo = JFFNetwork;
-		};
-		65229FD1147AD4BC00D83D06 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 65229FC9147AD4BB00D83D06 /* JFFAsyncOperations.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D2AAC07E0554694100DB518D;
-			remoteInfo = JFFAsyncOperations;
-		};
-		65229FE3147AD52D00D83D06 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 65229FD9147AD52D00D83D06 /* SBJson.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BC12323D1391D5CC00131607;
-			remoteInfo = SBJson;
-		};
-		65229FE5147AD52D00D83D06 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 65229FD9147AD52D00D83D06 /* SBJson.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BC1232521391D5CC00131607;
-			remoteInfo = SBJsonTests;
-		};
-		65229FE7147AD52D00D83D06 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 65229FD9147AD52D00D83D06 /* SBJson.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BCC2626913920FC7003D9994;
-			remoteInfo = "sbjson-ios";
-		};
-		65229FE9147AD52D00D83D06 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 65229FD9147AD52D00D83D06 /* SBJson.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BCC2627313920FC7003D9994;
-			remoteInfo = "sbjson-iosTests";
-		};
-		65229FEB147AD54800D83D06 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 65229FAE147AD4AA00D83D06 /* JFFUtils.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D;
-			remoteInfo = JFFUtils;
-		};
-		65229FED147AD54800D83D06 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 65229FD9147AD52D00D83D06 /* SBJson.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = BCC2626813920FC7003D9994;
-			remoteInfo = "sbjson-ios";
-		};
-		65229FEF147AD54800D83D06 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 65229FB7147AD4B100D83D06 /* JFFScheduler.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D;
-			remoteInfo = JFFScheduler;
-		};
-		65229FF1147AD54800D83D06 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 65229FC9147AD4BB00D83D06 /* JFFAsyncOperations.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D;
-			remoteInfo = JFFAsyncOperations;
-		};
-		65229FF3147AD54800D83D06 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 65229FC0147AD4B500D83D06 /* JFFNetwork.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5AE6DA13F3E6C600EB6143;
-			remoteInfo = JFFNetwork;
-		};
-		65229FF5147AD54800D83D06 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 65229FA5147AD4A100D83D06 /* ESBlockRuntime.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D;
-			remoteInfo = ESBlockRuntime;
-		};
-		6522A076147C56D100D83D06 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6522A06D147C56D000D83D06 /* CocoaAMF-iPhone.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 1D6058910D05DD3D006BFB54;
-			remoteInfo = "CocoaAMF-iPhone";
-		};
-		6522A078147C56D100D83D06 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6522A06D147C56D000D83D06 /* CocoaAMF-iPhone.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 2CEB28391203818500887DED;
-			remoteInfo = "CocoaAMF (Device 4.0)";
-		};
-		6522A07A147C56FD00D83D06 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6522A06D147C56D000D83D06 /* CocoaAMF-iPhone.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 2CEB28381203818500887DED;
-			remoteInfo = "CocoaAMF (Device 4.0)";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		65229F94147AD45900D83D06 /* libMWSrv.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMWSrv.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		65229F97147AD45900D83D06 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65229F9B147AD45900D83D06 /* MWSrv-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MWSrv-Prefix.pch"; sourceTree = "<group>"; };
-		65229FA5147AD4A100D83D06 /* ESBlockRuntime.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ESBlockRuntime.xcodeproj; path = "../../lib-third-party/BlockRuntime/ESBlockRuntime.xcodeproj"; sourceTree = "<group>"; };
-		65229FAE147AD4AA00D83D06 /* JFFUtils.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JFFUtils.xcodeproj; path = "../../lib-third-party/JFFLibrary/lib/JFFUtils/JFFUtils.xcodeproj"; sourceTree = "<group>"; };
-		65229FB7147AD4B100D83D06 /* JFFScheduler.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JFFScheduler.xcodeproj; path = "../../lib-third-party/JFFLibrary/lib/JFFScheduler/JFFScheduler.xcodeproj"; sourceTree = "<group>"; };
-		65229FC0147AD4B500D83D06 /* JFFNetwork.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JFFNetwork.xcodeproj; path = "../../lib-third-party/JFFLibrary/lib/JFFNetwork/JFFNetwork.xcodeproj"; sourceTree = "<group>"; };
-		65229FC9147AD4BB00D83D06 /* JFFAsyncOperations.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JFFAsyncOperations.xcodeproj; path = "../../lib-third-party/JFFLibrary/lib/JFFAsyncOperations/JFFAsyncOperations.xcodeproj"; sourceTree = "<group>"; };
-		65229FD9147AD52D00D83D06 /* SBJson.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SBJson.xcodeproj; path = "../../lib-third-party/json-framework/SBJson.xcodeproj"; sourceTree = "<group>"; };
 		6522A060147AECFE00D83D06 /* MWSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWSession.h; sourceTree = "<group>"; };
 		6522A061147AECFE00D83D06 /* MWSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWSession.m; sourceTree = "<group>"; };
 		6522A064147AEE0800D83D06 /* MWApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWApi.h; sourceTree = "<group>"; };
 		6522A065147AEE0800D83D06 /* MWApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWApi.m; sourceTree = "<group>"; };
 		6522A069147AEF2C00D83D06 /* NSString+RandomString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+RandomString.h"; sourceTree = "<group>"; };
 		6522A06A147AEF2C00D83D06 /* NSString+RandomString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+RandomString.m"; sourceTree = "<group>"; };
-		6522A06D147C56D000D83D06 /* CocoaAMF-iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "CocoaAMF-iPhone.xcodeproj"; path = "../../lib-third-party/cocoa-amf/CocoaAMF-iPhone.xcodeproj"; sourceTree = "<group>"; };
+		6532663014C1A876004E90B0 /* MWDoStepState+doStepStateWithPrevState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MWDoStepState+doStepStateWithPrevState.h"; sourceTree = "<group>"; };
+		6532663114C1A876004E90B0 /* MWDoStepState+doStepStateWithPrevState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MWDoStepState+doStepStateWithPrevState.m"; sourceTree = "<group>"; };
+		65460AF914BA16AC00664376 /* MWGameStatistic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWGameStatistic.h; sourceTree = "<group>"; };
+		65460AFA14BA16AD00664376 /* MWGameStatistic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWGameStatistic.m; sourceTree = "<group>"; };
+		65460AFE14BA182B00664376 /* MWGameStatistic+Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MWGameStatistic+Parser.h"; sourceTree = "<group>"; };
+		65460AFF14BA182C00664376 /* MWGameStatistic+Parser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MWGameStatistic+Parser.m"; sourceTree = "<group>"; };
+		654BB54914B9CC68000369F9 /* MWDoStepState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWDoStepState.h; sourceTree = "<group>"; };
+		654BB54A14B9CC68000369F9 /* MWDoStepState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWDoStepState.m; sourceTree = "<group>"; };
 		6585326E147EEDDA00075ACF /* JMonad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JMonad.h; sourceTree = "<group>"; };
 		6585326F147EEDDA00075ACF /* JMonad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JMonad.m; sourceTree = "<group>"; };
 		6585330A148111C000075ACF /* NSObject+Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Parser.h"; sourceTree = "<group>"; };
@@ -201,6 +80,12 @@
 		658533251481544F00075ACF /* MWSymbWithCoords.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWSymbWithCoords.m; sourceTree = "<group>"; };
 		658533C7148269A400075ACF /* MWCurrentGameState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCurrentGameState.h; sourceTree = "<group>"; };
 		658533C8148269A500075ACF /* MWCurrentGameState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWCurrentGameState.m; sourceTree = "<group>"; };
+		65A9949A14C1F382001D36AE /* MWFinishGameStatistic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWFinishGameStatistic.h; sourceTree = "<group>"; };
+		65A9949B14C1F382001D36AE /* MWFinishGameStatistic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWFinishGameStatistic.m; sourceTree = "<group>"; };
+		65A9949E14C1F45C001D36AE /* MWFinishGameStatistic+Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MWFinishGameStatistic+Parser.h"; sourceTree = "<group>"; };
+		65A9949F14C1F45C001D36AE /* MWFinishGameStatistic+Parser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MWFinishGameStatistic+Parser.m"; sourceTree = "<group>"; };
+		65A994A214C225DB001D36AE /* MWSessionGameState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWSessionGameState.h; sourceTree = "<group>"; };
+		65A994A314C225DB001D36AE /* MWSessionGameState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWSessionGameState.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,13 +93,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6522A07C147C570400D83D06 /* libCocoaAMF.a in Frameworks */,
-				65229FF7147AD55300D83D06 /* libESBlockRuntime.a in Frameworks */,
-				65229FF8147AD55300D83D06 /* libJFFAsyncOperations.a in Frameworks */,
-				65229FF9147AD55300D83D06 /* libJFFNetwork.a in Frameworks */,
-				65229FFA147AD55300D83D06 /* libJFFScheduler.a in Frameworks */,
-				65229FFB147AD55300D83D06 /* libJFFUtils.a in Frameworks */,
-				65229FFC147AD55300D83D06 /* libsbjson-ios.a in Frameworks */,
 				65229F98147AD45900D83D06 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -251,6 +129,7 @@
 		65229F99147AD45900D83D06 /* MWSrv */ = {
 			isa = PBXGroup;
 			children = (
+				65A9949814C1F34E001D36AE /* Data */,
 				6585331214812DA300075ACF /* MWSymb.h */,
 				6585331314812DA300075ACF /* MWSymb.m */,
 				658533241481544F00075ACF /* MWSymbWithCoords.h */,
@@ -259,6 +138,10 @@
 				6585330F14812D0900075ACF /* MWStartGameState.m */,
 				658533C7148269A400075ACF /* MWCurrentGameState.h */,
 				658533C8148269A500075ACF /* MWCurrentGameState.m */,
+				654BB54914B9CC68000369F9 /* MWDoStepState.h */,
+				654BB54A14B9CC68000369F9 /* MWDoStepState.m */,
+				65460AF914BA16AC00664376 /* MWGameStatistic.h */,
+				65460AFA14BA16AD00664376 /* MWGameStatistic.m */,
 				65853304148111AF00075ACF /* Parser */,
 				65853268147EEDCB00075ACF /* Monad */,
 				6522A068147AEF1200D83D06 /* Extensions */,
@@ -282,66 +165,8 @@
 		65229FA4147AD48900D83D06 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
-				6522A06D147C56D000D83D06 /* CocoaAMF-iPhone.xcodeproj */,
-				65229FD9147AD52D00D83D06 /* SBJson.xcodeproj */,
-				65229FC9147AD4BB00D83D06 /* JFFAsyncOperations.xcodeproj */,
-				65229FC0147AD4B500D83D06 /* JFFNetwork.xcodeproj */,
-				65229FB7147AD4B100D83D06 /* JFFScheduler.xcodeproj */,
-				65229FAE147AD4AA00D83D06 /* JFFUtils.xcodeproj */,
-				65229FA5147AD4A100D83D06 /* ESBlockRuntime.xcodeproj */,
 			);
 			name = Dependencies;
-			sourceTree = "<group>";
-		};
-		65229FA6147AD4A100D83D06 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				65229FAD147AD4A200D83D06 /* libESBlockRuntime.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		65229FAF147AD4AA00D83D06 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				65229FB6147AD4AA00D83D06 /* libJFFUtils.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		65229FB8147AD4B100D83D06 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				65229FBF147AD4B100D83D06 /* libJFFScheduler.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		65229FC1147AD4B500D83D06 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				65229FC8147AD4B500D83D06 /* libJFFNetwork.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		65229FCA147AD4BB00D83D06 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				65229FD2147AD4BC00D83D06 /* libJFFAsyncOperations.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		65229FDA147AD52D00D83D06 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				65229FE4147AD52D00D83D06 /* SBJson.framework */,
-				65229FE6147AD52D00D83D06 /* SBJsonTests.octest */,
-				65229FE8147AD52D00D83D06 /* libsbjson-ios.a */,
-				65229FEA147AD52D00D83D06 /* sbjson-iosTests.octest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		6522A068147AEF1200D83D06 /* Extensions */ = {
@@ -349,17 +174,10 @@
 			children = (
 				6522A069147AEF2C00D83D06 /* NSString+RandomString.h */,
 				6522A06A147AEF2C00D83D06 /* NSString+RandomString.m */,
+				6532663014C1A876004E90B0 /* MWDoStepState+doStepStateWithPrevState.h */,
+				6532663114C1A876004E90B0 /* MWDoStepState+doStepStateWithPrevState.m */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		6522A06E147C56D000D83D06 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				6522A077147C56D100D83D06 /* CocoaAMFiPhone.app */,
-				6522A079147C56D100D83D06 /* libCocoaAMF.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		65853268147EEDCB00075ACF /* Monad */ = {
@@ -380,8 +198,23 @@
 				6585331D14814E6100075ACF /* NSArray+Parser.m */,
 				6585332014814F3D00075ACF /* NSString+Parser.h */,
 				6585332114814F3D00075ACF /* NSString+Parser.m */,
+				65460AFE14BA182B00664376 /* MWGameStatistic+Parser.h */,
+				65460AFF14BA182C00664376 /* MWGameStatistic+Parser.m */,
+				65A9949E14C1F45C001D36AE /* MWFinishGameStatistic+Parser.h */,
+				65A9949F14C1F45C001D36AE /* MWFinishGameStatistic+Parser.m */,
 			);
 			path = Parser;
+			sourceTree = "<group>";
+		};
+		65A9949814C1F34E001D36AE /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				65A9949A14C1F382001D36AE /* MWFinishGameStatistic.h */,
+				65A9949B14C1F382001D36AE /* MWFinishGameStatistic.m */,
+				65A994A214C225DB001D36AE /* MWSessionGameState.h */,
+				65A994A314C225DB001D36AE /* MWSessionGameState.m */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -402,6 +235,13 @@
 				6585332214814F3D00075ACF /* NSString+Parser.h in Headers */,
 				658533261481544F00075ACF /* MWSymbWithCoords.h in Headers */,
 				658533C9148269A600075ACF /* MWCurrentGameState.h in Headers */,
+				654BB54B14B9CC68000369F9 /* MWDoStepState.h in Headers */,
+				65460AFB14BA16AD00664376 /* MWGameStatistic.h in Headers */,
+				65460B0014BA182C00664376 /* MWGameStatistic+Parser.h in Headers */,
+				6532663214C1A876004E90B0 /* MWDoStepState+doStepStateWithPrevState.h in Headers */,
+				65A9949C14C1F382001D36AE /* MWFinishGameStatistic.h in Headers */,
+				65A994A014C1F45C001D36AE /* MWFinishGameStatistic+Parser.h in Headers */,
+				65A994A414C225DB001D36AE /* MWSessionGameState.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,13 +259,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				6522A07B147C56FD00D83D06 /* PBXTargetDependency */,
-				65229FEC147AD54800D83D06 /* PBXTargetDependency */,
-				65229FEE147AD54800D83D06 /* PBXTargetDependency */,
-				65229FF0147AD54800D83D06 /* PBXTargetDependency */,
-				65229FF2147AD54800D83D06 /* PBXTargetDependency */,
-				65229FF4147AD54800D83D06 /* PBXTargetDependency */,
-				65229FF6147AD54800D83D06 /* PBXTargetDependency */,
 			);
 			name = MWSrv;
 			productName = MWSrv;
@@ -450,122 +283,12 @@
 			mainGroup = 65229F89147AD45800D83D06;
 			productRefGroup = 65229F95147AD45900D83D06 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 6522A06E147C56D000D83D06 /* Products */;
-					ProjectRef = 6522A06D147C56D000D83D06 /* CocoaAMF-iPhone.xcodeproj */;
-				},
-				{
-					ProductGroup = 65229FA6147AD4A100D83D06 /* Products */;
-					ProjectRef = 65229FA5147AD4A100D83D06 /* ESBlockRuntime.xcodeproj */;
-				},
-				{
-					ProductGroup = 65229FCA147AD4BB00D83D06 /* Products */;
-					ProjectRef = 65229FC9147AD4BB00D83D06 /* JFFAsyncOperations.xcodeproj */;
-				},
-				{
-					ProductGroup = 65229FC1147AD4B500D83D06 /* Products */;
-					ProjectRef = 65229FC0147AD4B500D83D06 /* JFFNetwork.xcodeproj */;
-				},
-				{
-					ProductGroup = 65229FB8147AD4B100D83D06 /* Products */;
-					ProjectRef = 65229FB7147AD4B100D83D06 /* JFFScheduler.xcodeproj */;
-				},
-				{
-					ProductGroup = 65229FAF147AD4AA00D83D06 /* Products */;
-					ProjectRef = 65229FAE147AD4AA00D83D06 /* JFFUtils.xcodeproj */;
-				},
-				{
-					ProductGroup = 65229FDA147AD52D00D83D06 /* Products */;
-					ProjectRef = 65229FD9147AD52D00D83D06 /* SBJson.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				65229F93147AD45900D83D06 /* MWSrv */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		65229FAD147AD4A200D83D06 /* libESBlockRuntime.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libESBlockRuntime.a;
-			remoteRef = 65229FAC147AD4A200D83D06 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		65229FB6147AD4AA00D83D06 /* libJFFUtils.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libJFFUtils.a;
-			remoteRef = 65229FB5147AD4AA00D83D06 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		65229FBF147AD4B100D83D06 /* libJFFScheduler.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libJFFScheduler.a;
-			remoteRef = 65229FBE147AD4B100D83D06 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		65229FC8147AD4B500D83D06 /* libJFFNetwork.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libJFFNetwork.a;
-			remoteRef = 65229FC7147AD4B500D83D06 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		65229FD2147AD4BC00D83D06 /* libJFFAsyncOperations.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libJFFAsyncOperations.a;
-			remoteRef = 65229FD1147AD4BC00D83D06 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		65229FE4147AD52D00D83D06 /* SBJson.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SBJson.framework;
-			remoteRef = 65229FE3147AD52D00D83D06 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		65229FE6147AD52D00D83D06 /* SBJsonTests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = SBJsonTests.octest;
-			remoteRef = 65229FE5147AD52D00D83D06 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		65229FE8147AD52D00D83D06 /* libsbjson-ios.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libsbjson-ios.a";
-			remoteRef = 65229FE7147AD52D00D83D06 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		65229FEA147AD52D00D83D06 /* sbjson-iosTests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "sbjson-iosTests.octest";
-			remoteRef = 65229FE9147AD52D00D83D06 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		6522A077147C56D100D83D06 /* CocoaAMFiPhone.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = CocoaAMFiPhone.app;
-			remoteRef = 6522A076147C56D100D83D06 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		6522A079147C56D100D83D06 /* libCocoaAMF.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libCocoaAMF.a;
-			remoteRef = 6522A078147C56D100D83D06 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
 		65229F90147AD45900D83D06 /* Sources */ = {
@@ -583,55 +306,28 @@
 				6585332314814F3D00075ACF /* NSString+Parser.m in Sources */,
 				658533271481544F00075ACF /* MWSymbWithCoords.m in Sources */,
 				658533CA148269A600075ACF /* MWCurrentGameState.m in Sources */,
+				654BB54C14B9CC68000369F9 /* MWDoStepState.m in Sources */,
+				65460AFC14BA16AD00664376 /* MWGameStatistic.m in Sources */,
+				65460B0114BA182C00664376 /* MWGameStatistic+Parser.m in Sources */,
+				6532663314C1A876004E90B0 /* MWDoStepState+doStepStateWithPrevState.m in Sources */,
+				65A9949D14C1F382001D36AE /* MWFinishGameStatistic.m in Sources */,
+				65A994A114C1F45C001D36AE /* MWFinishGameStatistic+Parser.m in Sources */,
+				65A994A514C225DB001D36AE /* MWSessionGameState.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		65229FEC147AD54800D83D06 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = JFFUtils;
-			targetProxy = 65229FEB147AD54800D83D06 /* PBXContainerItemProxy */;
-		};
-		65229FEE147AD54800D83D06 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "sbjson-ios";
-			targetProxy = 65229FED147AD54800D83D06 /* PBXContainerItemProxy */;
-		};
-		65229FF0147AD54800D83D06 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = JFFScheduler;
-			targetProxy = 65229FEF147AD54800D83D06 /* PBXContainerItemProxy */;
-		};
-		65229FF2147AD54800D83D06 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = JFFAsyncOperations;
-			targetProxy = 65229FF1147AD54800D83D06 /* PBXContainerItemProxy */;
-		};
-		65229FF4147AD54800D83D06 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = JFFNetwork;
-			targetProxy = 65229FF3147AD54800D83D06 /* PBXContainerItemProxy */;
-		};
-		65229FF6147AD54800D83D06 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ESBlockRuntime;
-			targetProxy = 65229FF5147AD54800D83D06 /* PBXContainerItemProxy */;
-		};
-		6522A07B147C56FD00D83D06 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "CocoaAMF (Device 4.0)";
-			targetProxy = 6522A07A147C56FD00D83D06 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		65229F9F147AD45900D83D06 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					armv6,
+					armv7,
+				);
+				CODE_SIGN_IDENTITY = "iPhone Developer: Aleksey Savchenko (CR2T5PQ37E)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -641,7 +337,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = "";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -650,7 +346,13 @@
 					"../../lib-third-party/JFFLibrary/lib",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PROVISIONING_PROFILE = "72F11EEC-0338-47A4-A83D-79A5E657E9EA";
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -658,10 +360,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					armv6,
+					armv7,
+				);
+				CODE_SIGN_IDENTITY = "iPhone Developer: Aleksey Savchenko (CR2T5PQ37E)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = "";
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -670,7 +376,13 @@
 					"../../lib-third-party/JFFLibrary/lib",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PROVISIONING_PROFILE = "72F11EEC-0338-47A4-A83D-79A5E657E9EA";
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -678,10 +390,18 @@
 		65229FA2147AD45900D83D06 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					armv6,
+					armv7,
+				);
 				DSTROOT = /tmp/MWSrv.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MWSrv/MWSrv-Prefix.pch";
-				OTHER_LDFLAGS = "-ObjC";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -690,10 +410,18 @@
 		65229FA3147AD45900D83D06 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					armv6,
+					armv7,
+				);
 				DSTROOT = /tmp/MWSrv.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MWSrv/MWSrv-Prefix.pch";
-				OTHER_LDFLAGS = "-ObjC";
+				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};

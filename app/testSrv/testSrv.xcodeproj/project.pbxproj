@@ -19,6 +19,11 @@
 		6522A056147AD6A600D83D06 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6522A055147AD6A600D83D06 /* CFNetwork.framework */; };
 		6522A05E147AD7E500D83D06 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6522A05D147AD7E500D83D06 /* libz.dylib */; };
 		6585331814813BDB00075ACF /* MWPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6585331714813BDB00075ACF /* MWPlayer.m */; };
+		65F620AD14C30DA4006673DF /* libJFFAsyncOperations.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F6208014C30D79006673DF /* libJFFAsyncOperations.a */; };
+		65F620AE14C30DA4006673DF /* libJFFNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F6208D14C30D7E006673DF /* libJFFNetwork.a */; };
+		65F620AF14C30DA4006673DF /* libJFFScheduler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F6209614C30D82006673DF /* libJFFScheduler.a */; };
+		65F620B014C30DA4006673DF /* libJFFUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F620A214C30D89006673DF /* libJFFUtils.a */; };
+		65F620C014C30DD2006673DF /* libCocoaAMF.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F620BD14C30DB9006673DF /* libCocoaAMF.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +40,111 @@
 			proxyType = 1;
 			remoteGlobalIDString = 65229F93147AD45900D83D06;
 			remoteInfo = MWSrv;
+		};
+		65F6207F14C30D79006673DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65F6207314C30D79006673DF /* JFFAsyncOperations.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
+			remoteInfo = JFFAsyncOperations;
+		};
+		65F6208114C30D79006673DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65F6207314C30D79006673DF /* JFFAsyncOperations.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5B81172C1486952A001B46D8;
+			remoteInfo = "JFFAsyncOperations-clang";
+		};
+		65F6208C14C30D7E006673DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65F6208414C30D7E006673DF /* JFFNetwork.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D5AE6DB13F3E6C600EB6143;
+			remoteInfo = JFFNetwork;
+		};
+		65F6208E14C30D7E006673DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65F6208414C30D7E006673DF /* JFFNetwork.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5B8116F5148694ED001B46D8;
+			remoteInfo = "JFFNetwork-clang";
+		};
+		65F6209514C30D82006673DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65F6209014C30D82006673DF /* JFFScheduler.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
+			remoteInfo = JFFScheduler;
+		};
+		65F6209714C30D82006673DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65F6209014C30D82006673DF /* JFFScheduler.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5B81173C14869565001B46D8;
+			remoteInfo = "JFFScheduler-clang";
+		};
+		65F620A114C30D89006673DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65F6209914C30D89006673DF /* JFFUtils.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
+			remoteInfo = JFFUtils;
+		};
+		65F620A314C30D89006673DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65F6209914C30D89006673DF /* JFFUtils.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5B18423814852046000C8181;
+			remoteInfo = "JFFUtils-clang";
+		};
+		65F620A514C30D9C006673DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65F6208414C30D7E006673DF /* JFFNetwork.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5AE6DA13F3E6C600EB6143;
+			remoteInfo = JFFNetwork;
+		};
+		65F620A714C30D9C006673DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65F6209014C30D82006673DF /* JFFScheduler.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = JFFScheduler;
+		};
+		65F620A914C30D9C006673DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65F6209914C30D89006673DF /* JFFUtils.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = JFFUtils;
+		};
+		65F620AB14C30D9C006673DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65F6207314C30D79006673DF /* JFFAsyncOperations.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = JFFAsyncOperations;
+		};
+		65F620BA14C30DB9006673DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65F620B114C30DB8006673DF /* CocoaAMF-iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1D6058910D05DD3D006BFB54;
+			remoteInfo = "CocoaAMF-iPhone";
+		};
+		65F620BC14C30DB9006673DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65F620B114C30DB8006673DF /* CocoaAMF-iPhone.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2CEB28391203818500887DED;
+			remoteInfo = "CocoaAMF (Device 4.0)";
+		};
+		65F620BE14C30DCA006673DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65F620B114C30DB8006673DF /* CocoaAMF-iPhone.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 1D6058900D05DD3D006BFB54;
+			remoteInfo = "CocoaAMF-iPhone";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -57,6 +167,11 @@
 		6522A05D147AD7E500D83D06 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		6585331614813BDB00075ACF /* MWPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPlayer.h; sourceTree = "<group>"; };
 		6585331714813BDB00075ACF /* MWPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWPlayer.m; sourceTree = "<group>"; };
+		65F6207314C30D79006673DF /* JFFAsyncOperations.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JFFAsyncOperations.xcodeproj; path = "../../lib-third-party/JFFLibrary/lib/JFFAsyncOperations/JFFAsyncOperations.xcodeproj"; sourceTree = "<group>"; };
+		65F6208414C30D7E006673DF /* JFFNetwork.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JFFNetwork.xcodeproj; path = "../../lib-third-party/JFFLibrary/lib/JFFNetwork/JFFNetwork.xcodeproj"; sourceTree = "<group>"; };
+		65F6209014C30D82006673DF /* JFFScheduler.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JFFScheduler.xcodeproj; path = "../../lib-third-party/JFFLibrary/lib/JFFScheduler/JFFScheduler.xcodeproj"; sourceTree = "<group>"; };
+		65F6209914C30D89006673DF /* JFFUtils.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JFFUtils.xcodeproj; path = "../../lib-third-party/JFFLibrary/lib/JFFUtils/JFFUtils.xcodeproj"; sourceTree = "<group>"; };
+		65F620B114C30DB8006673DF /* CocoaAMF-iPhone.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "CocoaAMF-iPhone.xcodeproj"; path = "../../lib-third-party/cocoa-amf/CocoaAMF-iPhone.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +179,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65F620C014C30DD2006673DF /* libCocoaAMF.a in Frameworks */,
+				65F620AD14C30DA4006673DF /* libJFFAsyncOperations.a in Frameworks */,
+				65F620AE14C30DA4006673DF /* libJFFNetwork.a in Frameworks */,
+				65F620AF14C30DA4006673DF /* libJFFScheduler.a in Frameworks */,
+				65F620B014C30DA4006673DF /* libJFFUtils.a in Frameworks */,
 				6522A05E147AD7E500D83D06 /* libz.dylib in Frameworks */,
 				6522A056147AD6A600D83D06 /* CFNetwork.framework in Frameworks */,
 				6522A054147AD66900D83D06 /* libMWSrv.a in Frameworks */,
@@ -135,6 +255,11 @@
 		6522A02B147AD63A00D83D06 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				65F620B114C30DB8006673DF /* CocoaAMF-iPhone.xcodeproj */,
+				65F6209914C30D89006673DF /* JFFUtils.xcodeproj */,
+				65F6209014C30D82006673DF /* JFFScheduler.xcodeproj */,
+				65F6208414C30D7E006673DF /* JFFNetwork.xcodeproj */,
+				65F6207314C30D79006673DF /* JFFAsyncOperations.xcodeproj */,
 				6522A02C147AD65700D83D06 /* MWSrv.xcodeproj */,
 			);
 			name = Dependencies;
@@ -144,6 +269,51 @@
 			isa = PBXGroup;
 			children = (
 				6522A04D147AD65700D83D06 /* libMWSrv.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		65F6207414C30D79006673DF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				65F6208014C30D79006673DF /* libJFFAsyncOperations.a */,
+				65F6208214C30D79006673DF /* libJFFAsyncOperations-clang.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		65F6208514C30D7E006673DF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				65F6208D14C30D7E006673DF /* libJFFNetwork.a */,
+				65F6208F14C30D7E006673DF /* libJFFNetwork-clang.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		65F6209114C30D82006673DF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				65F6209614C30D82006673DF /* libJFFScheduler.a */,
+				65F6209814C30D82006673DF /* libJFFScheduler-clang.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		65F6209A14C30D89006673DF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				65F620A214C30D89006673DF /* libJFFUtils.a */,
+				65F620A414C30D89006673DF /* libJFFUtils-clang.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		65F620B214C30DB8006673DF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				65F620BB14C30DB9006673DF /* CocoaAMFiPhone.app */,
+				65F620BD14C30DB9006673DF /* libCocoaAMF.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -162,6 +332,11 @@
 			buildRules = (
 			);
 			dependencies = (
+				65F620BF14C30DCA006673DF /* PBXTargetDependency */,
+				65F620A614C30D9C006673DF /* PBXTargetDependency */,
+				65F620A814C30D9C006673DF /* PBXTargetDependency */,
+				65F620AA14C30D9C006673DF /* PBXTargetDependency */,
+				65F620AC14C30D9C006673DF /* PBXTargetDependency */,
 				6522A053147AD66300D83D06 /* PBXTargetDependency */,
 			);
 			name = testSrv;
@@ -189,6 +364,26 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 65F620B214C30DB8006673DF /* Products */;
+					ProjectRef = 65F620B114C30DB8006673DF /* CocoaAMF-iPhone.xcodeproj */;
+				},
+				{
+					ProductGroup = 65F6207414C30D79006673DF /* Products */;
+					ProjectRef = 65F6207314C30D79006673DF /* JFFAsyncOperations.xcodeproj */;
+				},
+				{
+					ProductGroup = 65F6208514C30D7E006673DF /* Products */;
+					ProjectRef = 65F6208414C30D7E006673DF /* JFFNetwork.xcodeproj */;
+				},
+				{
+					ProductGroup = 65F6209114C30D82006673DF /* Products */;
+					ProjectRef = 65F6209014C30D82006673DF /* JFFScheduler.xcodeproj */;
+				},
+				{
+					ProductGroup = 65F6209A14C30D89006673DF /* Products */;
+					ProjectRef = 65F6209914C30D89006673DF /* JFFUtils.xcodeproj */;
+				},
+				{
 					ProductGroup = 6522A02D147AD65700D83D06 /* Products */;
 					ProjectRef = 6522A02C147AD65700D83D06 /* MWSrv.xcodeproj */;
 				},
@@ -206,6 +401,76 @@
 			fileType = archive.ar;
 			path = libMWSrv.a;
 			remoteRef = 6522A04C147AD65700D83D06 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		65F6208014C30D79006673DF /* libJFFAsyncOperations.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libJFFAsyncOperations.a;
+			remoteRef = 65F6207F14C30D79006673DF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		65F6208214C30D79006673DF /* libJFFAsyncOperations-clang.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libJFFAsyncOperations-clang.a";
+			remoteRef = 65F6208114C30D79006673DF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		65F6208D14C30D7E006673DF /* libJFFNetwork.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libJFFNetwork.a;
+			remoteRef = 65F6208C14C30D7E006673DF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		65F6208F14C30D7E006673DF /* libJFFNetwork-clang.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libJFFNetwork-clang.a";
+			remoteRef = 65F6208E14C30D7E006673DF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		65F6209614C30D82006673DF /* libJFFScheduler.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libJFFScheduler.a;
+			remoteRef = 65F6209514C30D82006673DF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		65F6209814C30D82006673DF /* libJFFScheduler-clang.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libJFFScheduler-clang.a";
+			remoteRef = 65F6209714C30D82006673DF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		65F620A214C30D89006673DF /* libJFFUtils.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libJFFUtils.a;
+			remoteRef = 65F620A114C30D89006673DF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		65F620A414C30D89006673DF /* libJFFUtils-clang.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libJFFUtils-clang.a";
+			remoteRef = 65F620A314C30D89006673DF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		65F620BB14C30DB9006673DF /* CocoaAMFiPhone.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = CocoaAMFiPhone.app;
+			remoteRef = 65F620BA14C30DB9006673DF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		65F620BD14C30DB9006673DF /* libCocoaAMF.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCocoaAMF.a;
+			remoteRef = 65F620BC14C30DB9006673DF /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -241,6 +506,31 @@
 			isa = PBXTargetDependency;
 			name = MWSrv;
 			targetProxy = 6522A052147AD66300D83D06 /* PBXContainerItemProxy */;
+		};
+		65F620A614C30D9C006673DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = JFFNetwork;
+			targetProxy = 65F620A514C30D9C006673DF /* PBXContainerItemProxy */;
+		};
+		65F620A814C30D9C006673DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = JFFScheduler;
+			targetProxy = 65F620A714C30D9C006673DF /* PBXContainerItemProxy */;
+		};
+		65F620AA14C30D9C006673DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = JFFUtils;
+			targetProxy = 65F620A914C30D9C006673DF /* PBXContainerItemProxy */;
+		};
+		65F620AC14C30D9C006673DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = JFFAsyncOperations;
+			targetProxy = 65F620AB14C30D9C006673DF /* PBXContainerItemProxy */;
+		};
+		65F620BF14C30DCA006673DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "CocoaAMF-iPhone";
+			targetProxy = 65F620BE14C30DCA006673DF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

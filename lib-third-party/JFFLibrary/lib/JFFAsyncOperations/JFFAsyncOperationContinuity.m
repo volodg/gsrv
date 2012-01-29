@@ -425,10 +425,10 @@ JFFAsyncOperation asyncOperationWithFinishCallbackBlock( JFFAsyncOperation loade
 }
 
 JFFAsyncOperation asyncOperationWithFinishHookBlock( JFFAsyncOperation loader_
-                                                    , JFFDidFinishAsyncOperationHook finish_callback_hook_ )
+                                                    , JFFDidFinishAsyncOperationHook finishCallbackHook_ )
 {
-   assert( finish_callback_hook_ );// should not be nil"
-   finish_callback_hook_ = [ [ finish_callback_hook_ copy ] autorelease ];
+   assert( finishCallbackHook_ );// should not be nil"
+   finishCallbackHook_ = [ [ finishCallbackHook_ copy ] autorelease ];
    loader_ = [ [ loader_ copy ] autorelease ];
    return [ [ ^JFFCancelAsyncOperation( JFFAsyncOperationProgressHandler progress_callback_
                                        , JFFCancelAsyncOperationHandler cancel_callback_
@@ -437,7 +437,7 @@ JFFAsyncOperation asyncOperationWithFinishHookBlock( JFFAsyncOperation loader_
       done_callback_ = [ [ done_callback_ copy ] autorelease ];
       return loader_( progress_callback_, cancel_callback_, ^void( id result_, NSError* error_ )
       {
-         finish_callback_hook_( result_, error_, done_callback_ );
+         finishCallbackHook_( result_, error_, done_callback_ );
       } );
    } copy ] autorelease ];
 }
